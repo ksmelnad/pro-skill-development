@@ -1,0 +1,224 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  jobSeeker        JobSeeker? //@relation(fields: [jobSeekerId], references: [id])
+  hiringCompany    HiringCompany? // @relation(fields: [hiringCompanyId], references: [id])
+  jobSeekerId      String?         @db.ObjectId
+  hiringCompanyId  String?         @db.ObjectId
+  selfAssessment   SelfAssessment?
+  selfAssessmentId String?         @db.ObjectId
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model JobSeeker {
+  id                String          @id @default(auto()) @map("_id") @db.ObjectId
+  user              User            @relation(fields: [userId], references: [id])
+  userId            String          @unique @db.ObjectId
+  firstName         String
+  lastName          String
+  dob               DateTime
+  gender            String
+  contactNumber     String
+  address           String
+  city              String
+  state             String
+  postalCode        String
+  country           String
+  education         Education[]
+  experience        Experience[]
+  skills            Skill[]
+  certifications    Certification[] // New Relation
+  portfolioLinks    String[]
+  preferredJobRoles String[]
+  resume            String
+  profilePicture    String
+  applications      Application[]
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+}
+
+// Education Model
+model Education {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  jobSeeker   JobSeeker @relation(fields: [jobSeekerId], references: [id])
+  jobSeekerId String    @db.ObjectId
+  degree      String
+  institution String
+  startDate   DateTime
+  endDate     DateTime
+  grade       String?
+}
+
+// Experience Model
+model Experience {
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
+  jobSeeker        JobSeeker @relation(fields: [jobSeekerId], references: [id])
+  jobSeekerId      String    @db.ObjectId
+  company          String
+  position         String
+  startDate        DateTime
+  endDate          DateTime?
+  responsibilities String
+}
+
+// Skill Model
+model Skill {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  jobSeeker   JobSeeker @relation(fields: [jobSeekerId], references: [id])
+  jobSeekerId String    @db.ObjectId
+  name        String
+  proficiency String
+  years       Int
+  // domain-technical | behavioural-soft skills (media recording)
+  // ai assessment
+  // scope for improvement/ recommendation
+  // adaptive and difficulty leveled mcqs
+}
+
+model Certification {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  jobSeeker   JobSeeker @relation(fields: [jobSeekerId], references: [id])
+  jobSeekerId String    @db.ObjectId
+  name        String
+  issuedBy    String
+  issuedDate  DateTime
+}
+
+model HiringCompany {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String   @unique @db.ObjectId
+  companyName   String
+  industry      String
+  companySize   String // New Field
+  website       String
+  socialLinks   String[] // New Field
+  contactPerson String
+  contactEmail  String
+  contactNumber String
+  address       String
+  city          String
+  state         String
+  postalCode    String
+  country       String
+  jobs          Job[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Job {
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  hiringCompany   HiringCompany @relation(fields: [hiringCompanyId], references: [id])
+  hiringCompanyId String        @db.ObjectId
+  title           String
+  description     String
+  requirements    String[]
+  salaryRange     String
+  location        String
+  employmentType  String
+  benefits        String[] // New Field
+  remote          Boolean // New Field
+  postedAt        DateTime      @default(now())
+  applications    Application[]
+}
+
+model Application {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  jobSeeker   JobSeeker   @relation(fields: [jobSeekerId], references: [id])
+  jobSeekerId String      @db.ObjectId
+  job         Job         @relation(fields: [jobId], references: [id])
+  jobId       String      @db.ObjectId
+  appliedAt   DateTime    @default(now())
+  status      String      @default("pending")
+  resume      String
+  coverLetter String?
+  interviews  Interview[] // New Relation
+}
+
+model Interview {
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  application   Application @relation(fields: [applicationId], references: [id])
+  applicationId String      @db.ObjectId
+  scheduledAt   DateTime
+  status        String      @default("scheduled")
+  feedback      String?
+}
+
+model SelfAssessment {
+  id                     String                   @id @default(auto()) @map("_id") @db.ObjectId
+  user                   User                     @relation(fields: [userId], references: [id])
+  userId                 String                   @unique @db.ObjectId
+  selfAssessmentResponse SelfAssessmentResponse[]
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+}
+
+type SelfAssessmentResponse {
+  question String
+  answer   String
+}
