@@ -5,7 +5,7 @@ import { auth } from "@/auth";
 export async function POST(request: Request) {
     try {
         const { selfAssessmentResponse } = await request.json();
-        console.log(selfAssessmentResponse);
+        console.log("Self Assessment Response: ", selfAssessmentResponse);
 
         const session = await auth()
 

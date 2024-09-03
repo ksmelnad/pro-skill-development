@@ -20,6 +20,11 @@ import {
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import axios from "axios";
 
+interface SelfAssessmentResponse {
+  question: String;
+  answer: String;
+}
+
 const generateSchema = () => {
   const schemaObject: Record<string, z.ZodTypeAny> = {};
 
@@ -57,18 +62,28 @@ const SelfAssessment = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  // const selfAssessmentResponse = questions.map((item) => item.type);
+  // console.log(selfAssessmentResponse);
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
 
   const onSubmit = async (values: any) => {
-    console.log("submitted");
+    console.log("Values", Object.values(values));
+    console.log("Values full:", values);
     setIsSubmitted(true);
+
+    const selfAssessmentResponse: SelfAssessmentResponse[] = questions.map(
+      (item, index) => ({
+        question: item.question,
+        answer: Object.values(values)[index] as string,
+      })
+    );
 
     try {
       const response = await axios.post("/api/self-assessment", {
-        selfAssessmentResponse: Object.values(values),
+        selfAssessmentResponse: selfAssessmentResponse,
       });
       if (response.status === 200) {
         console.log("Success");
