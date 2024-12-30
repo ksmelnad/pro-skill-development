@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { auth, signIn, signOut } from "@/auth";
+import { useSession } from "next-auth/react";
 import { Button, buttonVariants } from "./ui/button";
 import Image from "next/image";
 
@@ -12,16 +13,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Dropdown } from "react-day-picker";
 
 const navItems = [
   {
-    title: "Job Seekers",
-    href: "#",
+    title: "Quiz",
+    href: "/quiz",
   },
-  {
-    title: "Employers",
-    href: "#",
-  },
+
   {
     title: "Courses",
     href: "#",
@@ -91,6 +90,15 @@ const Navbar = async () => {
                   {/* <DropdownMenuSeparator /> */}
                   <DropdownMenuItem>
                     <SignOut />
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/profile">Profile</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/self-assessment">Self Assessment</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/admin">Admin</Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

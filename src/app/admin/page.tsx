@@ -1,3 +1,7 @@
+import Admin from "@/components/admin";
+
 const page = () => {
-  return <div className="container mx-auto">Admin</div>;
+  return <Admin />;
 };
+
+export default page;

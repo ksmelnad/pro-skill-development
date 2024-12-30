@@ -1,0 +1,282 @@
+[
+  {
+    "firstName": "John",
+    "lastName": "Doe",
+    "dob": "1990-01-01T00:00:00.000Z",
+    "gender": "Male",
+    "contactNumber": "1234567890",
+    "address": "123 Main Street",
+    "city": "New York",
+    "state": "NY",
+    "postalCode": "10001",
+    "country": "USA",
+    "education": [
+      {
+        "degree": "Bachelor of Science",
+        "institution": "New York University",
+        "startDate": "2010-09-01T00:00:00.000Z",
+        "endDate": "2014-05-01T00:00:00.000Z",
+        "grade": "3.5"
+      }
+    ],
+    "experience": [
+      {
+        "company": "Google",
+        "position": "Software Engineer",
+        "startDate": "2014-06-01T00:00:00.000Z",
+        "endDate": "2018-05-01T00:00:00.000Z",
+        "responsibilities": "Developed and maintained software applications"
+      }
+    ],
+    "skills": [
+      {
+        "name": "JavaScript",
+        "proficiency": "Expert",
+        "years": 5
+      },
+      {
+        "name": "Python",
+        "proficiency": "Advanced",
+        "years": 3
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Certified Scrum Master",
+        "issuedBy": "Scrum Alliance",
+        "issuedDate": "2017-01-01T00:00:00.000Z"
+      }
+    ],
+    "portfolioLinks": [
+      "https://www.linkedin.com/in/johndoe",
+      "https://github.com/johndoe"
+    ],
+    "preferredJobRoles": ["Software Engineer", "Web Developer"],
+    "resume": "path/to/resume.pdf",
+    "profilePicture": "path/to/profile_picture.jpg"
+  },
+  {
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "dob": "1992-03-15T00:00:00.000Z",
+    "gender": "Female",
+    "contactNumber": "9876543210",
+    "address": "456 Elm Street",
+    "city": "Los Angeles",
+    "state": "CA",
+    "postalCode": "90001",
+    "country": "USA",
+    "education": [
+      {
+        "degree": "Master of Science",
+        "institution": "Stanford University",
+        "startDate": "2015-09-01T00:00:00.000Z",
+        "endDate": "2017-05-01T00:00:00.000Z",
+        "grade": "4.0"
+      }
+    ],
+    "experience": [
+      {
+        "company": "Amazon",
+        "position": "Data Scientist",
+        "startDate": "2017-06-01T00:00:00.000Z",
+        "endDate": "2020-04-01T00:00:00.000Z",
+        "responsibilities": "Developed and implemented data-driven solutions"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Python",
+        "proficiency": "Expert",
+        "years": 4
+      },
+      {
+        "name": "R",
+        "proficiency": "Advanced",
+        "years": 2
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Certified Data Scientist",
+        "issuedBy": "Data Science Institute",
+        "issuedDate": "2019-08-01T00:00:00.000Z"
+      }
+    ],
+    "portfolioLinks": [
+      "https://www.linkedin.com/in/janedoe",
+      "https://github.com/janedoe"
+    ],
+    "preferredJobRoles": ["Data Scientist", "Machine Learning Engineer"],
+    "resume": "path/to/resume.pdf",
+    "profilePicture": "path/to/profile_picture.jpg"
+  },
+  {
+    "firstName": "David",
+    "lastName": "Smith",
+    "dob": "1988-07-20T00:00:00.000Z",
+    "gender": "Male",
+    "contactNumber": "5551234567",
+    "address": "789 Oak Street",
+    "city": "Chicago",
+    "state": "IL",
+    "postalCode": "60601",
+    "country": "USA",
+    "education": [
+      {
+        "degree": "Bachelor of Arts",
+        "institution": "University of California, Berkeley",
+        "startDate": "2007-09-01T00:00:00.000Z",
+        "endDate": "2011-05-01T00:00:00.000Z",
+        "grade": "3.8"
+      }
+    ],
+    "experience": [
+      {
+        "company": "Microsoft",
+        "position": "Product Manager",
+        "startDate": "2011-06-01T00:00:00.000Z",
+        "endDate": "2015-03-01T00:00:00.000Z",
+        "responsibilities": "Managed product development and launch"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Product Management",
+        "proficiency": "Expert",
+        "years": 6
+      },
+      {
+        "name": "Agile Methodologies",
+        "proficiency": "Advanced",
+        "years": 4
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Certified Product Manager",
+        "issuedBy": "Product Management Institute",
+        "issuedDate": "2014-02-01T00:00:00.000Z"
+      }
+    ],
+    "portfolioLinks": [
+      "https://www.linkedin.com/in/davidsmith",
+      "https://www.producthunt.com/@davidsmith"
+    ],
+    "preferredJobRoles": ["Product Manager", "Product Owner"],
+    "resume": "path/to/resume.pdf",
+    "profilePicture": "path/to/profile_picture.jpg"
+  },
+  {
+    "firstName": "Sarah",
+    "lastName": "Jones",
+    "dob": "1995-11-10T00:00:00.000Z",
+    "gender": "Female",
+    "contactNumber": "1235551212",
+    "address": "1011 Pine Street",
+    "city": "San Francisco",
+    "state": "CA",
+    "postalCode": "94101",
+    "country": "USA",
+    "education": [
+      {
+        "degree": "Master of Business Administration",
+        "institution": "Harvard Business School",
+        "startDate": "2018-09-01T00:00:00.000Z",
+        "endDate": "2020-05-01T00:00:00.000Z",
+        "grade": "4.0"
+      }
+    ],
+    "experience": [
+      {
+        "company": "Apple",
+        "position": "Marketing Manager",
+        "startDate": "2020-06-01T00:00:00.000Z",
+        "endDate": "2022-08-01T00:00:00.000Z",
+        "responsibilities": "Developed and executed marketing campaigns"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Marketing",
+        "proficiency": "Expert",
+        "years": 3
+      },
+      {
+        "name": "Social Media Marketing",
+        "proficiency": "Advanced",
+        "years": 2
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Certified Digital Marketing Professional",
+        "issuedBy": "Digital Marketing Institute",
+        "issuedDate": "2021-03-01T00:00:00.000Z"
+      }
+    ],
+    "portfolioLinks": [
+      "https://www.linkedin.com/in/sarahjones",
+      "https://www.instagram.com/sarahjones_"
+    ],
+    "preferredJobRoles": ["Marketing Manager", "Brand Manager"],
+    "resume": "path/to/resume.pdf",
+    "profilePicture": "path/to/profile_picture.jpg"
+  },
+  {
+    "firstName": "Michael",
+    "lastName": "Brown",
+    "dob": "1993-04-25T00:00:00.000Z",
+    "gender": "Male",
+    "contactNumber": "9998887777",
+    "address": "1234 Maple Street",
+    "city": "Seattle",
+    "state": "WA",
+    "postalCode": "98101",
+    "country": "USA",
+    "education": [
+      {
+        "degree": "Bachelor of Engineering",
+        "institution": "University of Washington",
+        "startDate": "2012-09-01T00:00:00.000Z",
+        "endDate": "2016-05-01T00:00:00.000Z",
+        "grade": "3.9"
+      }
+    ],
+    "experience": [
+      {
+        "company": "Facebook",
+        "position": "Software Engineer",
+        "startDate": "2016-06-01T00:00:00.000Z",
+        "endDate": "2019-10-01T00:00:00.000Z",
+        "responsibilities": "Developed and maintained social media applications"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Java",
+        "proficiency": "Expert",
+        "years": 4
+      },
+      {
+        "name": "Spring Framework",
+        "proficiency": "Advanced",
+        "years": 3
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Certified Java Programmer",
+        "issuedBy": "Oracle",
+        "issuedDate": "2017-07-01T00:00:00.000Z"
+      }
+    ],
+    "portfolioLinks": [
+      "https://www.linkedin.com/in/michaelbrown",
+      "https://github.com/michaelbrown"
+    ],
+    "preferredJobRoles": ["Software Engineer", "Full Stack Developer"],
+    "resume": "path/to/resume.pdf",
+    "profilePicture": "path/to/profile_picture.jpg"
+  }
+]

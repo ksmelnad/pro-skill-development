@@ -32,6 +32,9 @@ const formSchema = z.object({
   state: z.string().optional(),
   postalCode: z.string().optional(),
   country: z.string().optional(),
+  hobbies: z.string().optional(),
+  areaImprovementCurrent: z.string().optional(),
+  areaImprovementNext: z.string().optional(),
   resume: z
     .instanceof(FileList)
     .optional()
@@ -39,21 +42,24 @@ const formSchema = z.object({
 });
 
 export function ProfileForm() {
-  const session = useSession();
+  const { data: session } = useSession();
   // console.log(session);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fullName: session.data?.user?.name!,
+      fullName: session?.user?.name!,
       dob: "",
-      email: session.data?.user?.email!,
+      email: session?.user?.email!,
       mobile: "",
       address: "",
       city: "",
       state: "",
       postalCode: "",
       country: "",
+      hobbies: "",
+      areaImprovementCurrent: "",
+      areaImprovementNext: "",
     },
   });
 
@@ -70,10 +76,10 @@ export function ProfileForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 max-w-md"
+        className="space-y-4 max-w-lg"
       >
         <Image
-          src={session.data?.user?.image!}
+          src={session?.user?.image!}
           alt="profile photo"
           width={100}
           height={100}
@@ -86,7 +92,7 @@ export function ProfileForm() {
             <FormItem>
               <FormLabel>Full Name</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input {...field} />
               </FormControl>
 
               <FormMessage />
@@ -101,7 +107,7 @@ export function ProfileForm() {
             <FormItem>
               <FormLabel>Date of Birth</FormLabel>
               <FormControl>
-                <Input type="date" placeholder="shadcn" {...field} />
+                <Input type="date" {...field} />
               </FormControl>
 
               <FormMessage />
@@ -117,7 +123,7 @@ export function ProfileForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input {...field} />
               </FormControl>
 
               <FormMessage />
@@ -131,7 +137,7 @@ export function ProfileForm() {
             <FormItem>
               <FormLabel>Mobile</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input {...field} />
               </FormControl>
 
               <FormMessage />
@@ -145,7 +151,7 @@ export function ProfileForm() {
             <FormItem>
               <FormLabel>Address</FormLabel>
               <FormControl>
-                <Textarea rows={3} placeholder="shadcn" {...field} />
+                <Textarea rows={3} {...field} />
               </FormControl>
 
               <FormMessage />
@@ -159,7 +165,7 @@ export function ProfileForm() {
             <FormItem>
               <FormLabel>City</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input {...field} />
               </FormControl>
 
               <FormMessage />
@@ -173,7 +179,7 @@ export function ProfileForm() {
             <FormItem>
               <FormLabel>State</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input {...field} />
               </FormControl>
 
               <FormMessage />
@@ -187,7 +193,7 @@ export function ProfileForm() {
             <FormItem>
               <FormLabel>Country</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input {...field} />
               </FormControl>
 
               <FormMessage />
@@ -201,7 +207,50 @@ export function ProfileForm() {
             <FormItem>
               <FormLabel>Postal Code</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input {...field} />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="hobbies"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Hobbies</FormLabel>
+              <FormControl>
+                <Textarea rows={3} {...field} />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="areaImprovementCurrent"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Area of Improvement (Current)</FormLabel>
+              <FormControl>
+                <Textarea rows={3} {...field} />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="areaImprovementNext"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Area of Improvement (Next)</FormLabel>
+              <FormControl>
+                <Textarea rows={3} {...field} />
               </FormControl>
 
               <FormMessage />
@@ -216,7 +265,7 @@ export function ProfileForm() {
             <FormItem>
               <FormLabel>Upload CV</FormLabel>
               <FormControl>
-                <Input type="file" placeholder="shadcn" {...resumeRef} />
+                <Input type="file" {...resumeRef} />
               </FormControl>
 
               <FormMessage />
