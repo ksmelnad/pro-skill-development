@@ -6,7 +6,7 @@ import Hero from "@/components/hero";
 import Newsletter from "@/components/newsletter";
 import Image from "next/image";
 
-export default function Home() {
+export default async function Home() {
   return (
     <main>
       <Hero />

@@ -1,6 +1,6 @@
 import SelfAssessment from "@/components/selfAssessment";
 
-export default function page() {
+export default async function page() {
   return (
     <div className="bg-blue-700">
       <h2 className="text-xl lg:text-3xl text-center font-bold py-6 lg:py-8 text-white">

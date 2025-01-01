@@ -1,7 +1,7 @@
 import { ProfileForm } from "@/components/profileForm";
 import React from "react";
 
-const page = () => {
+const page = async () => {
   return (
     <section>
       <div className="max-w-xl mx-auto my-8 ">

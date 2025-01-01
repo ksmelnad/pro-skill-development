@@ -35,10 +35,9 @@ const formSchema = z.object({
   hobbies: z.string().optional(),
   areaImprovementCurrent: z.string().optional(),
   areaImprovementNext: z.string().optional(),
-  resume: z
-    .instanceof(FileList)
-    .optional()
-    .refine((file) => file?.length == 1, "File is required"),
+  // resume: z
+  //   .instanceof(File)
+  //   .optional()
 });
 
 export function ProfileForm() {
@@ -63,7 +62,7 @@ export function ProfileForm() {
     },
   });
 
-  const resumeRef = form.register("resume");
+  // const resumeRef = form.register("resume");
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
@@ -258,20 +257,20 @@ export function ProfileForm() {
           )}
         />
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name="resume"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Upload CV</FormLabel>
               <FormControl>
-                <Input type="file" {...resumeRef} />
+                <Input type="file" {...field} />
               </FormControl>
 
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
         <Button type="submit">Save</Button>
       </form>

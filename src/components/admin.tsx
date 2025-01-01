@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
-const Admin = () => {
+export default async function Admin() {
   return (
     <div className="container mx-auto my-8">
       <h2 className="text-xl lg:text-2xl font-bold mb-12 text-center">
@@ -46,6 +46,4 @@ const Admin = () => {
       </Table>
     </div>
   );
-};
-
-export default Admin;
+}

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { auth, signIn, signOut } from "@/auth";
-import { useSession } from "next-auth/react";
 import { Button, buttonVariants } from "./ui/button";
 import Image from "next/image";
 
@@ -48,8 +47,9 @@ function SignOut() {
   );
 }
 
-const Navbar = async () => {
+export default async function Navbar() {
   const session = await auth();
+  console.log("Session in Navbar", session);
 
   return (
     <header className="py-4 bg-slate-200">
@@ -119,6 +119,4 @@ const Navbar = async () => {
       </nav>
     </header>
   );
-};
-
-export default Navbar;
+}
