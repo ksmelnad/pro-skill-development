@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { auth, signIn, signOut } from "@/auth";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Button, buttonVariants } from "./ui/button";
 import Image from "next/image";
 
@@ -34,23 +34,7 @@ const navItems = [
   },
 ];
 
-function SignOut() {
-  return (
-    <form
-      action={async () => {
-        "use server";
-        await signOut();
-      }}
-    >
-      <button type="submit">Sign out</button>
-    </form>
-  );
-}
-
-export default async function Navbar() {
-  const session = await auth();
-  console.log("Session in Navbar", session);
-
+export default function Navbar() {
   return (
     <header className="py-4 bg-slate-200">
       <nav className="container mx-auto flex justify-between items-center">
@@ -75,45 +59,12 @@ export default async function Navbar() {
             </li>
           ))}
           <li>
-            {session?.user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Avatar>
-                    <AvatarImage src={session.user.image!} />
-                    {/* <AvatarFallback>CN</AvatarFallback> */}
-                  </Avatar>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  {/* <DropdownMenuLabel>Dashboard</DropdownMenuLabel> */}
-                  {/* <DropdownMenuSeparator /> */}
-                  {/* <DropdownMenuItem>Dashboard</DropdownMenuItem> */}
-                  {/* <DropdownMenuSeparator /> */}
-                  <DropdownMenuItem>
-                    <SignOut />
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/profile">Profile</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/self-assessment">Self Assessment</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/admin">Admin</Link>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <form
-                action={async () => {
-                  "use server";
-                  await signIn();
-                }}
-              >
-                <Button variant="link" type="submit">
-                  Sign in
-                </Button>
-              </form>
-            )}
+            <SignedOut>
+              <SignInButton />
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
           </li>
         </ul>
       </nav>

@@ -16,9 +16,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "./ui/textarea";
-import { DatePicker } from "./datepicker";
-import { useSession } from "next-auth/react";
+// import { DatePicker } from "./datepicker";
+import { useAuth } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   fullName: z.string().min(2, {
@@ -41,15 +43,14 @@ const formSchema = z.object({
 });
 
 export function ProfileForm() {
-  const { data: session } = useSession();
-  // console.log(session);
+  const { isLoaded, isSignedIn, user } = useUser();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fullName: session?.user?.name!,
+      fullName: "",
       dob: "",
-      email: session?.user?.email!,
+      email: "",
       mobile: "",
       address: "",
       city: "",
@@ -61,6 +62,27 @@ export function ProfileForm() {
       areaImprovementNext: "",
     },
   });
+
+  const { reset } = form;
+
+  useEffect(() => {
+    if (isLoaded && isSignedIn && user) {
+      reset({
+        fullName: user.fullName || "",
+        dob: "",
+        email: user.emailAddresses[0]?.emailAddress || "",
+        mobile: user.phoneNumbers[0]?.phoneNumber || "",
+        address: "",
+        city: "",
+        state: "",
+        postalCode: "",
+        country: "",
+        hobbies: "",
+        areaImprovementCurrent: "",
+        areaImprovementNext: "",
+      });
+    }
+  }, [isLoaded, isSignedIn, user, reset]);
 
   // const resumeRef = form.register("resume");
 
@@ -77,13 +99,16 @@ export function ProfileForm() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-4 max-w-lg"
       >
-        <Image
-          src={session?.user?.image!}
-          alt="profile photo"
-          width={100}
-          height={100}
-          className="rounded"
-        />
+        {user?.hasImage && user.imageUrl && (
+          <Image
+            src={user.imageUrl}
+            alt="profile photo"
+            width={100}
+            height={100}
+            className="rounded"
+          />
+        )}
+
         <FormField
           control={form.control}
           name="fullName"

@@ -1,0 +1,231 @@
+[
+  {
+    "question": "Weighing Balance Measure _______________.",
+    "options": ["Force", "Gravity", "Force due to Gravity", "Volume"],
+    "correctOption": "C",
+    "difficulty": 1
+  },
+  {
+    "question": "Amount of matter in an object is _______________",
+    "options": ["Mass", "Weight", "Density", "Volume"],
+    "correctOption": "A",
+    "difficulty": 1
+  },
+  {
+    "question": "Which type of balance will you prefer for weighing of 50mg material?",
+    "options": [
+      "Analytical Balance",
+      "Micro Balance",
+      "Top Load Balance",
+      "All of these"
+    ],
+    "correctOption": "A",
+    "difficulty": 1
+  },
+  {
+    "question": "Dis-position of the spirit level of the balance may lead to _______________.",
+    "options": ["Short circuit", "Accurate weighing", "Inaccurate Weighing"],
+    "correctOption": "C",
+    "difficulty": 1
+  },
+  {
+    "question": "Repeatability is assessed by weighing one test weight______.",
+    "options": ["NLT 3 times", "NLT 5 times", "NLT 10 times", "NLT 2 times"],
+    "correctOption": "C",
+    "difficulty": 2
+  },
+  {
+    "question": "Change in the display value divided by the load on the balance represents ___________ of the balance.",
+    "options": ["Repeatability", "Sensitivity", "Linearity", "Eccentricity"],
+    "correctOption": "B",
+    "difficulty": 3
+  },
+  {
+    "question": "In the linearity test the acceptance criteria for percentage deviation is ____________.",
+    "options": ["NMT 0.05%", "NMT 0.10%", "NMT 1.0%", "NLT 0.05%"],
+    "correctOption": "A",
+    "difficulty": 2
+  },
+  {
+    "question": "0.05 grams of solute is present in the 50 ml solution. Calculate the concentration of solution in ppm.",
+    "options": ["100ppm", "500ppm", "0.1ppm", "1000ppm"],
+    "correctOption": "D",
+    "difficulty": 1
+  },
+  {
+    "question": "200 mg of solute is present in the 50 ml solution. Calculate the concentration of solution in percentage.",
+    "options": ["4", "40", "0.004", "0.4"],
+    "correctOption": "C",
+    "difficulty": 1
+  },
+  {
+    "question": "20 grams of sodium hydroxide is present in the 200 ml solution. Calculate the molar concentration of solution.",
+    "options": ["25 molar", "2.5 molar", "0.25 molar", "5 molar"],
+    "correctOption": "B",
+    "difficulty": 2
+  },
+  {
+    "question": "50 grams of calcium carbonate CaCO3(molecular weight=100) is present in the 200 ml solution. Calculate the normal concentration of solution.",
+    "options": ["5 normal", "10 normal", "2.5 normal", "25 normal"],
+    "correctOption": "A",
+    "difficulty": 2
+  },
+  {
+    "question": "Weighed and transferred 0.5g of sodium chloride into 100ml volumetric flask, dissolved and diluted up to the mark using water and mixed. Diluted 5ml of this solution to 50ml with water and mixed. Calculate the concentration of the final solution.",
+    "options": ["745ppm", "200ppm", "375ppm", "500ppm"],
+    "correctOption": "D",
+    "difficulty": 3
+  },
+  {
+    "question": "Weighed and transferred 0.1g of sodium chloride into 50ml volumetric flask, dissolved and diluted up to the mark using water and mixed. Diluted 4ml of this solution to 20ml with water and mixed. Calculate the concentration of the final solution.",
+    "options": ["245ppm", "120ppm", "525ppm", "400ppm"],
+    "correctOption": "D",
+    "difficulty": 3
+  },
+  {
+    "question": "Use ______________ to measure 150ml volume for diluent prepatatiion.",
+    "options": [
+      "1000ml measuring cylinder",
+      "500ml measuring cylinder",
+      "250ml measuring cylinder",
+      "Any of the given"
+    ],
+    "correctOption": "C",
+    "difficulty": 1
+  },
+  {
+    "question": "What is the acceptance criteria of Temperature of solution under measurement as per USP?",
+    "options": [
+      "37\u00b10.5\u00b0C",
+      "25\u00b10.5\u00b0C",
+      "25\u00b12\u00b0C",
+      "37\u00b12\u00b0C"
+    ],
+    "correctOption": "C",
+    "difficulty": 1
+  },
+  {
+    "question": "What is the relationship of hydrogen ion concentration and pH Value.",
+    "options": [
+      "[H+] is directly proportional to pH",
+      "[H+] is inversely proportional to pH",
+      "pH is independent of [H+]"
+    ],
+    "correctOption": "B",
+    "difficulty": 1
+  },
+  {
+    "question": "If the hydrogen ion concentration is 10-5 mol/L, what is the pH of solution.",
+    "options": ["10", "5", "7.3", "2.5"],
+    "correctOption": "B",
+    "difficulty": 2
+  },
+  {
+    "question": "If the hydrogen ion concentration of solution-1 is 10-5 mol/L and  hydrogen ion concentration of solution-2 is 10-2 mol/L, choose the correct option.",
+    "options": [
+      "Solution-1 is more acidic than solution-2",
+      "Solution-1 is acidic and  solution-2 is basic",
+      "Solution-2 is more basic than solution-1",
+      "Solution-2 is more acidic than solution-1"
+    ],
+    "correctOption": "D",
+    "difficulty": 3
+  },
+  {
+    "question": "If the hydrogen ion concentration of solution-1 is 10-5 mol/L and  hydrogen ion concentration of solution-2 is 10-11 mol/L, choose the correct option.",
+    "options": [
+      "Solution-1 is more acidic than solution-3",
+      "Solution-1 is acidic and  solution-2 is basic",
+      "Solution-2 is more basic than solution-2",
+      "Solution-2 is more acidic than solution-2"
+    ],
+    "correctOption": "B",
+    "difficulty": 2
+  },
+  {
+    "question": "Phenolphthalein indicator shows pink color in _______.",
+    "options": [
+      "Acidic solution",
+      "Basic Solution",
+      "Neutral solution",
+      "Titrant"
+    ],
+    "correctOption": "B",
+    "difficulty": 2
+  },
+  {
+    "question": "Which titration is used to determine the concentration of metal ion by using Metal Ligand reaction?",
+    "options": [
+      "Redox Titration",
+      "Complexometric Titration",
+      "Acid-Base Titration",
+      "Precipitation Titration"
+    ],
+    "correctOption": "B",
+    "difficulty": 1
+  },
+  {
+    "question": "In titration of strong acid- weak base the pH at equivalence point is _______.",
+    "options": ["Less than 7", "Greater than 7", "Equal to 7", "0 to 14"],
+    "correctOption": "B",
+    "difficulty": 2
+  },
+  {
+    "question": "In the acceptance criteria of standardization, the %RSD of concentration of triplicate standardization should be _______.",
+    "options": ["NMT 0.2%", "NLT 2.0%", "NLT 0.2%", "NMT 2.0%"],
+    "correctOption": "A",
+    "difficulty": 3
+  },
+  {
+    "question": "What is the acceptance criteria of temperature during Conductivity measurement?",
+    "options": [
+      "37\u00b10.5\u00b0C",
+      "25\u00b12\u00b0C",
+      "37\u00b11\u00b0C",
+      "25\u00b11\u00b0C"
+    ],
+    "correctOption": "D",
+    "difficulty": 2
+  },
+  {
+    "question": "What is the unit of conductivity?",
+    "options": ["Ampere", "Ohm", "\u00b5S cm-1", "\u00b5S"],
+    "correctOption": "C",
+    "difficulty": 2
+  },
+  {
+    "question": "Acidity and Alkalinity of the water can be performed by using ________.",
+    "options": [
+      "Vacuum oven",
+      "pH meter",
+      "Conductivity meter",
+      "UV-VIS Spectroscopy"
+    ],
+    "correctOption": "B",
+    "difficulty": 1
+  },
+  {
+    "question": "If the difference between tapped  volume V500  and V1250  is greater than 2ml then tap the cylinder another ______ times",
+    "options": ["500", "200", "50", "1250"],
+    "correctOption": "D",
+    "difficulty": 1
+  },
+  {
+    "question": "Solution have different Conductivity at different temperature",
+    "options": ["True", "False"],
+    "correctOption": "A",
+    "difficulty": 1
+  },
+  {
+    "question": "Unit of PH",
+    "options": ["Unitless", "mg/ml", "\u00b0C"],
+    "correctOption": "A",
+    "difficulty": 1
+  },
+  {
+    "question": "Range of pH",
+    "options": ["0 to 7", "7 to 14", "0 to 14"],
+    "correctOption": "C",
+    "difficulty": 1
+  }
+]

@@ -1,26 +1,22 @@
 import { NextResponse } from "next/server";
 import prisma from "@/utils/prismadb";
-import { auth } from "@/auth";
+import { auth } from "@clerk/nextjs/server";
 
 export async function POST(request: Request) {
   try {
     const { selfAssessmentResponse } = await request.json();
     console.log("Self Assessment Response: ", selfAssessmentResponse);
 
-    const session = await auth();
+    const { userId } = await auth();
 
-    if (!session?.user?.email) {
+    if (!userId) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
     const selfAssessmentWrite = await prisma.selfAssessment.create({
       data: {
         selfAssessmentResponse: selfAssessmentResponse,
-        user: {
-          connect: {
-            email: session?.user?.email!,
-          },
-        },
+        userId,
       },
     });
     console.log(selfAssessmentWrite);

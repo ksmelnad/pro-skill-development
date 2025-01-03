@@ -1,4 +1,4 @@
-import profiles from "../data/sample-profiles.json";
+import { clerkClient } from "@clerk/nextjs/server";
 import { Button } from "./ui/button";
 import {
   Table,
@@ -10,35 +10,38 @@ import {
   TableRow,
 } from "./ui/table";
 export default async function Admin() {
+  const userList = await (await clerkClient()).users.getUserList();
   return (
     <div className="container mx-auto my-8">
       <h2 className="text-xl lg:text-2xl font-bold mb-12 text-center">
-        Dashboard
+        Admin Dashboard
       </h2>
       <Table className="max-w-4xl mx-auto">
-        <TableCaption>Sample Profiles</TableCaption>
+        <TableCaption>Users</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead>Name</TableHead>
-            <TableHead>Date of Birth</TableHead>
+            <TableHead>Joined</TableHead>
             <TableHead>Profile</TableHead>
             <TableHead>Self Assessments</TableHead>
+            <TableHead>Quiz</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {profiles.map((profile, index) => (
-            <TableRow key={index}>
+          {userList.data.map((user) => (
+            <TableRow key={user.id}>
+              <TableCell>{user.fullName}</TableCell>
               <TableCell>
-                {profile.firstName + " " + profile.lastName}
+                {new Date(user.createdAt).toLocaleDateString()}
               </TableCell>
               <TableCell>
-                {new Date(profile.dob).toLocaleDateString()}
+                <Button variant={"ghost"}>View</Button>
               </TableCell>
               <TableCell>
-                <Button variant={"outline"}>View</Button>
+                <Button variant={"ghost"}>View</Button>
               </TableCell>
               <TableCell>
-                <Button variant={"outline"}>View</Button>
+                <Button variant={"ghost"}>View</Button>
               </TableCell>
             </TableRow>
           ))}

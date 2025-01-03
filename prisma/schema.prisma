@@ -222,3 +222,21 @@ type SelfAssessmentResponse {
   question String
   answer   String
 }
+
+model QuizResult {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  quizId    String
+  userId    String   
+  score     Int
+  percent  Float
+  grade    String
+  createdAt DateTime @default(now())
+  attempt  Int
+  quizAnswers QuizAnswer[] 
+
+}
+
+type QuizAnswer {
+  questionId Int
+  optionId     Int
+}

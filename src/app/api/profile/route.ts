@@ -1,16 +1,16 @@
-import { auth } from "@/auth";
 import prisma from "@/utils/prismadb";
 import { NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
 export async function GET() {
   try {
-    const session = await auth();
+    const { userId } = await auth();
 
-    if (!session?.user?.email) {
+    if (!userId) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
     const profile = await prisma.jobSeeker.findUnique({
       where: {
-        userId: session?.user.id,
+        userId,
       },
     });
 
@@ -34,7 +34,7 @@ export async function POST(request: Request) {
   try {
     const { profile } = await request.json();
     // console.log("Profile: ", profile);
-    const session = await auth();
+    const { userId } = await auth();
     // if (!session?.user?.email) {
     //   return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     // }
@@ -43,7 +43,7 @@ export async function POST(request: Request) {
       data: {
         user: {
           connect: {
-            userId: session?.user?.id,
+            userId,
           },
         },
         ...profile,

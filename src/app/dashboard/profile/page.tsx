@@ -1,5 +1,5 @@
 import { ProfileForm } from "@/components/profileForm";
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 
 export default async function page() {
   const { userId } = await auth();
