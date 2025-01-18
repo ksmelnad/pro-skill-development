@@ -11,8 +11,6 @@ import {
   Settings,
   User2,
 } from "lucide-react";
-import { NavUser } from "@/components/nav-user";
-import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
@@ -30,7 +28,6 @@ import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 
-// This is sample data.
 const items = [
   {
     title: "Home",
@@ -47,16 +44,16 @@ const items = [
     url: "/dashboard/quiz",
     icon: BookOpenCheck,
   },
-  {
-    title: "Self Assessment",
-    url: "/dashboard/self-assessment",
-    icon: Glasses,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
+  // {
+  //   title: "Self Assessment",
+  //   url: "/dashboard/self-assessment",
+  //   icon: Glasses,
+  // },
+  // {
+  //   title: "Settings",
+  //   url: "#",
+  //   icon: Settings,
+  // },
 ];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {

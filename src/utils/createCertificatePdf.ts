@@ -27,7 +27,7 @@ export async function createCertificatePDF(
     // );
     // console.log("Template File Path", templateFilePath.href);
     const templateBytes = await readFile(
-      process.cwd() + "/src/data/certificate-template.pdf"
+      path.join(process.cwd(), "public", "certificate-template.pdf")
     );
     const pdfDoc = await PDFDocument.load(templateBytes);
 
@@ -35,7 +35,7 @@ export async function createCertificatePDF(
     // const radleyFontFilePath = new URL("/Radley-Regular.ttf", import.meta.url);
     // const radleyFontFilePath = new URL("/Radley-Regular.ttf", import.meta.url);
     const radleyFontBytes = await readFile(
-      process.cwd() + "/src/data/Radley-Regular.ttf"
+      path.join(process.cwd(), "public", "Radley-Regular.ttf")
     );
     const radleyFont = await pdfDoc.embedFont(radleyFontBytes);
 
@@ -50,7 +50,7 @@ export async function createCertificatePDF(
     // );
 
     const greatVibesBytes = await readFile(
-      process.cwd() + "/src/data/GreatVibes-Regular.ttf"
+      path.join(process.cwd(), "public", "GreatVibes-Regular.ttf")
     );
     const greatVibesFont = await pdfDoc.embedFont(greatVibesBytes);
     const [firstPage] = pdfDoc.getPages();
