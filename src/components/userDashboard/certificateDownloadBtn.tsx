@@ -20,7 +20,7 @@ export default function CertificateDownloadBtn({
 
   const handleClick = async () => {
     try {
-      const response = await generateCertificate({ course, attempt: 1 });
+      const response = await generateCertificate({ course, attempt });
       // if (!response.ok) {
       //   throw new Error('Failed to fetch PDF');
       // }

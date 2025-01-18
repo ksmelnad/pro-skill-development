@@ -45,7 +45,13 @@ export default async function Quiz() {
             <TableRow key={quiz.id}>
               <TableCell className="font-medium">{quiz.quizTitle}</TableCell>
               <TableCell>{quiz.attempt}</TableCell>
-              <TableCell>{quiz.createdAt.toLocaleString()}</TableCell>
+              <TableCell>
+                {quiz.createdAt.toLocaleDateString("en-US", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </TableCell>
               <TableCell>{quiz.grade}</TableCell>
               <TableCell>
                 <Dialog>

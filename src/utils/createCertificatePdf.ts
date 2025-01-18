@@ -1,6 +1,6 @@
 import { PDFDocument, rgb } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
-import fs from "fs/promises";
+import { readFile } from "fs/promises";
 import path from "path";
 
 interface CertificateData {
@@ -21,36 +21,37 @@ export async function createCertificatePDF(
     //   "/certificate-template.pdf",
     //   import.meta.url
     // );
-    const templateFilePath = path.join(
-      process.cwd(),
-      "public",
-      "certificate-template.pdf"
+    // const templateFilePath = new URL(
+    //   "/certificate-template.pdf",
+    //   import.meta.url
+    // );
+    // console.log("Template File Path", templateFilePath.href);
+    const templateBytes = await readFile(
+      process.cwd() + "/src/data/certificate-template.pdf"
     );
-    console.log("Template File Path", templateFilePath);
-    const templateBytes = await fs.readFile(templateFilePath);
     const pdfDoc = await PDFDocument.load(templateBytes);
 
     pdfDoc.registerFontkit(fontkit);
-    const radleyFontFilePath = path.join(
-      process.cwd(),
-      "public",
-      "Radley-Regular.ttf"
-    );
     // const radleyFontFilePath = new URL("/Radley-Regular.ttf", import.meta.url);
-    const radleyFontBytes = await fs.readFile(radleyFontFilePath);
+    // const radleyFontFilePath = new URL("/Radley-Regular.ttf", import.meta.url);
+    const radleyFontBytes = await readFile(
+      process.cwd() + "/src/data/Radley-Regular.ttf"
+    );
     const radleyFont = await pdfDoc.embedFont(radleyFontBytes);
 
     // const greatVibesFontFilePath = new URL(
     //   "/GreatVibes-Regular.ttf",
     //   import.meta.url
     // );
-    const greatVibesFontFilePath = path.join(
-      process.cwd(),
-      "public",
-      "GreatVibes-Regular.ttf"
-    );
+    // const greatVibesFontFilePath = path.join(
+    //   process.cwd(),
+    //   "public",
+    //   "GreatVibes-Regular.ttf"
+    // );
 
-    const greatVibesBytes = await fs.readFile(greatVibesFontFilePath);
+    const greatVibesBytes = await readFile(
+      process.cwd() + "/src/data/GreatVibes-Regular.ttf"
+    );
     const greatVibesFont = await pdfDoc.embedFont(greatVibesBytes);
     const [firstPage] = pdfDoc.getPages();
     const pageWidth = firstPage.getWidth();
