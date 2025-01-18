@@ -1,698 +1,705 @@
-[
+{
+  "quizId": "chemistry-1",
+  "quizTitle": "Analytical Chemistry",
+  "quizTopic": "Weight Balance",
+  "totalQuestions": 30,
+  "maxAttempts": 2,
+  "questions": [
     {
-        "question": "Weighing Balance Measure _______________.",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "Force"
-            },
-            {
-                "optionId": 2,
-                "text": "Gravity"
-            },
-            {
-                "optionId": 3,
-                "text": "Force due to Gravity"
-            },
-            {
-                "optionId": 4,
-                "text": "Volume"
-            }
-        ],
-        "difficulty": 1,
-        "questionId": 1,
-        "correctOptionId": 3
+      "question": "Weighing Balance Measure _______________.",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "Force"
+        },
+        {
+          "optionId": 2,
+          "text": "Gravity"
+        },
+        {
+          "optionId": 3,
+          "text": "Force due to Gravity"
+        },
+        {
+          "optionId": 4,
+          "text": "Volume"
+        }
+      ],
+      "difficulty": 1,
+      "questionId": 1,
+      "correctOptionId": 3
     },
     {
-        "question": "Amount of matter in an object is _______________",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "Mass"
-            },
-            {
-                "optionId": 2,
-                "text": "Weight"
-            },
-            {
-                "optionId": 3,
-                "text": "Density"
-            },
-            {
-                "optionId": 4,
-                "text": "Volume"
-            }
-        ],
-        "difficulty": 1,
-        "questionId": 2,
-        "correctOptionId": 1
+      "question": "Amount of matter in an object is _______________",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "Mass"
+        },
+        {
+          "optionId": 2,
+          "text": "Weight"
+        },
+        {
+          "optionId": 3,
+          "text": "Density"
+        },
+        {
+          "optionId": 4,
+          "text": "Volume"
+        }
+      ],
+      "difficulty": 1,
+      "questionId": 2,
+      "correctOptionId": 1
     },
     {
-        "question": "Which type of balance will you prefer for weighing of 50mg material?",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "Analytical Balance"
-            },
-            {
-                "optionId": 2,
-                "text": "Micro Balance"
-            },
-            {
-                "optionId": 3,
-                "text": "Top Load Balance"
-            },
-            {
-                "optionId": 4,
-                "text": "All of these"
-            }
-        ],
-        "difficulty": 1,
-        "questionId": 3,
-        "correctOptionId": 1
+      "question": "Which type of balance will you prefer for weighing of 50mg material?",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "Analytical Balance"
+        },
+        {
+          "optionId": 2,
+          "text": "Micro Balance"
+        },
+        {
+          "optionId": 3,
+          "text": "Top Load Balance"
+        },
+        {
+          "optionId": 4,
+          "text": "All of these"
+        }
+      ],
+      "difficulty": 1,
+      "questionId": 3,
+      "correctOptionId": 1
     },
     {
-        "question": "Dis-position of the spirit level of the balance may lead to _______________.",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "Short circuit"
-            },
-            {
-                "optionId": 2,
-                "text": "Accurate weighing"
-            },
-            {
-                "optionId": 3,
-                "text": "Inaccurate Weighing"
-            }
-        ],
-        "difficulty": 1,
-        "questionId": 4,
-        "correctOptionId": 3
+      "question": "Dis-position of the spirit level of the balance may lead to _______________.",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "Short circuit"
+        },
+        {
+          "optionId": 2,
+          "text": "Accurate weighing"
+        },
+        {
+          "optionId": 3,
+          "text": "Inaccurate Weighing"
+        }
+      ],
+      "difficulty": 1,
+      "questionId": 4,
+      "correctOptionId": 3
     },
     {
-        "question": "Repeatability is assessed by weighing one test weight______.",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "NLT 3 times"
-            },
-            {
-                "optionId": 2,
-                "text": "NLT 5 times"
-            },
-            {
-                "optionId": 3,
-                "text": "NLT 10 times"
-            },
-            {
-                "optionId": 4,
-                "text": "NLT 2 times"
-            }
-        ],
-        "difficulty": 2,
-        "questionId": 5,
-        "correctOptionId": 3
+      "question": "Repeatability is assessed by weighing one test weight______.",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "NLT 3 times"
+        },
+        {
+          "optionId": 2,
+          "text": "NLT 5 times"
+        },
+        {
+          "optionId": 3,
+          "text": "NLT 10 times"
+        },
+        {
+          "optionId": 4,
+          "text": "NLT 2 times"
+        }
+      ],
+      "difficulty": 2,
+      "questionId": 5,
+      "correctOptionId": 3
     },
     {
-        "question": "Change in the display value divided by the load on the balance represents ___________ of the balance.",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "Repeatability"
-            },
-            {
-                "optionId": 2,
-                "text": "Sensitivity"
-            },
-            {
-                "optionId": 3,
-                "text": "Linearity"
-            },
-            {
-                "optionId": 4,
-                "text": "Eccentricity"
-            }
-        ],
-        "difficulty": 3,
-        "questionId": 6,
-        "correctOptionId": 2
+      "question": "Change in the display value divided by the load on the balance represents ___________ of the balance.",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "Repeatability"
+        },
+        {
+          "optionId": 2,
+          "text": "Sensitivity"
+        },
+        {
+          "optionId": 3,
+          "text": "Linearity"
+        },
+        {
+          "optionId": 4,
+          "text": "Eccentricity"
+        }
+      ],
+      "difficulty": 3,
+      "questionId": 6,
+      "correctOptionId": 2
     },
     {
-        "question": "In the linearity test the acceptance criteria for percentage deviation is ____________.",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "NMT 0.05%"
-            },
-            {
-                "optionId": 2,
-                "text": "NMT 0.10%"
-            },
-            {
-                "optionId": 3,
-                "text": "NMT 1.0%"
-            },
-            {
-                "optionId": 4,
-                "text": "NLT 0.05%"
-            }
-        ],
-        "difficulty": 2,
-        "questionId": 7,
-        "correctOptionId": 1
+      "question": "In the linearity test the acceptance criteria for percentage deviation is ____________.",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "NMT 0.05%"
+        },
+        {
+          "optionId": 2,
+          "text": "NMT 0.10%"
+        },
+        {
+          "optionId": 3,
+          "text": "NMT 1.0%"
+        },
+        {
+          "optionId": 4,
+          "text": "NLT 0.05%"
+        }
+      ],
+      "difficulty": 2,
+      "questionId": 7,
+      "correctOptionId": 1
     },
     {
-        "question": "0.05 grams of solute is present in the 50 ml solution. Calculate the concentration of solution in ppm.",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "100ppm"
-            },
-            {
-                "optionId": 2,
-                "text": "500ppm"
-            },
-            {
-                "optionId": 3,
-                "text": "0.1ppm"
-            },
-            {
-                "optionId": 4,
-                "text": "1000ppm"
-            }
-        ],
-        "difficulty": 1,
-        "questionId": 8,
-        "correctOptionId": 4
+      "question": "0.05 grams of solute is present in the 50 ml solution. Calculate the concentration of solution in ppm.",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "100ppm"
+        },
+        {
+          "optionId": 2,
+          "text": "500ppm"
+        },
+        {
+          "optionId": 3,
+          "text": "0.1ppm"
+        },
+        {
+          "optionId": 4,
+          "text": "1000ppm"
+        }
+      ],
+      "difficulty": 1,
+      "questionId": 8,
+      "correctOptionId": 4
     },
     {
-        "question": "200 mg of solute is present in the 50 ml solution. Calculate the concentration of solution in percentage.",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "4"
-            },
-            {
-                "optionId": 2,
-                "text": "40"
-            },
-            {
-                "optionId": 3,
-                "text": "0.004"
-            },
-            {
-                "optionId": 4,
-                "text": "0.4"
-            }
-        ],
-        "difficulty": 1,
-        "questionId": 9,
-        "correctOptionId": 3
+      "question": "200 mg of solute is present in the 50 ml solution. Calculate the concentration of solution in percentage.",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "4"
+        },
+        {
+          "optionId": 2,
+          "text": "40"
+        },
+        {
+          "optionId": 3,
+          "text": "0.004"
+        },
+        {
+          "optionId": 4,
+          "text": "0.4"
+        }
+      ],
+      "difficulty": 1,
+      "questionId": 9,
+      "correctOptionId": 3
     },
     {
-        "question": "20 grams of sodium hydroxide is present in the 200 ml solution. Calculate the molar concentration of solution.",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "25 molar"
-            },
-            {
-                "optionId": 2,
-                "text": "2.5 molar"
-            },
-            {
-                "optionId": 3,
-                "text": "0.25 molar"
-            },
-            {
-                "optionId": 4,
-                "text": "5 molar"
-            }
-        ],
-        "difficulty": 2,
-        "questionId": 10,
-        "correctOptionId": 2
+      "question": "20 grams of sodium hydroxide is present in the 200 ml solution. Calculate the molar concentration of solution.",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "25 molar"
+        },
+        {
+          "optionId": 2,
+          "text": "2.5 molar"
+        },
+        {
+          "optionId": 3,
+          "text": "0.25 molar"
+        },
+        {
+          "optionId": 4,
+          "text": "5 molar"
+        }
+      ],
+      "difficulty": 2,
+      "questionId": 10,
+      "correctOptionId": 2
     },
     {
-        "question": "50 grams of calcium carbonate CaCO3(molecular weight=100) is present in the 200 ml solution. Calculate the normal concentration of solution.",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "5 normal"
-            },
-            {
-                "optionId": 2,
-                "text": "10 normal"
-            },
-            {
-                "optionId": 3,
-                "text": "2.5 normal"
-            },
-            {
-                "optionId": 4,
-                "text": "25 normal"
-            }
-        ],
-        "difficulty": 2,
-        "questionId": 11,
-        "correctOptionId": 1
+      "question": "50 grams of calcium carbonate CaCO3(molecular weight=100) is present in the 200 ml solution. Calculate the normal concentration of solution.",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "5 normal"
+        },
+        {
+          "optionId": 2,
+          "text": "10 normal"
+        },
+        {
+          "optionId": 3,
+          "text": "2.5 normal"
+        },
+        {
+          "optionId": 4,
+          "text": "25 normal"
+        }
+      ],
+      "difficulty": 2,
+      "questionId": 11,
+      "correctOptionId": 1
     },
     {
-        "question": "Weighed and transferred 0.5g of sodium chloride into 100ml volumetric flask, dissolved and diluted up to the mark using water and mixed. Diluted 5ml of this solution to 50ml with water and mixed. Calculate the concentration of the final solution.",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "745ppm"
-            },
-            {
-                "optionId": 2,
-                "text": "200ppm"
-            },
-            {
-                "optionId": 3,
-                "text": "375ppm"
-            },
-            {
-                "optionId": 4,
-                "text": "500ppm"
-            }
-        ],
-        "difficulty": 3,
-        "questionId": 12,
-        "correctOptionId": 4
+      "question": "Weighed and transferred 0.5g of sodium chloride into 100ml volumetric flask, dissolved and diluted up to the mark using water and mixed. Diluted 5ml of this solution to 50ml with water and mixed. Calculate the concentration of the final solution.",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "745ppm"
+        },
+        {
+          "optionId": 2,
+          "text": "200ppm"
+        },
+        {
+          "optionId": 3,
+          "text": "375ppm"
+        },
+        {
+          "optionId": 4,
+          "text": "500ppm"
+        }
+      ],
+      "difficulty": 3,
+      "questionId": 12,
+      "correctOptionId": 4
     },
     {
-        "question": "Weighed and transferred 0.1g of sodium chloride into 50ml volumetric flask, dissolved and diluted up to the mark using water and mixed. Diluted 4ml of this solution to 20ml with water and mixed. Calculate the concentration of the final solution.",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "245ppm"
-            },
-            {
-                "optionId": 2,
-                "text": "120ppm"
-            },
-            {
-                "optionId": 3,
-                "text": "525ppm"
-            },
-            {
-                "optionId": 4,
-                "text": "400ppm"
-            }
-        ],
-        "difficulty": 3,
-        "questionId": 13,
-        "correctOptionId": 4
+      "question": "Weighed and transferred 0.1g of sodium chloride into 50ml volumetric flask, dissolved and diluted up to the mark using water and mixed. Diluted 4ml of this solution to 20ml with water and mixed. Calculate the concentration of the final solution.",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "245ppm"
+        },
+        {
+          "optionId": 2,
+          "text": "120ppm"
+        },
+        {
+          "optionId": 3,
+          "text": "525ppm"
+        },
+        {
+          "optionId": 4,
+          "text": "400ppm"
+        }
+      ],
+      "difficulty": 3,
+      "questionId": 13,
+      "correctOptionId": 4
     },
     {
-        "question": "Use ______________ to measure 150ml volume for diluent prepatatiion.",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "1000ml measuring cylinder"
-            },
-            {
-                "optionId": 2,
-                "text": "500ml measuring cylinder"
-            },
-            {
-                "optionId": 3,
-                "text": "250ml measuring cylinder"
-            },
-            {
-                "optionId": 4,
-                "text": "Any of the given"
-            }
-        ],
-        "difficulty": 1,
-        "questionId": 14,
-        "correctOptionId": 3
+      "question": "Use ______________ to measure 150ml volume for diluent prepatatiion.",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "1000ml measuring cylinder"
+        },
+        {
+          "optionId": 2,
+          "text": "500ml measuring cylinder"
+        },
+        {
+          "optionId": 3,
+          "text": "250ml measuring cylinder"
+        },
+        {
+          "optionId": 4,
+          "text": "Any of the given"
+        }
+      ],
+      "difficulty": 1,
+      "questionId": 14,
+      "correctOptionId": 3
     },
     {
-        "question": "What is the acceptance criteria of Temperature of solution under measurement as per USP?",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "37\u00b10.5\u00b0C"
-            },
-            {
-                "optionId": 2,
-                "text": "25\u00b10.5\u00b0C"
-            },
-            {
-                "optionId": 3,
-                "text": "25\u00b12\u00b0C"
-            },
-            {
-                "optionId": 4,
-                "text": "37\u00b12\u00b0C"
-            }
-        ],
-        "difficulty": 1,
-        "questionId": 15,
-        "correctOptionId": 3
+      "question": "What is the acceptance criteria of Temperature of solution under measurement as per USP?",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "37\u00b10.5\u00b0C"
+        },
+        {
+          "optionId": 2,
+          "text": "25\u00b10.5\u00b0C"
+        },
+        {
+          "optionId": 3,
+          "text": "25\u00b12\u00b0C"
+        },
+        {
+          "optionId": 4,
+          "text": "37\u00b12\u00b0C"
+        }
+      ],
+      "difficulty": 1,
+      "questionId": 15,
+      "correctOptionId": 3
     },
     {
-        "question": "What is the relationship of hydrogen ion concentration and pH Value.",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "[H+] is directly proportional to pH"
-            },
-            {
-                "optionId": 2,
-                "text": "[H+] is inversely proportional to pH"
-            },
-            {
-                "optionId": 3,
-                "text": "pH is independent of [H+]"
-            }
-        ],
-        "difficulty": 1,
-        "questionId": 16,
-        "correctOptionId": 2
+      "question": "What is the relationship of hydrogen ion concentration and pH Value.",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "[H+] is directly proportional to pH"
+        },
+        {
+          "optionId": 2,
+          "text": "[H+] is inversely proportional to pH"
+        },
+        {
+          "optionId": 3,
+          "text": "pH is independent of [H+]"
+        }
+      ],
+      "difficulty": 1,
+      "questionId": 16,
+      "correctOptionId": 2
     },
     {
-        "question": "If the hydrogen ion concentration is 10-5 mol/L, what is the pH of solution.",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "10"
-            },
-            {
-                "optionId": 2,
-                "text": "5"
-            },
-            {
-                "optionId": 3,
-                "text": "7.3"
-            },
-            {
-                "optionId": 4,
-                "text": "2.5"
-            }
-        ],
-        "difficulty": 2,
-        "questionId": 17,
-        "correctOptionId": 2
+      "question": "If the hydrogen ion concentration is 10-5 mol/L, what is the pH of solution.",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "10"
+        },
+        {
+          "optionId": 2,
+          "text": "5"
+        },
+        {
+          "optionId": 3,
+          "text": "7.3"
+        },
+        {
+          "optionId": 4,
+          "text": "2.5"
+        }
+      ],
+      "difficulty": 2,
+      "questionId": 17,
+      "correctOptionId": 2
     },
     {
-        "question": "If the hydrogen ion concentration of solution-1 is 10-5 mol/L and  hydrogen ion concentration of solution-2 is 10-2 mol/L, choose the correct option.",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "Solution-1 is more acidic than solution-2"
-            },
-            {
-                "optionId": 2,
-                "text": "Solution-1 is acidic and  solution-2 is basic"
-            },
-            {
-                "optionId": 3,
-                "text": "Solution-2 is more basic than solution-1"
-            },
-            {
-                "optionId": 4,
-                "text": "Solution-2 is more acidic than solution-1"
-            }
-        ],
-        "difficulty": 3,
-        "questionId": 18,
-        "correctOptionId": 4
+      "question": "If the hydrogen ion concentration of solution-1 is 10-5 mol/L and  hydrogen ion concentration of solution-2 is 10-2 mol/L, choose the correct option.",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "Solution-1 is more acidic than solution-2"
+        },
+        {
+          "optionId": 2,
+          "text": "Solution-1 is acidic and  solution-2 is basic"
+        },
+        {
+          "optionId": 3,
+          "text": "Solution-2 is more basic than solution-1"
+        },
+        {
+          "optionId": 4,
+          "text": "Solution-2 is more acidic than solution-1"
+        }
+      ],
+      "difficulty": 3,
+      "questionId": 18,
+      "correctOptionId": 4
     },
     {
-        "question": "If the hydrogen ion concentration of solution-1 is 10-5 mol/L and  hydrogen ion concentration of solution-2 is 10-11 mol/L, choose the correct option.",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "Solution-1 is more acidic than solution-3"
-            },
-            {
-                "optionId": 2,
-                "text": "Solution-1 is acidic and  solution-2 is basic"
-            },
-            {
-                "optionId": 3,
-                "text": "Solution-2 is more basic than solution-2"
-            },
-            {
-                "optionId": 4,
-                "text": "Solution-2 is more acidic than solution-2"
-            }
-        ],
-        "difficulty": 2,
-        "questionId": 19,
-        "correctOptionId": 2
+      "question": "If the hydrogen ion concentration of solution-1 is 10-5 mol/L and  hydrogen ion concentration of solution-2 is 10-11 mol/L, choose the correct option.",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "Solution-1 is more acidic than solution-3"
+        },
+        {
+          "optionId": 2,
+          "text": "Solution-1 is acidic and  solution-2 is basic"
+        },
+        {
+          "optionId": 3,
+          "text": "Solution-2 is more basic than solution-2"
+        },
+        {
+          "optionId": 4,
+          "text": "Solution-2 is more acidic than solution-2"
+        }
+      ],
+      "difficulty": 2,
+      "questionId": 19,
+      "correctOptionId": 2
     },
     {
-        "question": "Phenolphthalein indicator shows pink color in _______.",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "Acidic solution"
-            },
-            {
-                "optionId": 2,
-                "text": "Basic Solution"
-            },
-            {
-                "optionId": 3,
-                "text": "Neutral solution"
-            },
-            {
-                "optionId": 4,
-                "text": "Titrant"
-            }
-        ],
-        "difficulty": 2,
-        "questionId": 20,
-        "correctOptionId": 2
+      "question": "Phenolphthalein indicator shows pink color in _______.",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "Acidic solution"
+        },
+        {
+          "optionId": 2,
+          "text": "Basic Solution"
+        },
+        {
+          "optionId": 3,
+          "text": "Neutral solution"
+        },
+        {
+          "optionId": 4,
+          "text": "Titrant"
+        }
+      ],
+      "difficulty": 2,
+      "questionId": 20,
+      "correctOptionId": 2
     },
     {
-        "question": "Which titration is used to determine the concentration of metal ion by using Metal Ligand reaction?",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "Redox Titration"
-            },
-            {
-                "optionId": 2,
-                "text": "Complexometric Titration"
-            },
-            {
-                "optionId": 3,
-                "text": "Acid-Base Titration"
-            },
-            {
-                "optionId": 4,
-                "text": "Precipitation Titration"
-            }
-        ],
-        "difficulty": 1,
-        "questionId": 21,
-        "correctOptionId": 2
+      "question": "Which titration is used to determine the concentration of metal ion by using Metal Ligand reaction?",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "Redox Titration"
+        },
+        {
+          "optionId": 2,
+          "text": "Complexometric Titration"
+        },
+        {
+          "optionId": 3,
+          "text": "Acid-Base Titration"
+        },
+        {
+          "optionId": 4,
+          "text": "Precipitation Titration"
+        }
+      ],
+      "difficulty": 1,
+      "questionId": 21,
+      "correctOptionId": 2
     },
     {
-        "question": "In titration of strong acid- weak base the pH at equivalence point is _______.",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "Less than 7"
-            },
-            {
-                "optionId": 2,
-                "text": "Greater than 7"
-            },
-            {
-                "optionId": 3,
-                "text": "Equal to 7"
-            },
-            {
-                "optionId": 4,
-                "text": "0 to 14"
-            }
-        ],
-        "difficulty": 2,
-        "questionId": 22,
-        "correctOptionId": 2
+      "question": "In titration of strong acid- weak base the pH at equivalence point is _______.",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "Less than 7"
+        },
+        {
+          "optionId": 2,
+          "text": "Greater than 7"
+        },
+        {
+          "optionId": 3,
+          "text": "Equal to 7"
+        },
+        {
+          "optionId": 4,
+          "text": "0 to 14"
+        }
+      ],
+      "difficulty": 2,
+      "questionId": 22,
+      "correctOptionId": 2
     },
     {
-        "question": "In the acceptance criteria of standardization, the %RSD of concentration of triplicate standardization should be _______.",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "NMT 0.2%"
-            },
-            {
-                "optionId": 2,
-                "text": "NLT 2.0%"
-            },
-            {
-                "optionId": 3,
-                "text": "NLT 0.2%"
-            },
-            {
-                "optionId": 4,
-                "text": "NMT 2.0%"
-            }
-        ],
-        "difficulty": 3,
-        "questionId": 23,
-        "correctOptionId": 1
+      "question": "In the acceptance criteria of standardization, the %RSD of concentration of triplicate standardization should be _______.",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "NMT 0.2%"
+        },
+        {
+          "optionId": 2,
+          "text": "NLT 2.0%"
+        },
+        {
+          "optionId": 3,
+          "text": "NLT 0.2%"
+        },
+        {
+          "optionId": 4,
+          "text": "NMT 2.0%"
+        }
+      ],
+      "difficulty": 3,
+      "questionId": 23,
+      "correctOptionId": 1
     },
     {
-        "question": "What is the acceptance criteria of temperature during Conductivity measurement?",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "37\u00b10.5\u00b0C"
-            },
-            {
-                "optionId": 2,
-                "text": "25\u00b12\u00b0C"
-            },
-            {
-                "optionId": 3,
-                "text": "37\u00b11\u00b0C"
-            },
-            {
-                "optionId": 4,
-                "text": "25\u00b11\u00b0C"
-            }
-        ],
-        "difficulty": 2,
-        "questionId": 24,
-        "correctOptionId": 4
+      "question": "What is the acceptance criteria of temperature during Conductivity measurement?",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "37\u00b10.5\u00b0C"
+        },
+        {
+          "optionId": 2,
+          "text": "25\u00b12\u00b0C"
+        },
+        {
+          "optionId": 3,
+          "text": "37\u00b11\u00b0C"
+        },
+        {
+          "optionId": 4,
+          "text": "25\u00b11\u00b0C"
+        }
+      ],
+      "difficulty": 2,
+      "questionId": 24,
+      "correctOptionId": 4
     },
     {
-        "question": "What is the unit of conductivity?",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "Ampere"
-            },
-            {
-                "optionId": 2,
-                "text": "Ohm"
-            },
-            {
-                "optionId": 3,
-                "text": "\u00b5S cm-1"
-            },
-            {
-                "optionId": 4,
-                "text": "\u00b5S"
-            }
-        ],
-        "difficulty": 2,
-        "questionId": 25,
-        "correctOptionId": 3
+      "question": "What is the unit of conductivity?",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "Ampere"
+        },
+        {
+          "optionId": 2,
+          "text": "Ohm"
+        },
+        {
+          "optionId": 3,
+          "text": "\u00b5S cm-1"
+        },
+        {
+          "optionId": 4,
+          "text": "\u00b5S"
+        }
+      ],
+      "difficulty": 2,
+      "questionId": 25,
+      "correctOptionId": 3
     },
     {
-        "question": "Acidity and Alkalinity of the water can be performed by using ________.",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "Vacuum oven"
-            },
-            {
-                "optionId": 2,
-                "text": "pH meter"
-            },
-            {
-                "optionId": 3,
-                "text": "Conductivity meter"
-            },
-            {
-                "optionId": 4,
-                "text": "UV-VIS Spectroscopy"
-            }
-        ],
-        "difficulty": 1,
-        "questionId": 26,
-        "correctOptionId": 2
+      "question": "Acidity and Alkalinity of the water can be performed by using ________.",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "Vacuum oven"
+        },
+        {
+          "optionId": 2,
+          "text": "pH meter"
+        },
+        {
+          "optionId": 3,
+          "text": "Conductivity meter"
+        },
+        {
+          "optionId": 4,
+          "text": "UV-VIS Spectroscopy"
+        }
+      ],
+      "difficulty": 1,
+      "questionId": 26,
+      "correctOptionId": 2
     },
     {
-        "question": "If the difference between tapped  volume V500  and V1250  is greater than 2ml then tap the cylinder another ______ times",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "500"
-            },
-            {
-                "optionId": 2,
-                "text": "200"
-            },
-            {
-                "optionId": 3,
-                "text": "50"
-            },
-            {
-                "optionId": 4,
-                "text": "1250"
-            }
-        ],
-        "difficulty": 1,
-        "questionId": 27,
-        "correctOptionId": 4
+      "question": "If the difference between tapped  volume V500  and V1250  is greater than 2ml then tap the cylinder another ______ times",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "500"
+        },
+        {
+          "optionId": 2,
+          "text": "200"
+        },
+        {
+          "optionId": 3,
+          "text": "50"
+        },
+        {
+          "optionId": 4,
+          "text": "1250"
+        }
+      ],
+      "difficulty": 1,
+      "questionId": 27,
+      "correctOptionId": 4
     },
     {
-        "question": "Solution have different Conductivity at different temperature",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "True"
-            },
-            {
-                "optionId": 2,
-                "text": "False"
-            }
-        ],
-        "difficulty": 1,
-        "questionId": 28,
-        "correctOptionId": 1
+      "question": "Solution have different Conductivity at different temperature",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "True"
+        },
+        {
+          "optionId": 2,
+          "text": "False"
+        }
+      ],
+      "difficulty": 1,
+      "questionId": 28,
+      "correctOptionId": 1
     },
     {
-        "question": "Unit of PH",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "Unitless"
-            },
-            {
-                "optionId": 2,
-                "text": "mg/ml"
-            },
-            {
-                "optionId": 3,
-                "text": "\u00b0C"
-            }
-        ],
-        "difficulty": 1,
-        "questionId": 29,
-        "correctOptionId": 1
+      "question": "Unit of PH",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "Unitless"
+        },
+        {
+          "optionId": 2,
+          "text": "mg/ml"
+        },
+        {
+          "optionId": 3,
+          "text": "\u00b0C"
+        }
+      ],
+      "difficulty": 1,
+      "questionId": 29,
+      "correctOptionId": 1
     },
     {
-        "question": "Range of pH",
-        "options": [
-            {
-                "optionId": 1,
-                "text": "0 to 7"
-            },
-            {
-                "optionId": 2,
-                "text": "7 to 14"
-            },
-            {
-                "optionId": 3,
-                "text": "0 to 14"
-            }
-        ],
-        "difficulty": 1,
-        "questionId": 30,
-        "correctOptionId": 3
+      "question": "Range of pH",
+      "options": [
+        {
+          "optionId": 1,
+          "text": "0 to 7"
+        },
+        {
+          "optionId": 2,
+          "text": "7 to 14"
+        },
+        {
+          "optionId": 3,
+          "text": "0 to 14"
+        }
+      ],
+      "difficulty": 1,
+      "questionId": 30,
+      "correctOptionId": 3
     }
-]
+  ]
+}

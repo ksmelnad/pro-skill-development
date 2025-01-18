@@ -12,7 +12,7 @@ import {
   DialogHeader,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { MoveLeft, MoveRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -38,9 +38,11 @@ interface QuizQuestion {
 
 interface QuizProps {
   questions: QuizQuestion[];
+
+  quizId: string;
 }
 
-const Quiz: React.FC<QuizProps> = ({ questions }) => {
+const Quiz: React.FC<QuizProps> = ({ questions, quizId }) => {
   // Shuffle questions and options
   const [shuffledQuestions, setShuffledQuestions] = useState<QuizQuestion[]>(
     []
@@ -110,14 +112,20 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
     //   }))
     // );
     try {
+      const quizAnswers = Object.entries(answers)
+        .filter(([, optionId]) => optionId !== null)
+        .map(([questionId, optionId]) => ({
+          questionId: Number(questionId),
+          optionId: optionId as number,
+        }));
+      console.log("quizAnswers:", quizAnswers);
+      if (!quizId || quizAnswers.length === 0) {
+        throw new Error("Quiz ID or answers are missing");
+      }
       const response = await createQuizResult({
-        quizId: "test-quiz",
-        quizAnswers: Object.entries(answers)
-          .filter(([, optionId]) => optionId !== null)
-          .map(([questionId, optionId]) => ({
-            questionId: Number(questionId),
-            optionId: optionId as number,
-          })),
+        quizId,
+
+        quizAnswers,
       });
 
       if (response.success) {
@@ -134,7 +142,7 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
         });
       }
     } catch (error) {
-      console.log(error);
+      console.log("Error posting quiz result data:", error);
     }
   };
 
@@ -143,16 +151,13 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
   ).length;
 
   return (
-    <div className="bg-slate-100 min-h-screen">
-      <div className="py-10">
-        <h1 className="text-2xl font-semibold text-center">Quiz</h1>
-      </div>
-      <Card className="max-w-lg mx-auto">
+    <div className="p-4 min-h-screen">
+      <Card className="max-w-2xl mx-auto">
         <CardHeader>
-          <p className="text-sm text-gray-500 font-semibold text-right">
+          <p className="text-sm text-gray-500  text-right">
             Question {currentIndex + 1} of {shuffledQuestions.length}
           </p>
-          <CardTitle className="text-gray-800 py-8 font-semibold leading-6">
+          <CardTitle className="text-gray-800 text-lg py-4 font-semibold leading-6">
             {currentQuestion.question}
           </CardTitle>
         </CardHeader>
@@ -184,23 +189,25 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
               disabled={currentIndex === 0}
               onClick={handlePrevious}
               variant={"outline"}
-              size={"icon"}
+              // size={"icon"}
             >
-              <MoveLeft />
+              <ArrowLeft size={18} className="mr-2" />
+              Previous
             </Button>
             <Button
               disabled={currentIndex === shuffledQuestions.length - 1}
               onClick={handleNext}
               variant={"outline"}
-              size={"icon"}
+              // size={"icon"}
             >
-              <MoveRight />
+              Next
+              <ArrowRight size={18} className="ml-2" />
             </Button>
           </div>
 
           <Dialog>
             <DialogTrigger asChild>
-              <Button>Submit</Button>
+              <Button>Finish</Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>

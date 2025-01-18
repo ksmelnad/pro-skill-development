@@ -1,5 +1,9 @@
 import Quiz from "@/components/userDashboard/quiz";
 
 export default async function page() {
-  return <Quiz />;
+  return (
+    <div>
+      <Quiz />
+    </div>
+  );
 }

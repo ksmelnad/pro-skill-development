@@ -33,6 +33,42 @@ model User {
   selfAssessmentId String?         @db.ObjectId
 }
 
+model Profile {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String  @unique
+  fullName   String?
+  email      String? @unique
+  dob        DateTime?
+  mobile     String?
+  image      String?
+  address    String?
+  city       String?
+  state      String?
+  postalCode String?
+  country    String?
+
+  hobbies                String?
+  areaImprovementCurrent String?
+  areaImprovementFuture  String?
+
+  certificates Certificate[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Certificate {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  profile    Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId  String   @db.ObjectId
+  userId     String
+  userName   String
+  course     String
+  attempt    Int
+  key        String
+  issuedDate DateTime
+}
+
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
   userId            String  @db.ObjectId
@@ -224,19 +260,21 @@ type SelfAssessmentResponse {
 }
 
 model QuizResult {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  quizId    String
-  userId    String   
-  score     Int
-  percent  Float
-  grade    String
-  createdAt DateTime @default(now())
-  attempt  Int
-  quizAnswers QuizAnswer[] 
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  quizId      String
+  quizTitle   String
+  userId      String
+  score       Int
+  percent     Float
+  grade       String
+  createdAt   DateTime     @default(now())
+  attempt     Int
+  quizAnswers QuizAnswer[]
 
+  @@unique([quizId, userId, attempt])
 }
 
 type QuizAnswer {
   questionId Int
-  optionId     Int
+  optionId   Int
 }

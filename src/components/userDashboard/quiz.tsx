@@ -18,48 +18,67 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { getQuizResult } from "@/app/actions/quiz";
+import CertificateDownloadBtn from "./certificateDownloadBtn";
+import CertificateGenBtn from "./certificateGenBtn";
+// import { currentUser } from "@clerk/nextjs/server";
 export default async function Quiz() {
+  const quizResult = await getQuizResult();
+  // const user = await currentUser();
+
   return (
-    <div className="max-w-5xl mx-auto lg:w-[60%]  my-8">
+    <div className="max-w-5xl mx-auto p-4  my-4">
       <Table>
         <TableCaption>Your quiz history</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead>Quiz Name</TableHead>
+            <TableHead>Quiz</TableHead>
             <TableHead>Attempt</TableHead>
             <TableHead>Date</TableHead>
             <TableHead>Grade</TableHead>
-            <TableHead className="text-right">Action</TableHead>
+            <TableHead>View</TableHead>
+            <TableHead>Certificate</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">Test</TableCell>
-            <TableCell>1</TableCell>
-            <TableCell>{new Date().toLocaleDateString()}</TableCell>
-            <TableCell>A+</TableCell>
-            <TableCell className="text-right">
-              <Dialog>
-                <DialogTrigger>Open</DialogTrigger>
-                <DialogContent className="sm:max-w-md">
-                  <DialogHeader>
-                    <DialogTitle>Quiz</DialogTitle>
-                    <DialogDescription>
-                      Here are your quiz details.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div>Quiz Details</div>
-                  <DialogFooter className="sm:justify-start">
-                    <DialogClose asChild>
-                      <Button type="button" variant="secondary">
-                        Close
-                      </Button>
-                    </DialogClose>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-            </TableCell>
-          </TableRow>
+          {quizResult.map((quiz) => (
+            <TableRow key={quiz.id}>
+              <TableCell className="font-medium">{quiz.quizTitle}</TableCell>
+              <TableCell>{quiz.attempt}</TableCell>
+              <TableCell>{quiz.createdAt.toLocaleString()}</TableCell>
+              <TableCell>{quiz.grade}</TableCell>
+              <TableCell>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="ghost">View</Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Quiz</DialogTitle>
+                      <DialogDescription>
+                        Here are your quiz details.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div>Quiz Details</div>
+                    <DialogFooter className="sm:justify-start">
+                      <DialogClose asChild>
+                        <Button type="button" variant="secondary">
+                          Close
+                        </Button>
+                      </DialogClose>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              </TableCell>
+              <TableCell>
+                {/* <CertificateGenBtn course={quiz.quizId} /> */}
+                <CertificateDownloadBtn
+                  course={quiz.quizId}
+                  attempt={quiz.attempt}
+                />
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>

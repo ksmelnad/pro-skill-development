@@ -63,7 +63,15 @@ export default function Navbar() {
               <SignInButton />
             </SignedOut>
             <SignedIn>
-              <UserButton />
+              <div className="flex items-center gap-2">
+                <Link
+                  href="/dashboard"
+                  className={buttonVariants({ variant: "link" })}
+                >
+                  Dashboard
+                </Link>
+                <UserButton />
+              </div>
             </SignedIn>
           </li>
         </ul>

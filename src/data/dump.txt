@@ -1,0 +1,91 @@
+export async function createCertificate({
+  userId,
+  profileId,
+  userName,
+  course,
+  grade,
+  attempt,
+}: {
+  userId: string;
+  profileId: string;
+  userName: string;
+  course: string;
+  grade: string;
+  attempt: number;
+}) {
+  console.log("userId", userId);
+  console.log("profileId", profileId);
+  console.log("userName", userName);
+  console.log("course", course);
+  console.log("grade", grade);
+  console.log("attempt", attempt);
+
+  try {
+    const fileBytes = await createCertificatePDF({
+      name: userName,
+      course,
+      grade,
+    });
+
+    console.log("File Bytes", fileBytes);
+
+    if (!fileBytes) {
+      throw new Error("Failed to create certificate");
+    }
+
+    const params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: `certificates/${userId}/${course}-${attempt}-1.pdf`,
+      Body: fileBytes as Uint8Array<ArrayBufferLike>,
+      // ContentType: "application/pdf",
+    };
+
+    const command = new PutObjectCommand(params);
+
+    const response = await s3Client.send(command);
+    if (!response.$metadata.httpStatusCode) {
+      throw new Error("Failed to upload certificate");
+    }
+    const writeToPrisma = await prisma.certificate.create({
+      data: {
+        profileId,
+        userId,
+        userName,
+        course,
+        attempt,
+        key: `certificates/${userId}/${course}-${attempt}.pdf`,
+        issuedDate: new Date(),
+      },
+    });
+    if (!writeToPrisma) {
+      throw new Error("Failed to write to prisma");
+    }
+    return true;
+  } catch (error) {
+    console.error("Error uploading certificate:", error);
+    return false;
+  }
+}
+
+export async function getCertificateUrl({
+  course,
+  attempt,
+}: {
+  course: string;
+  attempt: number;
+}) {
+  const { userId } = await auth();
+  const params = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: `certificates/${userId}/${course}-${attempt}.pdf`,
+  };
+
+  const command = new GetObjectCommand(params);
+  try {
+    const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+    return url;
+  } catch (error) {
+    console.error("Error generating certificate URL:", error);
+    return null;
+  }
+}

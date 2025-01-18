@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AppSidebar } from "@/components/userDashboard/app-sidebar";
+import { AppSidebar } from "@/components/adminDashboard/app-sidebar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -16,8 +16,8 @@ import {
 } from "@/components/ui/sidebar";
 
 export const metadata: Metadata = {
-  title: "Dashboard - Proskill Development",
-  description: "Proskill Development",
+  title: "Admin Dashboard",
+  description: "Admin Dashboard - Proskill Development",
 };
 
 export default async function RootLayout({

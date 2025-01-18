@@ -34,29 +34,30 @@ import Link from "next/link";
 const items = [
   {
     title: "Home",
-    url: "/dashboard",
+    url: "/admin",
     icon: Home,
   },
   {
-    title: "Self Assessment",
-    url: "/dashboard/self-assessment",
-    icon: Glasses,
-  },
-  {
-    title: "Quiz",
-    url: "/dashboard/quiz",
-    icon: BookOpenCheck,
-  },
-  {
-    title: "Profile",
-    url: "/dashboard/profile",
+    title: "Profiles",
+    url: "/admin/profiles",
     icon: User2,
   },
+  // {
+  //   title: "Self Assessments",
+  //   url: "/admin/self-assessments",
+  //   icon: Glasses,
+  // },
   {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
+    title: "Quizzes",
+    url: "/admin/quizzes",
+    icon: BookOpenCheck,
   },
+
+  // {
+  //   title: "Settings",
+  //   url: "#",
+  //   icon: Settings,
+  // },
 ];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {

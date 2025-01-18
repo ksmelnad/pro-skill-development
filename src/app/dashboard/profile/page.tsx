@@ -1,8 +1,10 @@
+import { getProfile } from "@/app/actions/profile";
 import { ProfileForm } from "@/components/profileForm";
 import { auth } from "@clerk/nextjs/server";
 
 export default async function page() {
   const { userId } = await auth();
+  const profile = await getProfile();
 
   return (
     <section>
@@ -12,7 +14,7 @@ export default async function page() {
             Profile
           </h2>
         </div>
-        {userId && <ProfileForm />}
+        {userId && <ProfileForm profile={profile!} />}
       </div>
     </section>
   );
