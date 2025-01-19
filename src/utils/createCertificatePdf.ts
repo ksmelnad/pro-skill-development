@@ -26,17 +26,42 @@ export async function createCertificatePDF(
     //   import.meta.url
     // );
     // console.log("Template File Path", templateFilePath.href);
-    const templateBytes = await readFile(
-      path.join(process.cwd(), "public", "certificate-template.pdf")
+    // const templateBytes = await readFile(
+    //   path.join(process.cwd(), "public", "certificate-template.pdf")
+    // );
+    const responseTemplate = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000"
+      }/certificate-template.pdf`
     );
+    if (!responseTemplate.ok) {
+      throw new Error(
+        `Failed to fetch PDF template: ${responseTemplate.statusText}`
+      );
+    }
+
+    const templateBytes = await responseTemplate.arrayBuffer();
+
     const pdfDoc = await PDFDocument.load(templateBytes);
 
     pdfDoc.registerFontkit(fontkit);
     // const radleyFontFilePath = new URL("/Radley-Regular.ttf", import.meta.url);
-    // const radleyFontFilePath = new URL("/Radley-Regular.ttf", import.meta.url);
-    const radleyFontBytes = await readFile(
-      path.join(process.cwd(), "public", "Radley-Regular.ttf")
+    // const radleyFontBytes = await readFile(
+    //   path.join(process.cwd(), "public", "Radley-Regular.ttf")
+    // );
+
+    const responseRadleyFont = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000"
+      }/Radley-Regular.ttf`
     );
+    if (!responseRadleyFont.ok) {
+      throw new Error(
+        `Failed to fetch Radley font: ${responseRadleyFont.statusText}`
+      );
+    }
+    const radleyFontBytes = await responseRadleyFont.arrayBuffer();
+
     const radleyFont = await pdfDoc.embedFont(radleyFontBytes);
 
     // const greatVibesFontFilePath = new URL(
@@ -49,9 +74,21 @@ export async function createCertificatePDF(
     //   "GreatVibes-Regular.ttf"
     // );
 
-    const greatVibesBytes = await readFile(
-      path.join(process.cwd(), "public", "GreatVibes-Regular.ttf")
+    // const greatVibesBytes = await readFile(
+    //   path.join(process.cwd(), "public", "GreatVibes-Regular.ttf")
+    // );
+
+    const responseGreatVibesFont = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000"
+      }/GreatVibes-Regular.ttf`
     );
+    if (!responseGreatVibesFont.ok) {
+      throw new Error(
+        `Failed to fetch GreatVibes font: ${responseGreatVibesFont.statusText}`
+      );
+    }
+    const greatVibesBytes = await responseGreatVibesFont.arrayBuffer();
     const greatVibesFont = await pdfDoc.embedFont(greatVibesBytes);
     const [firstPage] = pdfDoc.getPages();
     const pageWidth = firstPage.getWidth();
