@@ -20,7 +20,7 @@ import { Textarea } from "./ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { format } from "date-fns";
+import { format, isValid } from "date-fns";
 import { useAuth } from "@clerk/nextjs";
 import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
@@ -104,7 +104,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
+    // console.log(values);
     try {
       const response = await createProfile({
         profile: {
@@ -145,7 +145,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-4 max-w-lg p-4"
+        className="space-y-4 max-w-xl mx-auto p-4"
       >
         {user?.hasImage && user.imageUrl && (
           <Image
@@ -188,7 +188,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
                         !field.value && "text-muted-foreground"
                       )}
                     >
-                      {field.value ? (
+                      {field.value && isValid(field.value) ? (
                         format(field.value, "PPP")
                       ) : (
                         <span>Pick a date</span>

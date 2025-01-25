@@ -1,7 +1,9 @@
 "use server";
 import prisma from "@/utils/prismadb";
 import { auth, currentUser } from "@clerk/nextjs/server";
-import quiz from "@/data/quiz_data.json";
+import { quizSchema } from "@/lib/zodSchemas";
+import { revalidatePath } from "next/cache";
+import { Quiz } from "@prisma/client";
 
 interface QuizAnswer {
   questionId: number;
@@ -34,29 +36,23 @@ export async function createQuizResult({
         },
       });
 
-    const grade = calculateQuizScore(quizAnswers).grade;
-    const attempt = quizResultExists ? quizResultExists.attempt + 1 : 1;
-    // console.log("Quiz Title", quiz.quizTitle);
+    const quiz = await prisma.quiz.findFirst({
+      where: { quizId },
+    });
+    const calculationResult = await calculateQuizScore(quiz!, quizAnswers);
 
-    // const payload = {
-    //   userId,
-    //   profileId: userId,
-    //   userName: user?.fullName!,
-    //   course: quizId,
-    //   attempt,
-    //   grade,
-    // };
+    const attempt = quizResultExists ? quizResultExists.attempt + 1 : 1;
     // console.log("Payload", payload);
 
     const quizWrite = await prisma.quizResult.create({
       data: {
         quizId: quizId,
         userId,
-        quizTitle: quiz.quizTitle,
+        quizTitle: quiz?.quizTitle!,
         attempt,
-        score: calculateQuizScore(quizAnswers).score,
-        percent: calculateQuizScore(quizAnswers).percent,
-        grade,
+        score: calculationResult.score,
+        percent: calculationResult.percent,
+        grade: calculationResult.grade,
         quizAnswers: quizAnswers,
       },
     });
@@ -65,27 +61,6 @@ export async function createQuizResult({
     if (!quizWrite) {
       throw new Error("Failed to create quiz result");
     }
-
-    // console.log("userId", userId);
-
-    // console.log("userName", user?.fullName);
-    // console.log("course", quizId);
-    // console.log("grade", grade);
-    // console.log("attempt", attempt);
-
-    // const certificateGenerate = await createCertificate({
-    //   userId,
-    //   profileId: userId,
-    //   userName: user?.fullName!,
-    //   course: quizId,
-    //   attempt,
-    //   grade,
-    // });
-    // console.log("Certificate Generate", certificateGenerate);
-
-    // if (!certificateGenerate) {
-    //   throw new Error("Failed to generate certificate");
-    // }
 
     return {
       success: true,
@@ -131,12 +106,13 @@ export async function getQuizResult() {
   return quizResult;
 }
 
-function calculateQuizScore(quizAnswers: QuizAnswer[]) {
+async function calculateQuizScore(quiz: Quiz, quizAnswers: QuizAnswer[]) {
   let result = {
     score: 0,
     percent: 0,
     grade: "",
   };
+
   const correctAnswers = quizAnswers.filter((qa) => {
     const question = quiz.questions.find((q) => q.questionId === qa.questionId);
     return question?.correctOptionId === qa.optionId;
@@ -159,4 +135,90 @@ function calculateQuizScore(quizAnswers: QuizAnswer[]) {
     result.grade = "C";
   }
   return result;
+}
+
+export async function createQuiz(quizData: any) {
+  const parsedData = quizSchema.safeParse(quizData);
+
+  if (!parsedData.success) {
+    console.log({
+      error: "Invalid data format",
+      details: parsedData.error.errors,
+    });
+
+    return {
+      success: false,
+      error: "Invalid data format",
+    };
+  }
+
+  // TODO: Admin can only create a quiz
+
+  const {
+    quizId,
+    quizTitle,
+    quizTopic,
+    totalQuestions,
+    maxAttempts,
+    questions,
+  } = parsedData.data!;
+
+  console.log("Quiz id", quizId, parsedData.data?.quizId);
+
+  try {
+    const quizExists = await prisma.quiz.findFirst({
+      where: {
+        quizId,
+      },
+    });
+
+    if (quizExists) {
+      return {
+        success: false,
+        error: "Quiz with this id already exists",
+      };
+    }
+
+    const response = await prisma.quiz.create({
+      data: {
+        quizId,
+        quizTitle,
+        quizTopic,
+        totalQuestions,
+        maxAttempts,
+        questions,
+      },
+    });
+    if (response) {
+      revalidatePath("/admin/quizzes");
+      return {
+        success: true,
+      };
+    } else {
+      return {
+        success: false,
+        error: "Failed to create quiz",
+      };
+    }
+  } catch (error: any) {
+    console.log("Error creating quiz:", error);
+    return {
+      success: false,
+      error: error.message || "Failed to create quiz",
+    };
+  }
+}
+
+export async function getQuizzes() {
+  const quizzes = await prisma.quiz.findMany();
+  return quizzes;
+}
+
+export async function getQuiz(quizId: string) {
+  const quiz = await prisma.quiz.findUnique({
+    where: {
+      quizId,
+    },
+  });
+  return quiz;
 }

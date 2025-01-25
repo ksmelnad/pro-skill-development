@@ -27,7 +27,7 @@ export default async function Quiz() {
   // const user = await currentUser();
 
   return (
-    <div className="max-w-5xl mx-auto p-4  my-4">
+    <div className="max-w-5xl mx-auto p-4">
       <Table>
         <TableCaption>Your quiz history</TableCaption>
         <TableHeader>
@@ -47,8 +47,8 @@ export default async function Quiz() {
               <TableCell>{quiz.attempt}</TableCell>
               <TableCell>
                 {quiz.createdAt.toLocaleDateString("en-US", {
-                  day: "numeric",
                   month: "long",
+                  day: "numeric",
                   year: "numeric",
                 })}
               </TableCell>
@@ -79,7 +79,8 @@ export default async function Quiz() {
               <TableCell>
                 {/* <CertificateGenBtn course={quiz.quizId} /> */}
                 <CertificateDownloadBtn
-                  course={quiz.quizId}
+                  courseId={quiz.quizId}
+                  courseTitle={quiz.quizTitle}
                   attempt={quiz.attempt}
                 />
               </TableCell>

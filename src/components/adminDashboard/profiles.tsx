@@ -255,9 +255,5 @@ export function DataTable<TData, TValue>({
 }
 
 export default function Profiles({ profiles }: { profiles: PrismaProfile[] }) {
-  return (
-    <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={profiles} />
-    </div>
-  );
+  return <DataTable columns={columns} data={profiles} />;
 }

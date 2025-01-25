@@ -9,11 +9,11 @@ export default async function Home() {
   return (
     <main>
       <Hero />
-      <CompaniesMarquee />
-      <Features />
-      <Companies />
-      <Newsletter />
-      <Footer />
+      {/* <CompaniesMarquee /> */}
+      {/* <Features /> */}
+      {/* <Companies /> */}
+      {/* <Newsletter /> */}
+      {/* <Footer /> */}
     </main>
   );
 }

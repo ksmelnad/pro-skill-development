@@ -7,10 +7,12 @@ import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 
 export default function CertificateDownloadBtn({
-  course,
+  courseId,
+  courseTitle,
   attempt,
 }: {
-  course: string;
+  courseId: string;
+  courseTitle: string;
   attempt: number;
 }) {
   const [url, setUrl] = useState<string | null>(null);
@@ -20,7 +22,11 @@ export default function CertificateDownloadBtn({
 
   const handleClick = async () => {
     try {
-      const response = await generateCertificate({ course, attempt });
+      const response = await generateCertificate({
+        courseId,
+        courseTitle,
+        attempt,
+      });
       // if (!response.ok) {
       //   throw new Error('Failed to fetch PDF');
       // }

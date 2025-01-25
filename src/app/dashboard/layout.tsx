@@ -14,6 +14,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { UserButton } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   title: "Dashboard - Proskill Development",
@@ -29,7 +30,7 @@ export default async function RootLayout({
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+        <header className="flex justify-between h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
@@ -45,8 +46,11 @@ export default async function RootLayout({
               </BreadcrumbList>
             </Breadcrumb>
           </div>
+          <div className="mr-2">
+            <UserButton />
+          </div>
         </header>
-        {children}
+        <div className="md:ml-12">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );

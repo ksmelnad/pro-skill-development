@@ -9,6 +9,7 @@ import {
   Inbox,
   Search,
   Settings,
+  ChartNoAxesCombined,
   User2,
 } from "lucide-react";
 import {
@@ -44,11 +45,11 @@ const items = [
     url: "/dashboard/quiz",
     icon: BookOpenCheck,
   },
-  // {
-  //   title: "Self Assessment",
-  //   url: "/dashboard/self-assessment",
-  //   icon: Glasses,
-  // },
+  {
+    title: "Results",
+    url: "/dashboard/results",
+    icon: ChartNoAxesCombined,
+  },
   // {
   //   title: "Settings",
   //   url: "#",
@@ -65,7 +66,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton asChild>
               <Link href="/">
                 <Image src="/logo.svg" width={42} height={42} alt="logo" />
-                <span>Proskill Development</span>
+                <span>My Skill Learning</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

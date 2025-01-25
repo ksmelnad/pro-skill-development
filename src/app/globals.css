@@ -83,3 +83,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.section-title {
+  @apply text-xl font-semibold md:text-2xl p-4;
+}

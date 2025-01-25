@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -23,10 +24,11 @@ import {
 } from "@/components/ui/card";
 import { createQuizResult } from "@/app/actions/quiz";
 import { useToast } from "@/hooks/use-toast";
+import { Quiz as QuizType } from "@prisma/client";
 
 interface QuizOption {
   optionId: number;
-  text: string;
+  option: string;
 }
 interface QuizQuestion {
   questionId: number;
@@ -42,7 +44,7 @@ interface QuizProps {
   quizId: string;
 }
 
-const Quiz: React.FC<QuizProps> = ({ questions, quizId }) => {
+const Quiz = ({ quiz }: { quiz: QuizType }) => {
   // Shuffle questions and options
   const [shuffledQuestions, setShuffledQuestions] = useState<QuizQuestion[]>(
     []
@@ -50,7 +52,9 @@ const Quiz: React.FC<QuizProps> = ({ questions, quizId }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number | null>>({});
 
+  const questions = quiz.questions;
   const { toast } = useToast();
+  const router = useRouter();
 
   useEffect(() => {
     const shuffleArray = (array: any[]) => {
@@ -119,11 +123,11 @@ const Quiz: React.FC<QuizProps> = ({ questions, quizId }) => {
           optionId: optionId as number,
         }));
       console.log("quizAnswers:", quizAnswers);
-      if (!quizId || quizAnswers.length === 0) {
+      if (!quiz.quizId || quizAnswers.length === 0) {
         throw new Error("Quiz ID or answers are missing");
       }
       const response = await createQuizResult({
-        quizId,
+        quizId: quiz.quizId,
 
         quizAnswers,
       });
@@ -134,6 +138,7 @@ const Quiz: React.FC<QuizProps> = ({ questions, quizId }) => {
           description:
             "Quiz submitted successfully. Check results in your dashboard.",
         });
+        router.push("/dashboard/quiz");
       } else {
         toast({
           title: "❌ Error ",
@@ -173,7 +178,7 @@ const Quiz: React.FC<QuizProps> = ({ questions, quizId }) => {
                 } `}
                 onClick={() => handleOptionSelect(option.optionId)}
               >
-                {option.text}
+                {option.option}
               </button>
             ))}
           </div>

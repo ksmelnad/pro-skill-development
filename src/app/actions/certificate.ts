@@ -8,10 +8,12 @@ import { createCertificatePDF } from "@/utils/createCertificatePdf";
 import { auth, currentUser } from "@clerk/nextjs/server";
 
 export async function generateCertificate({
-  course,
+  courseId,
+  courseTitle,
   attempt,
 }: {
-  course: string;
+  courseId: string;
+  courseTitle: string;
   attempt: number;
 }) {
   const { userId } = await auth();
@@ -29,7 +31,7 @@ export async function generateCertificate({
 
   const quizResultExists = await prisma.quizResult.findFirst({
     where: {
-      quizId: course,
+      quizId: courseId,
       attempt: Number(attempt),
       userId,
     },
@@ -45,7 +47,7 @@ export async function generateCertificate({
 
   const certificateGenerated = await createCertificatePDF({
     name: profile?.fullName ?? user?.fullName!,
-    course,
+    course: courseTitle,
     grade: quizResultExists.grade,
   });
 

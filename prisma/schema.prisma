@@ -259,6 +259,17 @@ type SelfAssessmentResponse {
   answer   String
 }
 
+model Quiz {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  quizId      String       @unique
+  quizTitle   String
+  quizTopic   String
+  totalQuestions Int
+  maxAttempts Int
+  questions   QuizQuestion[]
+  createdAt   DateTime     @default(now())
+}
+
 model QuizResult {
   id          String       @id @default(auto()) @map("_id") @db.ObjectId
   quizId      String
@@ -277,4 +288,17 @@ model QuizResult {
 type QuizAnswer {
   questionId Int
   optionId   Int
+}
+
+type QuizQuestion {
+  questionId   Int
+  question     String
+  difficulty   Int
+  options      QuizOption[]
+  correctOptionId Int
+}
+
+type QuizOption {
+  optionId   Int
+  option     String
 }

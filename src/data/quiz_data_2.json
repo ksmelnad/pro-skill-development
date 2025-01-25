@@ -1,7 +1,7 @@
 {
-  "quizId": "chemistry-1",
-  "quizTitle": "Analytical Chemistry",
-  "quizTopic": "Weight Balance",
+  "quizId": "chemistry-3",
+  "quizTitle": "Inorganic Chemistry",
+  "quizTopic": "Impurity Balance",
   "totalQuestions": 30,
   "maxAttempts": 2,
   "questions": [

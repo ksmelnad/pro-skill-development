@@ -46,7 +46,7 @@ export default async function RootLayout({
             </Breadcrumb>
           </div>
         </header>
-        {children}
+        <div className="md:ml-12">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );
