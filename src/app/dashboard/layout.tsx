@@ -17,8 +17,8 @@ import {
 import { UserButton } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
-  title: "Dashboard - Proskill Development",
-  description: "Proskill Development",
+  title: "My Skill Learning",
+  description: "My Skill Learning",
 };
 
 export default async function RootLayout({

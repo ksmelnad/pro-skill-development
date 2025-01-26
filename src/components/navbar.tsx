@@ -32,13 +32,12 @@ export default function Navbar() {
   return (
     <header className="py-4 ">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="flex gap-3 items-center">
-          <Image src="/logo.svg" width={42} height={42} alt="logo" />
+        <div className="flex items-center">
+          <Image src="/logo.svg" width={65} height={65} alt="logo" />
           <Link href="/">
             <p className="text-xl lg:text-2xl font-bold text-blue-800">
-              My Skill{" "}
+              My Skill Learning
             </p>
-            <p>Learning</p>
           </Link>
         </div>
         <nav className="hidden  md:flex justify-between items-center">
@@ -87,12 +86,11 @@ export default function Navbar() {
           <SheetContent side="right" className="md:hidden">
             <SheetTitle className="mb-6">
               <div className="flex gap-3 items-center">
-                <Image src="/logo.svg" width={42} height={42} alt="logo" />
+                <Image src="/logo.svg" width={65} height={65} alt="logo" />
                 <Link href="/">
                   <p className="text-xl lg:text-2xl font-bold text-blue-800">
-                    My Skill{" "}
+                    My Skill Learning
                   </p>
-                  <p>Learning</p>
                 </Link>
               </div>
             </SheetTitle>

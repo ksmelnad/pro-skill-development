@@ -16,8 +16,8 @@ import {
 } from "@/components/ui/sidebar";
 
 export const metadata: Metadata = {
-  title: "Admin Dashboard",
-  description: "Admin Dashboard - Proskill Development",
+  title: "My Skill Learning",
+  description: "My Skill Learning",
 };
 
 export default async function RootLayout({

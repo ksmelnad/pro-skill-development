@@ -1,8 +1,6 @@
 import Profiles from "@/components/adminDashboard/profiles";
 import prisma from "@/utils/prismadb";
 
-// export const dynamic = "force-dynamic";
-
 export default async function page() {
   const profiles = await prisma.profile.findMany();
 

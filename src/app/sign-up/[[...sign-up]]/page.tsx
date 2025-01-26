@@ -10,9 +10,8 @@ export default function page() {
           <Image src="/logo.svg" width={42} height={42} alt="logo" />
           <Link href="/">
             <p className="text-xl lg:text-2xl font-bold text-blue-800">
-              My Skill{" "}
+              My Skill Learning
             </p>
-            <p>Learning</p>
           </Link>
         </div>
       </div>

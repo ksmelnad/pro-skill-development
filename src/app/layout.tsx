@@ -7,8 +7,8 @@ import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Proskill Development",
-  description: "Proskill Development",
+  title: "My Skill Learning",
+  description: "My Skill Learning",
 };
 
 export default async function RootLayout({
