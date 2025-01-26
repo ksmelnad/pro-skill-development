@@ -17,7 +17,7 @@ const page = async () => {
   return (
     <div className="">
       <h3 className="section-title">Quizzes </h3>
-      <div className="p-4 grid grid-cols-1 md:grid-cols-2  gap-4 mt-4 ">
+      <div className="px-4 grid grid-cols-1 md:grid-cols-2 gap-4 ">
         {quizzes.map((quiz, index) => (
           <Card key={index} className="min-w-40">
             <CardHeader>

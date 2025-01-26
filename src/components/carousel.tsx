@@ -38,7 +38,7 @@ export default function CarouselComp() {
       <CarouselContent>
         {items.map((item, index) => (
           <CarouselItem key={index}>
-            <Card>
+            <Card className="h-full bg-transparent/20">
               <CardHeader>
                 <CardTitle>{item.title}</CardTitle>
                 <CardDescription>{item.description}</CardDescription>

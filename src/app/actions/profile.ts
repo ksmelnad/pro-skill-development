@@ -20,9 +20,9 @@ interface Profile {
 }
 
 export async function createProfile({ profile }: { profile: Profile }) {
-  console.log("Profile", profile);
+  // console.log("Profile", profile);
   const user = await currentUser();
-  console.log("User", user);
+  // console.log("User", user);
 
   if (!user) {
     throw new Error("User not found");
@@ -87,7 +87,7 @@ export async function getProfile() {
   return profile;
 }
 
-export async function getProfiles(): Promise<PrismaProfile[]> {
+export async function getProfiles() {
   const profiles = await prisma.profile.findMany();
   return profiles;
 }

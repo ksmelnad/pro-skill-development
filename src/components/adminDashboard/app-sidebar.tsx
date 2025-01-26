@@ -63,13 +63,19 @@ const items = [
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
+      <SidebarHeader className="py-4">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <Link href="/">
-                <Image src="/logo.svg" width={42} height={42} alt="logo" />
-                <span>Proskill Development</span>
+                <Image
+                  src="/logo.svg"
+                  width={42}
+                  height={42}
+                  alt="logo"
+                  objectFit="contain"
+                />
+                <span className="font-bold">My Skill Development</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

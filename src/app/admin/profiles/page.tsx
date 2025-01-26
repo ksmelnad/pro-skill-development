@@ -1,8 +1,9 @@
-import { getProfiles } from "@/app/actions/profile";
 import Profiles from "@/components/adminDashboard/profiles";
+import prisma from "@/utils/prismadb";
 
 export default async function page() {
-  const profiles = await getProfiles();
+  const profiles = await prisma.profile.findMany();
+
   return (
     <div>
       <h1 className="section-title">Profiles</h1>

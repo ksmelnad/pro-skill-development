@@ -20,8 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { getQuizResult } from "@/app/actions/quiz";
 import CertificateDownloadBtn from "./certificateDownloadBtn";
-import CertificateGenBtn from "./certificateGenBtn";
-// import { currentUser } from "@clerk/nextjs/server";
+
 export default async function Quiz() {
   const quizResult = await getQuizResult();
   // const user = await currentUser();
