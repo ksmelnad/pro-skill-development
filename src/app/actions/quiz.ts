@@ -1,6 +1,6 @@
 "use server";
 import prisma from "@/utils/prismadb";
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 import { quizSchema } from "@/lib/zodSchemas";
 import { revalidatePath } from "next/cache";
 import { Quiz } from "@prisma/client";
@@ -17,7 +17,6 @@ export async function createQuizResult({
   quizAnswers: QuizAnswer[];
 }) {
   const { userId } = await auth();
-  const user = await currentUser();
 
   if (!userId) {
     throw new Error("User not found");

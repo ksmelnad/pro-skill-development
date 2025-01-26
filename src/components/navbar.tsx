@@ -90,9 +90,9 @@ export default function Navbar() {
                 <Image src="/logo.svg" width={42} height={42} alt="logo" />
                 <Link href="/">
                   <p className="text-xl lg:text-2xl font-bold text-blue-800">
-                    Proskill{" "}
+                    My Skill{" "}
                   </p>
-                  <p>Development</p>
+                  <p>Learning</p>
                 </Link>
               </div>
             </SheetTitle>

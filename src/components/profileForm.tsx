@@ -94,7 +94,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
         fullName: user.fullName || profile?.fullName! || "",
         dob: new Date(profile?.dob!) || new Date(),
         email: user.emailAddresses[0]?.emailAddress || profile?.email! || "",
-        mobile: user.phoneNumbers[0]?.phoneNumber || profile?.mobile! || "",
+        mobile: profile?.mobile! || user.phoneNumbers[0]?.phoneNumber || "",
         address: profile?.address! || "",
         city: profile?.city || "",
         state: profile?.state || "",

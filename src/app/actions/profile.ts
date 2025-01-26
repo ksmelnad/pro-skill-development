@@ -3,6 +3,7 @@
 import prisma from "@/utils/prismadb";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { Profile as PrismaProfile } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 interface Profile {
   fullName: string;
@@ -46,6 +47,8 @@ export async function createProfile({ profile }: { profile: Profile }) {
     if (!profileUpdate) {
       throw new Error("Failed to update profile");
     }
+    revalidatePath("/admin/profiles");
+    // revalidatePath("/dashboard/profile");
     return {
       success: true,
       message: "Profile updated successfully",
