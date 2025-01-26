@@ -12,12 +12,16 @@ import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
 import { getProfile } from "../actions/profile";
 import { getQuizResult } from "../actions/quiz";
+import { redirect } from "next/navigation";
 
 export default async function page() {
   const user = await currentUser();
   const profile = await getProfile();
+  if (!profile) {
+    redirect("/dashboard/profile");
+  }
   const totalFields = 12;
-  const validFilledCount = Object.values(profile!).filter(Boolean).length;
+  const validFilledCount = Object.values(profile)?.filter(Boolean).length || 5;
   const progress = Math.round(((validFilledCount - 5) / totalFields) * 100);
   const quizResult = await getQuizResult();
   return (
