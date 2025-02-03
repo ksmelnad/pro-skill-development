@@ -27,7 +27,7 @@ export default async function page() {
   return (
     <div className="">
       <h3 className="section-title">Welcome {user?.fullName} </h3>
-      <div className="p-4 grid auto-rows-min gap-4 md:grid-cols-3">
+      <div className="p-4 grid auto-rows-min gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle>Profile completion</CardTitle>

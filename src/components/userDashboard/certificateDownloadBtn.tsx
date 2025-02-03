@@ -2,9 +2,12 @@
 
 import { generateCertificate } from "@/app/actions/certificate";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { useState, useTransition } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
+import { Loader2 } from "lucide-react";
 
 export default function CertificateDownloadBtn({
   courseId,
@@ -15,7 +18,9 @@ export default function CertificateDownloadBtn({
   courseTitle: string;
   attempt: number;
 }) {
+  const [isPending, startTransition] = useTransition();
   const [url, setUrl] = useState<string | null>(null);
+  const [mentionGrade, setMentionGrade] = useState<boolean>(true);
 
   // toast
   const { toast } = useToast();
@@ -26,6 +31,7 @@ export default function CertificateDownloadBtn({
         courseId,
         courseTitle,
         attempt,
+        isAddGrade: mentionGrade,
       });
       // if (!response.ok) {
       //   throw new Error('Failed to fetch PDF');
@@ -40,7 +46,7 @@ export default function CertificateDownloadBtn({
         action: (
           <ToastAction altText={"Download"}>
             <a href={url} target="_blank">
-              Download
+              Open
             </a>
           </ToastAction>
         ),
@@ -50,8 +56,31 @@ export default function CertificateDownloadBtn({
     }
   };
   return (
-    <Button variant="ghost" onClick={handleClick}>
-      Download
-    </Button>
+    <>
+      <div className="flex items-center space-x-2">
+        <Switch
+          id="mention-grade"
+          checked={mentionGrade}
+          onCheckedChange={() => setMentionGrade(!mentionGrade)}
+        />
+        <Label htmlFor="mention-grade">Mention grade</Label>
+      </div>
+
+      {url ? (
+        <Button asChild>
+          <a href={url} target="_blank" className="">
+            Open
+          </a>
+        </Button>
+      ) : (
+        <Button
+          disabled={isPending}
+          onClick={() => startTransition(handleClick)}
+        >
+          {isPending && <Loader2 className="animate-spin mr-2" size={16} />}
+          Download
+        </Button>
+      )}
+    </>
   );
 }

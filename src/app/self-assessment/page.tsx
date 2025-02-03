@@ -1,4 +1,4 @@
-import SelfAssessment from "@/components/selfAssessment";
+import SelfAssessment from "@/components/userDashboard/assessment";
 
 export default async function page() {
   return (

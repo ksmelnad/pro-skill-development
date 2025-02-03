@@ -11,10 +11,12 @@ export async function generateCertificate({
   courseId,
   courseTitle,
   attempt,
+  isAddGrade,
 }: {
   courseId: string;
   courseTitle: string;
   attempt: number;
+  isAddGrade?: boolean;
 }) {
   const { userId } = await auth();
   const user = await currentUser();
@@ -48,7 +50,7 @@ export async function generateCertificate({
   const certificateGenerated = await createCertificatePDF({
     name: profile?.fullName ?? user?.fullName!,
     course: courseTitle,
-    grade: quizResultExists.grade,
+    grade: isAddGrade ? quizResultExists.grade : undefined,
   });
 
   if (!certificateGenerated) {

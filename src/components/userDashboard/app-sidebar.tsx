@@ -41,6 +41,11 @@ const items = [
     icon: User2,
   },
   {
+    title: "Assessment",
+    url: "/dashboard/assessment",
+    icon: Glasses,
+  },
+  {
     title: "Quiz",
     url: "/dashboard/quiz",
     icon: BookOpenCheck,

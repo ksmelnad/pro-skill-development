@@ -2,8 +2,8 @@ import Navbar from "@/components/navbar";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Proskill Development",
-  description: "Proskill Development",
+  title: "My Skill Learning",
+  description: "My Skill Learning",
 };
 
 export default async function RootLayout({

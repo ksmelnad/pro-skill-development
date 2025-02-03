@@ -11,8 +11,6 @@ import {
   Settings,
   User2,
 } from "lucide-react";
-import { NavUser } from "@/components/nav-user";
-import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,

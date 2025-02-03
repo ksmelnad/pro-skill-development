@@ -1,18 +1,16 @@
 import { PDFDocument, rgb } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
-import { readFile } from "fs/promises";
-import path from "path";
 
 interface CertificateData {
   name: string;
   course: string;
-  grade: string;
+  grade?: string;
 }
 
 export async function createCertificatePDF(
   data: CertificateData
 ): Promise<Uint8Array> {
-  if (!data.name || !data.course || !data.grade) {
+  if (!data.name || !data.course) {
     throw new Error("Missing certificate data");
   }
   console.log("Creating certificate PDF...", data);
@@ -29,11 +27,12 @@ export async function createCertificatePDF(
     // const templateBytes = await readFile(
     //   path.join(process.cwd(), "public", "certificate-template.pdf")
     // );
-    const responseTemplate = await fetch(
-      `${
-        process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000"
-      }/certificate-template.pdf`
-    );
+    const templateUrl = data.grade
+      ? `https://pro-skill-development.s3.ap-south-1.amazonaws.com/certificate-template.pdf`
+      : `https://pro-skill-development.s3.ap-south-1.amazonaws.com/certificate-template-no-grade.pdf`;
+
+    // console.log("Template URL:", templateUrl);
+    const responseTemplate = await fetch(templateUrl);
     if (!responseTemplate.ok) {
       throw new Error(
         `Failed to fetch PDF template: ${responseTemplate.statusText}`
@@ -119,13 +118,17 @@ export async function createCertificatePDF(
         fixedX: 210,
         offsetX: 0,
       },
-      {
-        text: data.grade,
-        size: 16,
-        font: radleyFont,
-        y: 165,
-        offsetX: -5,
-      },
+      ...(data.grade
+        ? [
+            {
+              text: data.grade,
+              size: 16,
+              font: radleyFont,
+              y: 165,
+              offsetX: -5,
+            },
+          ]
+        : []),
     ];
 
     fields.forEach(({ text, size, font, y, offsetX, fixedX }) => {

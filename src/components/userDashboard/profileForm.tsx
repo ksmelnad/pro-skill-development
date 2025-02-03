@@ -15,11 +15,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "./ui/textarea";
+import { Textarea } from "../ui/textarea";
 import { Progress } from "@/components/ui/progress";
 // import { DatePicker } from "./datepicker";
 import { Calendar } from "@/components/ui/calendar";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format, isValid } from "date-fns";
 import { useAuth } from "@clerk/nextjs";
@@ -35,6 +35,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   image: z.string().optional(),
@@ -62,6 +63,7 @@ const formSchema = z.object({
 export function ProfileForm({ profile }: { profile: Profile }) {
   const { isLoaded, isSignedIn, user } = useUser();
   const { toast } = useToast();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -134,9 +136,11 @@ export function ProfileForm({ profile }: { profile: Profile }) {
 
       if (response.success === true) {
         toast({
-          title: "Success 🎉",
+          title:
+            "🎉 Successfully saved your profile. Redirecting to assessment...",
           description: response.message,
         });
+        router.push("/dashboard/assessment");
       } else {
         toast({
           title: "❌ Error ",
@@ -432,7 +436,13 @@ export function ProfileForm({ profile }: { profile: Profile }) {
           )}
         /> */}
 
-          <Button disabled={form.formState.isSubmitting} type="submit">
+          <Button
+            disabled={form.formState.isSubmitting || form.formState.isSubmitted}
+            type="submit"
+          >
+            {form.formState.isSubmitting && (
+              <Loader2 className="animate-spin" />
+            )}
             {form.formState.isSubmitting ? "Saving..." : "Save"}
           </Button>
         </form>

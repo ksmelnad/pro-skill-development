@@ -1,5 +1,5 @@
 import { getProfile } from "@/app/actions/profile";
-import { ProfileForm } from "@/components/profileForm";
+import { ProfileForm } from "@/components/userDashboard/profileForm";
 import { auth } from "@clerk/nextjs/server";
 
 export default async function page() {

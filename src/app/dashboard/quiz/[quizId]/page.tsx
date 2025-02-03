@@ -1,8 +1,8 @@
 import prisma from "@/utils/prismadb";
 import { currentUser } from "@clerk/nextjs/server";
-import QuizHeader from "@/components/quizHeader";
+import QuizHeader from "@/components/userDashboard/quizHeader";
 import { getAttempt } from "@/app/actions/quiz";
-import Quiz from "@/components/quiz";
+import Quiz from "@/components/userDashboard/quiz";
 export default async function page({
   params,
 }: {

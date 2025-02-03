@@ -17,7 +17,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import axios from "axios";
 
 interface SelfAssessmentResponse {
@@ -58,7 +58,7 @@ interface Question {
   options?: string[];
 }
 
-const SelfAssessment = () => {
+const Assessment = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -236,4 +236,4 @@ const SelfAssessment = () => {
   );
 };
 
-export default SelfAssessment;
+export default Assessment;
