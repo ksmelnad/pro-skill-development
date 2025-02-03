@@ -57,7 +57,7 @@ export default function CertificateDownloadBtn({
   };
   return (
     <>
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-2 my-4">
         <Switch
           id="mention-grade"
           checked={mentionGrade}

@@ -20,6 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { getQuizResult } from "@/app/actions/quiz";
 import CertificateDownloadBtn from "./certificateDownloadBtn";
+import ViewQuizDetails from "./viewQuizDetails";
 
 export default async function Results() {
   const quizResult = await getQuizResult();
@@ -55,16 +56,23 @@ export default async function Results() {
               <TableCell>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button variant="ghost">View</Button>
+                    <Button variant="secondary">View</Button>
                   </DialogTrigger>
-                  <DialogContent className="sm:max-w-md">
+                  <DialogContent className="overflow-y-auto max-h-[calc(80dvh)]">
                     <DialogHeader>
-                      <DialogTitle>Quiz</DialogTitle>
-                      <DialogDescription>
-                        Here are your quiz details.
+                      <DialogTitle>Quiz Analysis</DialogTitle>
+                      <DialogDescription className="my-2 flex flex-col gap-1">
+                        <span>Quiz: {quiz?.quizTitle}</span>
+                        <span>QuizId: {quiz?.quizId}</span>
+                        <span>Attempt: {quiz?.attempt}</span>
+                        <span>Score: {quiz?.score}</span>
+                        {/* <p>Quiz Topic: {quiz?.quizTopic}</p> */}
                       </DialogDescription>
                     </DialogHeader>
-                    <div>Quiz Details</div>
+                    <ViewQuizDetails
+                      quizId={quiz.quizId}
+                      attempt={quiz.attempt}
+                    />
                     <DialogFooter className="sm:justify-start">
                       <DialogClose asChild>
                         <Button type="button" variant="secondary">

@@ -34,16 +34,6 @@ const page = async () => {
               <p className="flex justify-between">
                 <span>Max Attempts:</span> <span>{quiz.maxAttempts}</span>
               </p>
-              <p className="flex justify-between">
-                <span>Created At:</span>
-                <span>
-                  {new Date(quiz.createdAt).toLocaleDateString("en-US", {
-                    month: "long",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
-                </span>
-              </p>
             </CardContent>
 
             <CardFooter className="flex justify-end items-center">

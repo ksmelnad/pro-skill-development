@@ -113,7 +113,7 @@ const Assessment = () => {
   };
 
   return (
-    <div className="w-full max-w-lg mx-auto p-4 bg-gray-50 rounded-lg shadow">
+    <div className="w-full max-w-lg mx-auto p-4 bg-sidebar rounded-lg shadow">
       <AnimatePresence mode="wait">
         {isSubmitted ? (
           <motion.div
@@ -150,7 +150,7 @@ const Assessment = () => {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-8 flex flex-col"
               >
-                <p className="text-gray-600 font-semibold">
+                <p className="text-gray-800 font-semibold">
                   {questions[currentQuestionIndex].question}
                 </p>
                 {questions[currentQuestionIndex].type === "mcq" && (

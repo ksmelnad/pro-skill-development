@@ -22,7 +22,7 @@ export default async function page({
     userId: user?.id!,
   });
   return (
-    <div>
+    <div className="p-4">
       <QuizHeader
         quizTitle={quiz?.quizTitle!}
         quizId={quiz?.quizId!}
