@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +13,7 @@ import {
   DialogHeader,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -55,6 +55,7 @@ const Quiz = ({ quiz }: { quiz: QuizType }) => {
   const questions = quiz.questions;
   const { toast } = useToast();
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     const shuffleArray = (array: any[]) => {
@@ -212,7 +213,12 @@ const Quiz = ({ quiz }: { quiz: QuizType }) => {
 
           <Dialog>
             <DialogTrigger asChild>
-              <Button>Finish</Button>
+              <Button disabled={isPending}>
+                {isPending && (
+                  <Loader2 size={16} className="mr-2 animate-spin" />
+                )}
+                Finish
+              </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
@@ -226,7 +232,14 @@ const Quiz = ({ quiz }: { quiz: QuizType }) => {
 
               <DialogFooter className="sm:justify-start">
                 <DialogClose asChild>
-                  <Button type="button" onClick={handleSubmit}>
+                  <Button
+                    disabled={isPending}
+                    type="button"
+                    onClick={() => startTransition(handleSubmit)}
+                  >
+                    {isPending && (
+                      <Loader2 size={16} className="mr-2 animate-spin" />
+                    )}
                     Submit
                   </Button>
                 </DialogClose>

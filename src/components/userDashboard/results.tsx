@@ -58,7 +58,7 @@ export default async function Results() {
                   <DialogTrigger asChild>
                     <Button variant="secondary">View</Button>
                   </DialogTrigger>
-                  <DialogContent className="overflow-y-auto max-h-[calc(80dvh)]">
+                  <DialogContent className="max-w-full overflow-y-auto max-h-[calc(80dvh)]">
                     <DialogHeader>
                       <DialogTitle>Quiz Analysis</DialogTitle>
                       <DialogDescription className="my-2 flex flex-col gap-1">
