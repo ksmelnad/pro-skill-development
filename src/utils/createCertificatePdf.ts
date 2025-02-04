@@ -4,6 +4,7 @@ import fontkit from "@pdf-lib/fontkit";
 interface CertificateData {
   name: string;
   course: string;
+  date: Date;
   grade?: string;
 }
 
@@ -13,25 +14,12 @@ export async function createCertificatePDF(
   if (!data.name || !data.course) {
     throw new Error("Missing certificate data");
   }
-  console.log("Creating certificate PDF...", data);
+  // console.log("Creating certificate PDF...", data);
   try {
-    // const templateFilePath = new URL(
-    //   "/certificate-template.pdf",
-    //   import.meta.url
-    // );
-    // const templateFilePath = new URL(
-    //   "/certificate-template.pdf",
-    //   import.meta.url
-    // );
-    // console.log("Template File Path", templateFilePath.href);
-    // const templateBytes = await readFile(
-    //   path.join(process.cwd(), "public", "certificate-template.pdf")
-    // );
     const templateUrl = data.grade
       ? `https://pro-skill-development.s3.ap-south-1.amazonaws.com/certificate-template.pdf`
       : `https://pro-skill-development.s3.ap-south-1.amazonaws.com/certificate-template-no-grade.pdf`;
 
-    // console.log("Template URL:", templateUrl);
     const responseTemplate = await fetch(templateUrl);
     if (!responseTemplate.ok) {
       throw new Error(
@@ -44,10 +32,6 @@ export async function createCertificatePDF(
     const pdfDoc = await PDFDocument.load(templateBytes);
 
     pdfDoc.registerFontkit(fontkit);
-    // const radleyFontFilePath = new URL("/Radley-Regular.ttf", import.meta.url);
-    // const radleyFontBytes = await readFile(
-    //   path.join(process.cwd(), "public", "Radley-Regular.ttf")
-    // );
 
     const responseRadleyFont = await fetch(
       `${
@@ -62,20 +46,6 @@ export async function createCertificatePDF(
     const radleyFontBytes = await responseRadleyFont.arrayBuffer();
 
     const radleyFont = await pdfDoc.embedFont(radleyFontBytes);
-
-    // const greatVibesFontFilePath = new URL(
-    //   "/GreatVibes-Regular.ttf",
-    //   import.meta.url
-    // );
-    // const greatVibesFontFilePath = path.join(
-    //   process.cwd(),
-    //   "public",
-    //   "GreatVibes-Regular.ttf"
-    // );
-
-    // const greatVibesBytes = await readFile(
-    //   path.join(process.cwd(), "public", "GreatVibes-Regular.ttf")
-    // );
 
     const responseGreatVibesFont = await fetch(
       `${
@@ -93,7 +63,7 @@ export async function createCertificatePDF(
     const pageWidth = firstPage.getWidth();
 
     const TEXT_COLOR = rgb(168 / 255, 131 / 255, 36 / 255);
-    const dateStr = new Date().toLocaleDateString();
+    const dateStr = data.date.toLocaleDateString()
 
     const fields = [
       {
@@ -143,8 +113,8 @@ export async function createCertificatePDF(
     });
 
     const pdfBytes = await pdfDoc.save();
-    // await fs.writeFile(`../data/${data.name}-${data.course}.pdf`, pdfBytes);
     return pdfBytes;
+    
   } catch (error: any) {
     throw new Error(`Failed to create certificate PDF: ${error.message}`);
   }

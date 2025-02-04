@@ -13,10 +13,12 @@ export default function CertificateDownloadBtn({
   courseId,
   courseTitle,
   attempt,
+  date,
 }: {
   courseId: string;
   courseTitle: string;
   attempt: number;
+  date: Date;
 }) {
   const [isPending, startTransition] = useTransition();
   const [url, setUrl] = useState<string | null>(null);
@@ -31,6 +33,7 @@ export default function CertificateDownloadBtn({
         courseId,
         courseTitle,
         attempt,
+        date,
         isAddGrade: mentionGrade,
       });
       // if (!response.ok) {

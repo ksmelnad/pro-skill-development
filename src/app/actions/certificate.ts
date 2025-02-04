@@ -11,11 +11,13 @@ export async function generateCertificate({
   courseId,
   courseTitle,
   attempt,
+  date,
   isAddGrade,
 }: {
   courseId: string;
   courseTitle: string;
   attempt: number;
+  date: Date;
   isAddGrade?: boolean;
 }) {
   const { userId } = await auth();
@@ -51,6 +53,7 @@ export async function generateCertificate({
     name: profile?.fullName ?? user?.fullName!,
     course: courseTitle,
     grade: isAddGrade ? quizResultExists.grade : undefined,
+    date: date,
   });
 
   if (!certificateGenerated) {

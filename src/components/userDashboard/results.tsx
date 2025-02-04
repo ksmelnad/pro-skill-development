@@ -58,7 +58,7 @@ export default async function Results() {
                   <DialogTrigger asChild>
                     <Button variant="secondary">View</Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-full overflow-y-auto max-h-[calc(80dvh)]">
+                  <DialogContent className="md:max-w-xl overflow-y-auto max-h-[calc(80dvh)]">
                     <DialogHeader>
                       <DialogTitle>Quiz Analysis</DialogTitle>
                       <DialogDescription className="my-2 flex flex-col gap-1">
@@ -100,6 +100,7 @@ export default async function Results() {
                       courseId={quiz.quizId}
                       courseTitle={quiz.quizTitle}
                       attempt={quiz.attempt}
+                      date={quiz.createdAt}
                     />
                     {/* <DialogFooter className="sm:justify-start">
                       <DialogClose asChild>
