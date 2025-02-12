@@ -9,6 +9,7 @@ interface Profile {
   fullName: string;
   dob?: string;
   mobile?: string;
+  relative?: string;
   address?: string;
   city?: string;
   state?: string;
