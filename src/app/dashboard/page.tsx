@@ -22,7 +22,7 @@ export default async function page() {
   }
   const totalFields = 12;
   const validFilledCount = Object.values(profile)?.filter(Boolean).length || 5;
-  const progress = Math.round(((validFilledCount - 5) / totalFields) * 100);
+  const progress = Math.round(((validFilledCount - 6) / totalFields) * 100);
   const quizResult = await getQuizResult();
   return (
     <div className="">

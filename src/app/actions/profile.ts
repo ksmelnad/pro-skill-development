@@ -2,10 +2,11 @@
 
 import prisma from "@/utils/prismadb";
 import { auth, currentUser } from "@clerk/nextjs/server";
-import { Profile as PrismaProfile } from "@prisma/client";
+// import { Profile as PrismaProfile } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 interface Profile {
+  image?: string;
   fullName: string;
   dob?: string;
   mobile?: string;
@@ -18,12 +19,12 @@ interface Profile {
   hobbies?: string;
   areaImprovementCurrent?: string;
   areaImprovementFuture?: string;
-  image?: string;
 }
 
 export async function createProfile({ profile }: { profile: Profile }) {
   // console.log("Profile", profile);
   const user = await currentUser();
+  const { userId } = await auth();
   // console.log("User", user);
 
   if (!user) {
@@ -32,14 +33,14 @@ export async function createProfile({ profile }: { profile: Profile }) {
 
   const profileExists = await prisma.profile.findUnique({
     where: {
-      userId: user?.id!,
+      userId: userId!,
     },
   });
 
   if (profileExists) {
     const profileUpdate = await prisma.profile.update({
       where: {
-        userId: user?.id!,
+        id: profileExists.id,
       },
       data: {
         ...profile,
@@ -79,13 +80,14 @@ export async function createProfile({ profile }: { profile: Profile }) {
 
 export async function getProfile() {
   const user = await currentUser();
+  const { userId } = await auth();
 
   if (!user?.id || !user.emailAddresses[0].emailAddress) {
     throw new Error("User not found");
   }
   const profile = await prisma.profile.findUnique({
     where: {
-      email: user.emailAddresses[0].emailAddress,
+      userId: userId!,
     },
   });
   if (!profile) {

@@ -284,7 +284,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
           <FormField
             control={form.control}
             name="email"
-            // disabled
+            disabled
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>

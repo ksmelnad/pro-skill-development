@@ -37,7 +37,7 @@ model Profile {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   userId     String    @unique
   fullName   String?
-  email      String?   @unique
+  email      String?
   dob        DateTime?
   mobile     String?
   relative   String?
