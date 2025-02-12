@@ -1,0 +1,392 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+// UI components – assume these are your custom primitives (or from a design system like shadcn/ui)
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { createEducation } from "@/app/actions/education";
+
+// ------------------------------------------------------------------
+// 1. Define Sub‐Schemas for education entries
+// “10th” and “12th” do not have a degree field; for higher education the field is required.
+const secondarySchema = z.object({
+  subject: z.string().min(2, { message: "Subject/Stream required" }),
+  institution: z.string().min(2, { message: "Institution required" }),
+  year: z
+    .number({ invalid_type_error: "Year must be a number" })
+    .min(1900, { message: "Year must be at least 1900" })
+    .max(new Date().getFullYear(), { message: "Year cannot be in the future" }),
+  grade: z.string().min(1, { message: "Grade/Percentage required" }),
+});
+
+const higherEdSchema = secondarySchema.extend({
+  degree: z.string().min(2, { message: "Degree required" }),
+});
+
+// ------------------------------------------------------------------
+// 2. Overall Education Data Schema
+// We store data for each education level as an optional entry.
+const educationDataSchema = z.object({
+  "10th": secondarySchema.optional(),
+  "12th": secondarySchema.optional(),
+  graduation: higherEdSchema.optional(),
+  postgraduation: higherEdSchema.optional(),
+  diploma: higherEdSchema.optional(),
+  doctorate: higherEdSchema.optional(),
+});
+export type EducationData = z.infer<typeof educationDataSchema>;
+
+// ------------------------------------------------------------------
+// 3. Degree options for levels that need a selection (for demonstration).
+const graduationOptions = [
+  { value: "B.A", label: "Bachelor of Arts (B.A)" },
+  { value: "B.Sc", label: "Bachelor of Science (B.Sc)" },
+  { value: "B.Com", label: "Bachelor of Commerce (B.Com)" },
+  { value: "B.Tech", label: "Bachelor of Technology (B.Tech)" },
+  { value: "B.E", label: "Bachelor of Engineering (B.E)" },
+  { value: "B.B.A", label: "Bachelor of Business Administration (BBA)" },
+  { value: "B.C.A", label: "Bachelor of Computer Applications (BCA)" },
+  { value: "B.Ed", label: "Bachelor of Education (B.Phil)" },
+  { value: "Other", label: "Other" },
+];
+const postgraduationOptions = [
+  { value: "M.A", label: "Master of Arts (M.A)" },
+  { value: "M.Sc", label: "Master of Science (M.Sc)" },
+  { value: "M.Com", label: "Master of Commerce (M.Com)" },
+  { value: "M.Tech", label: "Master of Technology (M.Tech)" },
+  { value: "M.E", label: "Master of Engineering (M.E)" },
+  { value: "M.B.A", label: "Master of Business Administration (MBA)" },
+  { value: "M.C.A", label: "Master of Computer Applications (MCA)" },
+  { value: "M.Phil", label: "Master of Philosophy (M.Phil)" },
+  { value: "M.Ed", label: "Master of Education (M.Ed)" },
+  { value: "Other", label: "Other" },
+];
+const diplomaOptions = [
+  { value: "Diploma", label: "Diploma" },
+  { value: "PG Diploma", label: "Post Graduate Diploma" },
+  { value: "Other", label: "Other" },
+];
+const doctorateOptions = [
+  { value: "Ph.D", label: "Doctor of Philosophy (Ph.D)" },
+];
+
+// ------------------------------------------------------------------
+// 4. Define Education Levels (each level has a key and label)
+// Only higher education levels have degree options.
+const educationLevels = [
+  { level: "10th", label: "10th" },
+  { level: "12th", label: "12th" },
+  { level: "graduation", label: "Graduation", options: graduationOptions },
+  {
+    level: "postgraduation",
+    label: "Postgraduation",
+    options: postgraduationOptions,
+  },
+  { level: "diploma", label: "Diploma", options: diplomaOptions },
+  { level: "doctorate", label: "Doctorate", options: doctorateOptions },
+];
+
+// ------------------------------------------------------------------
+// 5. The Component
+export function EducationSection({ education }) {
+  // We'll store the overall education data in state.
+  const initialData: EducationData = {
+    "10th": {
+      subject: "",
+      institution: "",
+      year: new Date().getFullYear(),
+      grade: "",
+    },
+    "12th": {
+      subject: "",
+      institution: "",
+      year: new Date().getFullYear(),
+      grade: "",
+    },
+    graduation: {
+      degree: "",
+      subject: "",
+      institution: "",
+      year: new Date().getFullYear(),
+      grade: "",
+    },
+    postgraduation: {
+      degree: "",
+      subject: "",
+      institution: "",
+      year: new Date().getFullYear(),
+      grade: "",
+    },
+    diploma: {
+      degree: "",
+      subject: "",
+      institution: "",
+      year: new Date().getFullYear(),
+      grade: "",
+    },
+    doctorate: {
+      degree: "",
+      subject: "",
+      institution: "",
+      year: new Date().getFullYear(),
+      grade: "",
+    },
+  };
+
+  // This state holds the saved data that the user has submitted.
+  const [educationData, setEducationData] =
+    useState<EducationData>(initialData);
+
+  useEffect(() => {
+    if (education) {
+      console.log("Education data: ", education);
+      setEducationData(education);
+    }
+  }, [education]);
+  // Dialog open/close state.
+  const [dialogOpen, setDialogOpen] = useState(false);
+  // Active tab controls which education level is visible inside the dialog.
+  const [activeTab, setActiveTab] = useState<string>("10th");
+
+  // Set up one RHF form for all education data.
+  const form = useForm<EducationData>({
+    resolver: zodResolver(educationDataSchema),
+    defaultValues: educationData,
+  });
+
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = form;
+
+  // Open the dialog and load the current education data into the form.
+  const openDialog = () => {
+    reset(educationData);
+    setDialogOpen(true);
+  };
+
+  // Close the dialog.
+  const closeDialog = () => {
+    setDialogOpen(false);
+  };
+
+  // When the form is submitted, update the state and log the data.
+  const onSubmit = (data: EducationData) => {
+    console.log("Submitted Education Data:", data);
+    setEducationData(data);
+    setDialogOpen(false);
+  };
+
+  const uploadData = async () => {
+    // Upload data to the server
+    const response = await createEducation(educationData);
+    if (response) {
+      console.log("Education data saved successfully");
+    } else {
+      console.error("Failed to save education data");
+    }
+  };
+
+  return (
+    <div className="max-w-xl mx-auto p-4 space-y-6 bg-white">
+      <h3 className="text-2xl font-bold" id="education">
+        Education
+      </h3>
+      {/* Summary View */}
+      <div className="border p-4 rounded">
+        {educationLevels.map((level) => {
+          const levelData = educationData[level.level as keyof EducationData];
+          return (
+            <div key={level.level} className="mb-3">
+              <h4 className="font-semibold">{level.label}</h4>
+              {levelData && levelData.subject.trim() ? (
+                <div className="text-sm">
+                  {level.options && levelData.degree && (
+                    <p>Degree: {levelData.degree}</p>
+                  )}
+                  <p>Subject: {levelData.subject}</p>
+                  <p>Institution: {levelData.institution}</p>
+                  <p>Year: {levelData.year}</p>
+                  <p>Grade: {levelData.grade}</p>
+                </div>
+              ) : (
+                <p className="text-sm text-gray-500">No data provided</p>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      <div className="flex gap-2">
+        <Button variant={"outline"} onClick={openDialog}>
+          Edit Details
+        </Button>
+        <Button onClick={uploadData}>Save</Button>
+      </div>
+      {/* Dialog containing a tabbed form for all levels */}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="max-w-screen sm:max-w-xl">
+          <DialogHeader>
+            <DialogTitle>Edit Education Details</DialogTitle>
+          </DialogHeader>
+          <Form {...form}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              {/* Tabs header */}
+              <Tabs
+                value={activeTab}
+                onValueChange={(val) => setActiveTab(val)}
+              >
+                <TabsList>
+                  {educationLevels.map((level) => (
+                    <TabsTrigger key={level.level} value={level.level}>
+                      {level.label}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+                {/* For each level, render a panel with its fields */}
+                {educationLevels.map((level) => (
+                  <TabsContent key={level.level} value={level.level}>
+                    {/* If the level has degree options, render the degree field */}
+
+                    {level.options && (
+                      <FormField
+                        control={control}
+                        name={`${level.level}.degree` as const}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Degree</FormLabel>
+                            {/* Simple select for degree */}
+                            <Select {...field} onValueChange={field.onChange}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select a degree" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {level.options.map((opt) => (
+                                  <SelectItem key={opt.value} value={opt.value}>
+                                    {opt.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage>
+                              {errors[level.level]?.degree?.message as string}
+                            </FormMessage>
+                          </FormItem>
+                        )}
+                      />
+                    )}
+                    <FormField
+                      control={control}
+                      name={`${level.level}.subject` as const}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Subject/Stream</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Subject/Stream" {...field} />
+                          </FormControl>
+                          <FormMessage>
+                            {errors[level.level]?.subject?.message as string}
+                          </FormMessage>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={control}
+                      name={`${level.level}.institution` as const}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Institution</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Institution" {...field} />
+                          </FormControl>
+                          <FormMessage>
+                            {
+                              errors[level.level]?.institution
+                                ?.message as string
+                            }
+                          </FormMessage>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={control}
+                      name={`${level.level}.year` as const}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Year of Completion</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              placeholder="Year"
+                              {...field}
+                              onChange={(e) =>
+                                field.onChange(Number(e.target.value))
+                              }
+                            />
+                          </FormControl>
+                          <FormMessage>
+                            {errors[level.level]?.year?.message as string}
+                          </FormMessage>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={control}
+                      name={`${level.level}.grade` as const}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Grade/Percentage</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Grade/Percentage" {...field} />
+                          </FormControl>
+                          <FormMessage>
+                            {errors[level.level]?.grade?.message as string}
+                          </FormMessage>
+                        </FormItem>
+                      )}
+                    />
+                  </TabsContent>
+                ))}
+              </Tabs>
+              <div className="mt-6 flex justify-end gap-3">
+                <Button variant="outline" onClick={closeDialog}>
+                  Cancel
+                </Button>
+                <Button onClick={handleSubmit(onSubmit)}>Save All</Button>
+              </div>
+            </form>
+          </Form>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}

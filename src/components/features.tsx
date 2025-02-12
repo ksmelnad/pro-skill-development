@@ -30,7 +30,7 @@ const Features = () => {
         {features.map((item, index) => (
           <div
             key={index}
-            className="flex flex-col justify-center px-4 md:px-6 py-6 md:py-8 rounded-sm border shadow-sm bg-slate-100 h-[250px]"
+            className="flex flex-col justify-center px-4 md:px-6 py-6 md:py-8 rounded-sm border shadow-xs bg-slate-100 h-[250px]"
           >
             <p className="font-semibold">{item.title}</p>
             <p className="text-sm">{item.desc}</p>

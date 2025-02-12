@@ -34,12 +34,13 @@ model User {
 }
 
 model Profile {
-  id         String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId     String  @unique
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String    @unique
   fullName   String?
-  email      String? @unique
+  email      String?   @unique
   dob        DateTime?
   mobile     String?
+  relative   String?
   image      String?
   address    String?
   city       String?
@@ -52,6 +53,7 @@ model Profile {
   areaImprovementFuture  String?
 
   certificates Certificate[]
+  educations   Education[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -125,7 +127,6 @@ model JobSeeker {
   state             String
   postalCode        String
   country           String
-  education         Education[]
   experience        Experience[]
   skills            Skill[]
   certifications    Certification[] // New Relation
@@ -140,14 +141,24 @@ model JobSeeker {
 
 // Education Model
 model Education {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  jobSeeker   JobSeeker @relation(fields: [jobSeekerId], references: [id])
-  jobSeekerId String    @db.ObjectId
-  degree      String
-  institution String
-  startDate   DateTime
-  endDate     DateTime
-  grade       String?
+  id              String           @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String
+  profile         Profile          @relation(fields: [profileId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  profileId       String           @unique @db.ObjectId
+  educationLevels EducationLevel[]
+}
+
+type EducationLevel {
+  level           String
+  board           String?
+  institute       String?
+  degree          String?
+  subjects        String
+  year            Int?
+  expectedYear    Int?
+  currentSemester Int?
+  grade           String
+  completed       Boolean @default(true)
 }
 
 // Experience Model
@@ -260,14 +271,14 @@ type SelfAssessmentResponse {
 }
 
 model Quiz {
-  id          String       @id @default(auto()) @map("_id") @db.ObjectId
-  quizId      String       @unique
-  quizTitle   String
-  quizTopic   String
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
+  quizId         String         @unique
+  quizTitle      String
+  quizTopic      String
   totalQuestions Int
-  maxAttempts Int
-  questions   QuizQuestion[]
-  createdAt   DateTime     @default(now())
+  maxAttempts    Int
+  questions      QuizQuestion[]
+  createdAt      DateTime       @default(now())
 }
 
 model QuizResult {
@@ -291,14 +302,14 @@ type QuizAnswer {
 }
 
 type QuizQuestion {
-  questionId   Int
-  question     String
-  difficulty   Int
-  options      QuizOption[]
+  questionId      Int
+  question        String
+  difficulty      Int
+  options         QuizOption[]
   correctOptionId Int
 }
 
 type QuizOption {
-  optionId   Int
-  option     String
+  optionId Int
+  option   String
 }

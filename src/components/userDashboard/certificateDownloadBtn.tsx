@@ -8,6 +8,7 @@ import { useState, useTransition } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { Loader2 } from "lucide-react";
+import { FormDescription } from "../ui/form";
 
 export default function CertificateDownloadBtn({
   courseId,
@@ -59,14 +60,19 @@ export default function CertificateDownloadBtn({
     }
   };
   return (
-    <>
-      <div className="flex items-center space-x-2 my-4">
-        <Switch
-          id="mention-grade"
-          checked={mentionGrade}
-          onCheckedChange={() => setMentionGrade(!mentionGrade)}
-        />
-        <Label htmlFor="mention-grade">Mention grade</Label>
+    <div>
+      <div className="py-4">
+        <Label className="text-gray-500">
+          You can either mention the grade or opt out.
+        </Label>
+        <div className="flex items-center space-x-2 my-4">
+          <Switch
+            id="mention-grade"
+            checked={mentionGrade}
+            onCheckedChange={() => setMentionGrade(!mentionGrade)}
+          />
+          <Label htmlFor="mention-grade">Mention grade</Label>
+        </div>
       </div>
 
       {url ? (
@@ -84,6 +90,6 @@ export default function CertificateDownloadBtn({
           Download
         </Button>
       )}
-    </>
+    </div>
   );
 }

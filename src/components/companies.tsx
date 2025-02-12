@@ -48,7 +48,7 @@ const Companies = () => {
           {companies.map((item, index) => (
             <div
               key={index}
-              className="flex flex-col justify-center px-4 md:px-6 py-6 md:py-8 rounded-sm border shadow-sm"
+              className="flex flex-col justify-center px-4 md:px-6 py-6 md:py-8 rounded-sm border shadow-xs"
             >
               <p className="font-bold">{item.name}</p>
               <p className="text-sm">{item.description}</p>

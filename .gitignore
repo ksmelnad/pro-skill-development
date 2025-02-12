@@ -38,3 +38,6 @@ next-env.d.ts
 
 # rest http
 rest.http
+
+# zed editor
+.zed

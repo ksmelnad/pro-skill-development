@@ -4,10 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import CarouselComp from "./carousel";
 import Navbar from "./navbar";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 const Hero = () => {
   return (
-    <div className="relative h-screen bg-gradient-to-tl from-blue-800 from-10% via-sky-500 via-30% to-emerald-500 to-90%">
+    <div className="relative h-screen bg-linear-to-tl from-blue-800 from-10% via-sky-500 via-30% to-emerald-500 to-90%">
       <Navbar />
       <section className="relative h-[90vh] flex justify-center items-center">
         <div className="container grid grid-cols-1 md:grid-cols-2 items-center">
@@ -22,10 +23,16 @@ const Hero = () => {
               start achieving your goals!
             </p>
             <div className="mt-6 flex space-x-4">
-              <Button asChild className="bg-blue-800 hover:bg-blue-900">
-                <Link href="/sign-up">Get Started</Link>
-              </Button>
-              <Button variant="outline">Learn More</Button>
+              <SignedOut>
+                <Button asChild className="bg-blue-800 hover:bg-blue-900">
+                  <Link href="/sign-up">Get Started</Link>
+                </Button>
+              </SignedOut>
+              <SignedIn>
+                <Button asChild className="bg-blue-800 hover:bg-blue-900">
+                  <Link href="/dashboard">Dashboard</Link>
+                </Button>
+              </SignedIn>
             </div>
           </div>
           <div className="hidden md:flex justify-center items-center">

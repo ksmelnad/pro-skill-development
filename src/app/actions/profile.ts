@@ -47,26 +47,29 @@ export async function createProfile({ profile }: { profile: Profile }) {
     if (!profileUpdate) {
       throw new Error("Failed to update profile");
     }
-    revalidatePath("/admin/profiles");
-    // revalidatePath("/dashboard/profile");
+
     return {
       success: true,
       message: "Profile updated successfully",
     };
+  } else {
+    const profileWrite = await prisma.profile.create({
+      data: {
+        userId: user?.id!,
+        email: user?.emailAddresses[0].emailAddress!,
+        image: user.hasImage ? user.imageUrl : "",
+        ...profile,
+      },
+    });
+
+    if (!profileWrite) {
+      throw new Error("Failed to create profile");
+    }
   }
 
-  const profileWrite = await prisma.profile.create({
-    data: {
-      userId: user?.id!,
-      email: user?.emailAddresses[0].emailAddress!,
-      image: user.hasImage ? user.imageUrl : "",
-      ...profile,
-    },
-  });
+  revalidatePath("/admin/profiles");
+  revalidatePath("/dashboard/profile");
 
-  if (!profileWrite) {
-    throw new Error("Failed to create profile");
-  }
   return {
     success: true,
     message: "Profile created successfully",

@@ -1,8 +1,18 @@
 "use client";
 
+import Image from "next/image";
+import { useAuth } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
+import { useEffect } from "react";
+import { createProfile } from "@/app/actions/profile";
+import { Profile } from "@prisma/client";
+import { useToast } from "@/hooks/use-toast";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -17,25 +27,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
 import { Progress } from "@/components/ui/progress";
+
 // import { DatePicker } from "./datepicker";
 import { Calendar } from "@/components/ui/calendar";
-import { CalendarIcon, Loader2 } from "lucide-react";
+import { CalendarIcon, Loader2, Plus } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import { format, isValid } from "date-fns";
-import { useAuth } from "@clerk/nextjs";
-import { useUser } from "@clerk/nextjs";
-import Image from "next/image";
-import { useEffect } from "react";
-import { createProfile } from "@/app/actions/profile";
-import { Profile } from "@prisma/client";
-import { useToast } from "@/hooks/use-toast";
 
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   image: z.string().optional(),
@@ -47,6 +51,7 @@ const formSchema = z.object({
   }),
   email: z.string().email(),
   mobile: z.string().optional(),
+  relative: z.string().optional(),
   address: z.string().optional(),
   city: z.string().optional(),
   state: z.string().optional(),
@@ -55,9 +60,6 @@ const formSchema = z.object({
   hobbies: z.string().optional(),
   areaImprovementCurrent: z.string().optional(),
   areaImprovementFuture: z.string().optional(),
-  // resume: z
-  //   .instanceof(File)
-  //   .optional()
 });
 
 export function ProfileForm({ profile }: { profile: Profile }) {
@@ -73,6 +75,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
       dob: new Date(),
       email: "",
       mobile: "",
+      relative: "",
       address: "",
       city: "",
       state: "",
@@ -97,6 +100,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
         dob: new Date(profile?.dob!) || new Date(),
         email: user.emailAddresses[0]?.emailAddress || profile?.email! || "",
         mobile: profile?.mobile! || user.phoneNumbers[0]?.phoneNumber || "",
+        relative: profile?.relative! || "",
         address: profile?.address! || "",
         city: profile?.city || "",
         state: profile?.state || "",
@@ -112,9 +116,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
   // const resumeRef = form.register("resume");
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    // console.log(values);
+    console.log(values);
     try {
       const response = await createProfile({
         profile: {
@@ -122,6 +124,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
           fullName: values.fullName,
           dob: values.dob.toISOString(),
           mobile: values.mobile as string,
+          relative: values.relative,
           address: values.address,
           city: values.city,
           state: values.state,
@@ -132,7 +135,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
           areaImprovementFuture: values.areaImprovementFuture,
         },
       });
-      // console.log(response);
+      console.log(response);
 
       if (response.success === true) {
         toast({
@@ -188,7 +191,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4 max-w-xl mx-auto p-4 bg-white"
+          className="space-y-4 bg-white"
         >
           <div className="flex items-center gap-2">
             <Progress value={progress} className="flex-1" />
@@ -246,7 +249,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
                         variant={"outline"}
                         className={cn(
                           "w-[240px] pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground"
+                          !field.value && "text-muted-foreground",
                         )}
                       >
                         {field.value && isValid(field.value) ? (
@@ -299,6 +302,20 @@ export function ProfileForm({ profile }: { profile: Profile }) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Mobile</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="relative"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Father/Husband Name</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -377,6 +394,8 @@ export function ProfileForm({ profile }: { profile: Profile }) {
               </FormItem>
             )}
           />
+          <hr />
+
           <FormField
             control={form.control}
             name="hobbies"
