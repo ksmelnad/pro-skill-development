@@ -286,10 +286,32 @@ const EducationForm = ({
     setDialogOpen(false);
   };
 
+  const levelOrder = [
+    "10th",
+    "12th",
+    "diploma",
+    "graduation",
+    "postgraduation",
+    "doctorate",
+  ];
+
+  const sortEducationLevels = (a: EducationData, b: EducationData) => {
+    const indexA = levelOrder.indexOf(a.level);
+    const indexB = levelOrder.indexOf(b.level);
+
+    if (indexA < indexB) {
+      return -1;
+    }
+    if (indexA > indexB) {
+      return 1;
+    }
+    return 0; // indexA === indexB
+  };
+
   return (
     <div className="space-y-6 py-6">
       <h1 className="text-2xl">Education Details</h1>
-      {educationData?.map((item, index) => (
+      {educationData?.sort(sortEducationLevels).map((item, index) => (
         <Card key={index}>
           <CardHeader>
             <CardTitle className="flex justify-between items-center">
