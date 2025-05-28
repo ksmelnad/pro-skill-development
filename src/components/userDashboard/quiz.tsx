@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useTransition } from "react";
+import React, { useState, useEffect, useTransition, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +13,7 @@ import {
   DialogHeader,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2, Timer } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -25,6 +25,13 @@ import {
 import { createQuizResult } from "@/app/actions/quiz";
 import { useToast } from "@/hooks/use-toast";
 import { Quiz as QuizType } from "@prisma/client";
+import { time } from "framer-motion";
+import katex from "katex";
+import "katex/dist/katex.min.css";
+import Latex from "react-latex-next";
+import KaTeXRenderer from "../katexRenderer";
+import LatexRenderer from "../latexRenderer";
+import styles from "@/styles/LatexRenderer.module.css";
 
 interface QuizOption {
   optionId: number;
@@ -51,11 +58,21 @@ const Quiz = ({ quiz }: { quiz: QuizType }) => {
   );
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number | null>>({});
-
+  const [seconds, setSeconds] = useState<number>(60);
   const questions = quiz.questions;
   const { toast } = useToast();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+
+  const onTimerEnd = React.useCallback(() => {
+    toast({
+      title: "Time is up!",
+      description: "You have run out of time.",
+      variant: "destructive",
+    });
+  }, [toast]);
+
+  const timerId = useRef<number | null>(null);
 
   useEffect(() => {
     const shuffleArray = (array: any[]) => {
@@ -79,6 +96,43 @@ const Quiz = ({ quiz }: { quiz: QuizType }) => {
     // console.log(shuffledWithOptions);
     setShuffledQuestions(shuffledWithOptions);
   }, [questions]);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        console.log("Document visible again");
+        setCurrentIndex((prevIndex) =>
+          Math.min(prevIndex + 1, shuffledQuestions.length - 1)
+        );
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [shuffledQuestions.length]);
+
+  useEffect(() => {
+    timerId.current = window.setInterval(() => {
+      setSeconds((prevSeconds) => {
+        if (prevSeconds > 0) {
+          return prevSeconds - 1;
+        } else {
+          clearInterval(timerId.current!);
+          if (onTimerEnd) {
+            onTimerEnd();
+          }
+          return 0;
+        }
+      });
+    }, 1000);
+
+    return () => {
+      clearInterval(timerId.current!);
+    };
+  }, [onTimerEnd]);
 
   if (shuffledQuestions.length === 0) {
     return (
@@ -156,15 +210,41 @@ const Quiz = ({ quiz }: { quiz: QuizType }) => {
     (answer) => answer !== null
   ).length;
 
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+  };
+
+  const formula = katex.renderToString("c = \\pm\\sqrt{a^2 + b^2}", {
+    throwOnError: false,
+  });
+
+  const VcLatex = "$V_c = V_s(1 - 10^{-\\frac{t}{T}})$";
+
   return (
-    <div className="p-4 min-h-screen">
+    <div className="min-h-screen">
+      <div
+        className={`flex justify-end items-center gap-2 py-2 mr-2
+        ${
+          seconds < 300 && seconds >= 60
+            ? "text-yellow-500 animate-pulse"
+            : seconds < 60
+            ? "text-red-500 animate-pulse"
+            : "text-gray-500"
+        }
+        `}
+      >
+        <Timer size={20} />
+        <p className="">{formatTime(seconds)}</p>
+      </div>
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
           <p className="text-sm text-gray-500  text-right">
             Question {currentIndex + 1} of {shuffledQuestions.length}
           </p>
-          <CardTitle className="text-gray-800 text-lg py-4 font-semibold leading-6">
-            {currentQuestion.question}
+          <CardTitle className="text-gray-800 text-lg py-4 font-semibold">
+            <Latex>{currentQuestion.question} </Latex>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -179,7 +259,7 @@ const Quiz = ({ quiz }: { quiz: QuizType }) => {
                 } `}
                 onClick={() => handleOptionSelect(option.optionId)}
               >
-                {option.option}
+                <Latex>{option.option}</Latex>
               </button>
             ))}
           </div>
@@ -222,13 +302,15 @@ const Quiz = ({ quiz }: { quiz: QuizType }) => {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>End Quiz</DialogTitle>
-                <DialogDescription>
-                  You have answered {totalAnswered} out of{" "}
-                  {shuffledQuestions.length} questions. Are you sure you want to
-                  submit?
-                </DialogDescription>
+                <DialogTitle>Submit Quiz</DialogTitle>
+                <DialogDescription></DialogDescription>
               </DialogHeader>
+              <div>
+                You have answered {totalAnswered} out of{" "}
+                {shuffledQuestions.length} questions.{" "}
+                {totalAnswered !== shuffledQuestions.length &&
+                  "Are you sure you want to submit?"}
+              </div>
 
               <DialogFooter className="sm:justify-start">
                 <DialogClose asChild>
@@ -248,6 +330,12 @@ const Quiz = ({ quiz }: { quiz: QuizType }) => {
           </Dialog>
         </CardFooter>
       </Card>
+      {/* <div className="py-4 max-w-2xl flex flex-col gap-4">
+        <p dangerouslySetInnerHTML={{ __html: formula }} />
+        <Latex>What is $(3\times 4) \div (5-3)$</Latex>
+        <Latex>hi {VcLatex} </Latex>
+        <LatexRenderer text="What is the derivative of $f(x) = x^2$ and $f(x) = x^2$?" />
+      </div> */}
     </div>
   );
 };

@@ -14,6 +14,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -43,7 +50,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { createEducation } from "@/app/actions/education";
 import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
 
 const graduationOptions = [
   { value: "B.A", label: "Bachelor of Arts (B.A)" },
@@ -150,7 +157,7 @@ const educationFormSchema = z
       if (!data.year) {
         ctx.addIssue({
           code: "custom",
-          message: "Please endter year",
+          message: "Please enter year",
           path: ["year"],
         });
       }
@@ -309,53 +316,9 @@ const EducationForm = ({
   };
 
   return (
-    <div className="space-y-6 py-6">
-      <h1 className="text-2xl">Education Details</h1>
-      {educationData?.sort(sortEducationLevels).map((item, index) => (
-        <Card key={index}>
-          <CardHeader>
-            <CardTitle className="flex justify-between items-center">
-              <p>
-                {item.level.charAt(0).toUpperCase() + item.level.slice(1)}
-                {item.degree && `: ${item.degree}`}
-              </p>
-              <Button
-                variant={"outline"}
-                onClick={() => {
-                  setEditing(true);
-                  setCurrentEditingIndex(index);
-                  form.reset(item); // prefil with the selected item
-                  setDialogOpen(true);
-                }}
-              >
-                Edit
-              </Button>
-            </CardTitle>
-            <CardDescription>
-              {item.board
-                ? `Board: ${item.board}`
-                : item.institute &&
-                  `University/College/Institute: ${item.institute}`}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>Subjects: {item.subjects}</p>
-            {item.completed ? (
-              <>
-                <p>Completed: Yes</p>
-                <p>Year: {item.year}</p>
-              </>
-            ) : (
-              <>
-                <p>Expected Year: {item.expectedYear}</p>
-                <p>Current Semester/Year: {item.currentSemester}</p>
-              </>
-            )}
-            <p>Grade: {item.grade}</p>
-          </CardContent>
-        </Card>
-      ))}
-      <div className="space-x-2">
+    <div className="space-y-6 py-6 my-6">
+      <div className="flex justify-between gap-x-4">
+        <h1 className="text-2xl font-semibold">Education Details</h1>
         <Dialog
           open={dialogOpen}
           onOpenChange={(open) => {
@@ -368,12 +331,14 @@ const EducationForm = ({
         >
           <DialogTrigger asChild>
             <Button
+              size={"icon"}
+              variant={"secondary"}
               onClick={() => {
                 setEditing(false);
                 form.reset();
               }}
             >
-              Add Education Details
+              <Plus />
             </Button>
           </DialogTrigger>
           <DialogContent>
@@ -501,17 +466,30 @@ const EducationForm = ({
                         )}
                       />
                       {completed ? (
-                        <FormField
-                          name="year"
-                          control={form.control}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Year</FormLabel>
-                              <Input type="number" {...field} />
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                        <>
+                          <FormField
+                            name="year"
+                            control={form.control}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Year</FormLabel>
+                                <Input type="number" {...field} />
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            name="grade"
+                            control={form.control}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Grade/Percentage/CGPA</FormLabel>
+                                <Input {...field} />
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </>
                       ) : (
                         <div className="flex items-center justify-between gap-2">
                           <FormField
@@ -538,18 +516,6 @@ const EducationForm = ({
                           />
                         </div>
                       )}
-
-                      <FormField
-                        name="grade"
-                        control={form.control}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Grade/Percentage/CGPA</FormLabel>
-                            <Input {...field} />
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
                     </>
                   )}
                   <DialogFooter>
@@ -569,6 +535,60 @@ const EducationForm = ({
             </div>
           </DialogContent>
         </Dialog>
+      </div>
+      <Accordion type="single" collapsible>
+        {educationData?.sort(sortEducationLevels).map((item, index) => (
+          <AccordionItem value={`${item.level}+${index}`} key={index}>
+            <AccordionTrigger>
+              {item.level.charAt(0).toUpperCase() + item.level.slice(1)}
+            </AccordionTrigger>
+            {/* <CardHeader>
+            <CardTitle className="flex justify-between items-center">
+              <p>
+                {item.level.charAt(0).toUpperCase() + item.level.slice(1)}
+                {item.degree && `: ${item.degree}`}
+              </p>
+              <Button
+                variant={"outline"}
+                onClick={() => {
+                  setEditing(true);
+                  setCurrentEditingIndex(index);
+                  form.reset(item); // prefil with the selected item
+                  setDialogOpen(true);
+                }}
+              >
+                Edit
+              </Button>
+            </CardTitle>
+            <CardDescription>
+              {item.board
+                ? `Board: ${item.board}`
+                : item.institute &&
+                  `University/College/Institute: ${item.institute}`}
+            </CardDescription>
+          </CardHeader> */}
+            <AccordionContent className="text-sm">
+              <p className="font-semibold">{item.degree && `${item.degree}`}</p>
+              {item.board
+                ? `Board: ${item.board}`
+                : item.institute && `${item.institute}`}
+              <p className="mt-4">Subjects: {item.subjects}</p>
+              {item.completed ? (
+                <>
+                  <p>Year: {item.year}</p>
+                </>
+              ) : (
+                <>
+                  <p>Expected Year: {item.expectedYear}</p>
+                  <p>Current Semester/Year: {item.currentSemester}</p>
+                </>
+              )}
+              <p>Grade: {item.grade}</p>
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+      <div className="space-x-2">
         {/* {educationData.length > 0 && (
           <Button className="bg-green-700" onClick={uploadEducationData}>
             Save

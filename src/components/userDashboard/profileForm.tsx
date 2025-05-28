@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useAuth } from "@clerk/nextjs";
 import { useUser } from "@clerk/nextjs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createProfile } from "@/app/actions/profile";
 import { Profile } from "@prisma/client";
 import { useToast } from "@/hooks/use-toast";
@@ -60,12 +60,116 @@ const formSchema = z.object({
   hobbies: z.string().optional(),
   areaImprovementCurrent: z.string().optional(),
   areaImprovementFuture: z.string().optional(),
+  linkedin: z
+    .string()
+    .url({ message: "Invalid LinkedIn URL" })
+    .refine(
+      (url) => {
+        if (!url) return true;
+        try {
+          const parsedUrl = new URL(url);
+          return (
+            parsedUrl.protocol === "https:" &&
+            parsedUrl.hostname.includes("linkedin.com")
+          );
+        } catch (error) {
+          return false;
+        }
+      },
+      {
+        message: "Must be a valid LinkedIn URL starting with https://",
+      }
+    )
+    .optional()
+    .or(z.literal("")),
+
+  github: z
+    .string()
+    .url({ message: "Invalid GitHub URL" })
+    .refine(
+      (url) => {
+        if (!url) return true;
+        try {
+          const parsedUrl = new URL(url);
+          return (
+            parsedUrl.protocol === "https:" &&
+            parsedUrl.hostname.includes("github.com")
+          );
+        } catch (error) {
+          return false;
+        }
+      },
+      {
+        message: "Must be a valid GitHub URL starting with https://",
+      }
+    )
+    .optional()
+    .or(z.literal("")),
+
+  twitter: z
+    .string()
+    .url({ message: "Invalid Twitter URL" })
+    .refine(
+      (url) => {
+        if (!url) return true;
+        try {
+          const parsedUrl = new URL(url);
+          return (
+            parsedUrl.protocol === "https:" &&
+            parsedUrl.hostname.includes("x.com")
+          );
+        } catch (error) {
+          return false;
+        }
+      },
+      {
+        message: "Must be a valid X (Twitter) URL starting with https://",
+      }
+    )
+    .optional()
+    .or(z.literal("")),
+  facebook: z
+    .string()
+    .url({ message: "Invalid Facebook URL" })
+    .refine(
+      (url) => {
+        if (!url) return true;
+        try {
+          const parsedUrl = new URL(url);
+          return (
+            parsedUrl.protocol === "https:" &&
+            parsedUrl.hostname.includes("facebook.com")
+          );
+        } catch (error) {
+          return false;
+        }
+      },
+      {
+        message: "Must be a valid Facebook URL starting with https://",
+      }
+    )
+    .optional()
+    .or(z.literal("")),
 });
+
+const socialLinksItems = [
+  {
+    name: "LinkedIn",
+  },
+  {
+    name: "GitHub",
+  },
+  {
+    name: "Facebook",
+  },
+];
 
 export function ProfileForm({ profile }: { profile: Profile }) {
   const { isLoaded, isSignedIn, user } = useUser();
   const { toast } = useToast();
   const router = useRouter();
+
+  const [date, setDate] = useState<Date>();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -117,43 +221,43 @@ export function ProfileForm({ profile }: { profile: Profile }) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    try {
-      const response = await createProfile({
-        profile: {
-          image: values.image,
-          fullName: values.fullName,
-          dob: values.dob.toISOString(),
-          mobile: values.mobile as string,
-          relative: values.relative,
-          address: values.address,
-          city: values.city,
-          state: values.state,
-          postalCode: values.postalCode,
-          country: values.country,
-          hobbies: values.hobbies,
-          areaImprovementCurrent: values.areaImprovementCurrent,
-          areaImprovementFuture: values.areaImprovementFuture,
-        },
-      });
-      console.log(response);
+    // try {
+    //   const response = await createProfile({
+    //     profile: {
+    //       image: values.image,
+    //       fullName: values.fullName,
+    //       dob: values.dob.toISOString(),
+    //       mobile: values.mobile as string,
+    //       relative: values.relative,
+    //       address: values.address,
+    //       city: values.city,
+    //       state: values.state,
+    //       postalCode: values.postalCode,
+    //       country: values.country,
+    //       hobbies: values.hobbies,
+    //       areaImprovementCurrent: values.areaImprovementCurrent,
+    //       areaImprovementFuture: values.areaImprovementFuture,
+    //     },
+    //   });
+    //   console.log(response);
 
-      if (response.success === true) {
-        toast({
-          title:
-            "🎉 Successfully saved your profile. Redirecting to assessment...",
-          description: response.message,
-        });
-        router.push("/dashboard/assessment");
-      } else {
-        toast({
-          title: "❌ Error ",
-          description: "Something went wrong",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    //   if (response.success === true) {
+    //     toast({
+    //       title:
+    //         "🎉 Successfully saved your profile. Redirecting to assessment...",
+    //       description: response.message,
+    //     });
+    //     router.push("/dashboard/assessment");
+    //   } else {
+    //     toast({
+    //       title: "❌ Error ",
+    //       description: "Something went wrong",
+    //       variant: "destructive",
+    //     });
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   }
 
   const watchedValues = form.watch();
@@ -246,13 +350,13 @@ export function ProfileForm({ profile }: { profile: Profile }) {
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
-                        variant={"outline"}
+                        variant="outline"
                         className={cn(
-                          "w-[240px] pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground",
+                          "w-[240px]  text-left font-normal",
+                          !field.value && "text-muted-foreground"
                         )}
                       >
-                        {field.value && isValid(field.value) ? (
+                        {field.value ? (
                           format(field.value, "PPP")
                         ) : (
                           <span>Pick a date</span>
@@ -266,10 +370,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
                       mode="single"
                       selected={field.value}
                       onSelect={field.onChange}
-                      disabled={(date) =>
-                        date > new Date() || date < new Date("1900-01-01")
-                      }
-                      initialFocus
+                      autoFocus
                     />
                   </PopoverContent>
                 </Popover>
@@ -440,6 +541,63 @@ export function ProfileForm({ profile }: { profile: Profile }) {
             )}
           />
 
+          <FormField
+            control={form.control}
+            name="linkedin"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>LinkedIn</FormLabel>
+                <FormControl>
+                  <Input placeholder="https://linkedin.com/in/" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="github"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Github</FormLabel>
+                <FormControl>
+                  <Input placeholder="https://github.com/" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="twitter"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>X (Twitter)</FormLabel>
+                <FormControl>
+                  <Input placeholder="https://x.com/" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="facebook"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Facebook</FormLabel>
+                <FormControl>
+                  <Input placeholder="https://facebook.com/" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           {/* <FormField
           control={form.control}
           name="resume"
@@ -455,10 +613,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
           )}
         /> */}
 
-          <Button
-            disabled={form.formState.isSubmitting || form.formState.isSubmitted}
-            type="submit"
-          >
+          <Button disabled={form.formState.isSubmitting} type="submit">
             {form.formState.isSubmitting && (
               <Loader2 className="animate-spin" />
             )}

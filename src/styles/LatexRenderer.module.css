@@ -1,0 +1,48 @@
+.latex-container {
+    font-family: "Arial", sans-serif; /* Or a math-friendly font */
+    line-height: 1.6;
+}
+
+.inline-math,
+.block-math {
+    font-style: italic; /* Basic styling for unhandled math */
+    white-space: pre-wrap; /* Preserve line breaks if needed */
+}
+
+/* Fraction styling */
+.inline-fraction {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle; /* Align with surrounding text */
+    margin: 0 0.1em;
+}
+
+.block-fraction {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0.5em 0; /* Add some vertical spacing for block fractions */
+}
+
+.numerator,
+.denominator {
+    padding: 0 0.1em;
+}
+
+.fraction-line {
+    width: 100%; /* Make line span the width */
+    border-bottom: 1px solid black;
+    margin: 0.1em 0;
+}
+
+/* Superscript and Subscript styling */
+.superscript {
+    font-size: 0.8em;
+    vertical-align: super;
+}
+
+.subscript {
+    font-size: 0.8em;
+    vertical-align: sub;
+}

@@ -89,6 +89,10 @@ export async function getProfile() {
     where: {
       userId: userId!,
     },
+    include: {
+      educations: true,
+      experiences: true,
+    },
   });
   if (!profile) {
     return null;

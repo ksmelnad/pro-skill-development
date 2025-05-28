@@ -3,6 +3,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import QuizHeader from "@/components/userDashboard/quizHeader";
 import { getAttempt } from "@/app/actions/quiz";
 import Quiz from "@/components/userDashboard/quiz";
+
 export default async function page({
   params,
 }: {
@@ -22,7 +23,7 @@ export default async function page({
     userId: user?.id!,
   });
   return (
-    <div className="p-4">
+    <div className="p-4 max-w-2xl">
       <QuizHeader
         quizTitle={quiz?.quizTitle!}
         quizId={quiz?.quizId!}
@@ -39,6 +40,7 @@ export default async function page({
       ) : (
         <Quiz quiz={quiz!} />
       )}
+      {/* <Quiz quiz={quiz!} /> */}
     </div>
   );
 }

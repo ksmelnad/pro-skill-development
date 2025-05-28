@@ -30,6 +30,9 @@ export async function createQuizResult({
           quizId: quizId,
           userId,
         },
+        orderBy: {
+          attempt: "desc",
+        },
         select: {
           attempt: true,
         },
@@ -38,16 +41,33 @@ export async function createQuizResult({
     const quiz = await prisma.quiz.findFirst({
       where: { quizId },
     });
+
+    if (!quiz) {
+      console.error(`Quiz with ID ${quizId} not found.`);
+      throw new Error(`Quiz with ID ${quizId} not found.`);
+    }
+
     const calculationResult = await calculateQuizScore(quiz!, quizAnswers);
 
     const attempt = quizResultExists ? quizResultExists.attempt + 1 : 1;
+
+    // const payload = {
+    //   quizId,
+    //   userId,
+    //   quizTitle: quiz.quizTitle,
+    //   attempt,
+    //   score: calculationResult.score,
+    //   percent: calculationResult.percent,
+    //   grade: calculationResult.grade,
+    // };
+
     // console.log("Payload", payload);
 
     const quizWrite = await prisma.quizResult.create({
       data: {
         quizId: quizId,
         userId,
-        quizTitle: quiz?.quizTitle!,
+        quizTitle: quiz.quizTitle,
         attempt,
         score: calculationResult.score,
         percent: calculationResult.percent,
