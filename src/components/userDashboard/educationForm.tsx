@@ -142,7 +142,7 @@ const educationFormSchema = z
 
     if (
       ["graduation", "postgraduation", "diploma", "doctorate"].includes(
-        data.level,
+        data.level
       ) &&
       !data.institute
     ) {
@@ -203,7 +203,7 @@ const EducationForm = ({
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState(false);
   const [currentEditingIndex, setCurrentEditingIndex] = useState<number | null>(
-    null,
+    null
   );
   const { toast } = useToast();
 
@@ -238,7 +238,7 @@ const EducationForm = ({
 
     if (
       !["graduation", "postgraduation", "diploma", "doctorate"].includes(
-        cleanedData.level,
+        cleanedData.level
       )
     ) {
       delete cleanedData.institute;
@@ -316,233 +316,24 @@ const EducationForm = ({
   };
 
   return (
-    <div className="space-y-6 py-6 my-6">
-      <div className="flex justify-between gap-x-4">
-        <h1 className="text-2xl font-semibold">Education Details</h1>
-        <Dialog
-          open={dialogOpen}
-          onOpenChange={(open) => {
-            setDialogOpen(open);
-            if (!open) {
-              setEditing(false);
-              setCurrentEditingIndex(null);
-            }
-          }}
-        >
-          <DialogTrigger asChild>
-            <Button
-              size={"icon"}
-              variant={"secondary"}
-              onClick={() => {
-                setEditing(false);
-                form.reset();
-              }}
-            >
-              <Plus />
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Add Education Details</DialogTitle>
-              <DialogDescription>
-                Please provide your education details.
-              </DialogDescription>
-            </DialogHeader>
-            <div>
-              <Form {...form}>
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                  <FormField
-                    name="level"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Level</FormLabel>
-                        <Select onValueChange={field.onChange}>
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select Level" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {educationLevels.map((level) => (
-                              <SelectItem key={level.level} value={level.level}>
-                                {level.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  {(selectedLevel === "10th" || selectedLevel === "12th") && (
-                    <FormField
-                      name="board"
-                      control={form.control}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Board</FormLabel>
-                          <Input {...field} />
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  )}
-                  {(selectedLevel === "graduation" ||
-                    selectedLevel === "postgraduation" ||
-                    selectedLevel === "diploma" ||
-                    selectedLevel === "doctorate") && (
-                    <>
-                      <FormField
-                        name="degree"
-                        control={form.control}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Degree</FormLabel>
-                            <Select onValueChange={field.onChange}>
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select Degree" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {(
-                                  educationLevels.find(
-                                    (level) => level.level === selectedLevel,
-                                  )?.options || []
-                                ).map((degree, index) => (
-                                  <SelectItem key={index} value={degree.value}>
-                                    {degree.label}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        name="institute"
-                        control={form.control}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>University/College/Institute</FormLabel>
-                            <Input {...field} />
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </>
-                  )}
-
-                  {selectedLevel !== "" && (
-                    <>
-                      <FormField
-                        name="subjects"
-                        control={form.control}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Stream/Subjects/Major/Minor</FormLabel>
-                            <Input {...field} />
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="completed"
-                        render={({ field }) => (
-                          <FormItem className="flex items-center space-x-2">
-                            <FormLabel>Completed</FormLabel>
-                            <FormControl>
-                              <Switch
-                                checked={field.value}
-                                onCheckedChange={field.onChange}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      {completed ? (
-                        <>
-                          <FormField
-                            name="year"
-                            control={form.control}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Year</FormLabel>
-                                <Input type="number" {...field} />
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                          <FormField
-                            name="grade"
-                            control={form.control}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Grade/Percentage/CGPA</FormLabel>
-                                <Input {...field} />
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </>
-                      ) : (
-                        <div className="flex items-center justify-between gap-2">
-                          <FormField
-                            name="expectedYear"
-                            control={form.control}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Expected Year</FormLabel>
-                                <Input type="number" {...field} />
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                          <FormField
-                            name="currentSemester"
-                            control={form.control}
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Current Semester/Year</FormLabel>
-                                <Input type="number" {...field} />
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </div>
-                      )}
-                    </>
-                  )}
-                  <DialogFooter>
-                    <Button
-                      type="submit"
-                      // disabled={form.formState.isSubmitting}
-                    >
-                      {form.formState.isSubmitting && (
-                        <Loader2 size={16} className="mr-2 animate-spin" />
-                      )}
-                      {/* {editing ? "Update" : "Add"} */}
-                      Add
-                    </Button>
-                  </DialogFooter>
-                </form>
-              </Form>
-            </div>
-          </DialogContent>
-        </Dialog>
-      </div>
-      <Accordion type="single" collapsible>
-        {educationData?.sort(sortEducationLevels).map((item, index) => (
-          <AccordionItem value={`${item.level}+${index}`} key={index}>
-            <AccordionTrigger>
-              {item.level.charAt(0).toUpperCase() + item.level.slice(1)}
-            </AccordionTrigger>
-            {/* <CardHeader>
+    <div className="">
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex justify-between items-center">
+            Education Details
+          </CardTitle>
+          <CardDescription>
+            Please provide your education details.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <Accordion type="single" collapsible>
+            {educationData?.sort(sortEducationLevels).map((item, index) => (
+              <AccordionItem value={`${item.level}+${index}`} key={index}>
+                <AccordionTrigger>
+                  {item.level.charAt(0).toUpperCase() + item.level.slice(1)}
+                </AccordionTrigger>
+                {/* <CardHeader>
             <CardTitle className="flex justify-between items-center">
               <p>
                 {item.level.charAt(0).toUpperCase() + item.level.slice(1)}
@@ -567,27 +358,257 @@ const EducationForm = ({
                   `University/College/Institute: ${item.institute}`}
             </CardDescription>
           </CardHeader> */}
-            <AccordionContent className="text-sm">
-              <p className="font-semibold">{item.degree && `${item.degree}`}</p>
-              {item.board
-                ? `Board: ${item.board}`
-                : item.institute && `${item.institute}`}
-              <p className="mt-4">Subjects: {item.subjects}</p>
-              {item.completed ? (
-                <>
-                  <p>Year: {item.year}</p>
-                </>
-              ) : (
-                <>
-                  <p>Expected Year: {item.expectedYear}</p>
-                  <p>Current Semester/Year: {item.currentSemester}</p>
-                </>
-              )}
-              <p>Grade: {item.grade}</p>
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
+                <AccordionContent className="text-sm">
+                  <p className="font-semibold">
+                    {item.degree && `${item.degree}`}
+                  </p>
+                  {item.board
+                    ? `Board: ${item.board}`
+                    : item.institute && `${item.institute}`}
+                  <p className="mt-4">Subjects: {item.subjects}</p>
+                  {item.completed ? (
+                    <>
+                      <p>Year: {item.year}</p>
+                    </>
+                  ) : (
+                    <>
+                      <p>Expected Year: {item.expectedYear}</p>
+                      <p>Current Semester/Year: {item.currentSemester}</p>
+                    </>
+                  )}
+                  <p>Grade: {item.grade}</p>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </CardContent>
+        <CardFooter>
+          <Dialog
+            open={dialogOpen}
+            onOpenChange={(open) => {
+              setDialogOpen(open);
+              if (!open) {
+                setEditing(false);
+                setCurrentEditingIndex(null);
+              }
+            }}
+          >
+            <DialogTrigger asChild>
+              <Button
+                size={"icon"}
+                variant={"secondary"}
+                onClick={() => {
+                  setEditing(false);
+                  form.reset();
+                }}
+              >
+                <Plus />
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Add Education Details</DialogTitle>
+                <DialogDescription>
+                  Please provide your education details.
+                </DialogDescription>
+              </DialogHeader>
+              <div>
+                <Form {...form}>
+                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                    <FormField
+                      name="level"
+                      control={form.control}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Level</FormLabel>
+                          <Select onValueChange={field.onChange}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select Level" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {educationLevels.map((level) => (
+                                <SelectItem
+                                  key={level.level}
+                                  value={level.level}
+                                >
+                                  {level.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    {(selectedLevel === "10th" || selectedLevel === "12th") && (
+                      <FormField
+                        name="board"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Board</FormLabel>
+                            <Input {...field} />
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    )}
+                    {(selectedLevel === "graduation" ||
+                      selectedLevel === "postgraduation" ||
+                      selectedLevel === "diploma" ||
+                      selectedLevel === "doctorate") && (
+                      <>
+                        <FormField
+                          name="degree"
+                          control={form.control}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Degree</FormLabel>
+                              <Select onValueChange={field.onChange}>
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select Degree" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  {(
+                                    educationLevels.find(
+                                      (level) => level.level === selectedLevel
+                                    )?.options || []
+                                  ).map((degree, index) => (
+                                    <SelectItem
+                                      key={index}
+                                      value={degree.value}
+                                    >
+                                      {degree.label}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          name="institute"
+                          control={form.control}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>
+                                University/College/Institute
+                              </FormLabel>
+                              <Input {...field} />
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </>
+                    )}
+
+                    {selectedLevel !== "" && (
+                      <>
+                        <FormField
+                          name="subjects"
+                          control={form.control}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Stream/Subjects/Major/Minor</FormLabel>
+                              <Input {...field} />
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="completed"
+                          render={({ field }) => (
+                            <FormItem className="flex items-center space-x-2">
+                              <FormLabel>Completed</FormLabel>
+                              <FormControl>
+                                <Switch
+                                  checked={field.value}
+                                  onCheckedChange={field.onChange}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        {completed ? (
+                          <>
+                            <FormField
+                              name="year"
+                              control={form.control}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Year</FormLabel>
+                                  <Input type="number" {...field} />
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              name="grade"
+                              control={form.control}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Grade/Percentage/CGPA</FormLabel>
+                                  <Input {...field} />
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </>
+                        ) : (
+                          <div className="flex items-center justify-between gap-2">
+                            <FormField
+                              name="expectedYear"
+                              control={form.control}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Expected Year</FormLabel>
+                                  <Input type="number" {...field} />
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              name="currentSemester"
+                              control={form.control}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Current Semester/Year</FormLabel>
+                                  <Input type="number" {...field} />
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        )}
+                      </>
+                    )}
+                    <DialogFooter>
+                      <Button
+                        type="submit"
+                        // disabled={form.formState.isSubmitting}
+                      >
+                        {form.formState.isSubmitting && (
+                          <Loader2 size={16} className="mr-2 animate-spin" />
+                        )}
+                        {/* {editing ? "Update" : "Add"} */}
+                        Add
+                      </Button>
+                    </DialogFooter>
+                  </form>
+                </Form>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </CardFooter>
+      </Card>
       <div className="space-x-2">
         {/* {educationData.length > 0 && (
           <Button className="bg-green-700" onClick={uploadEducationData}>

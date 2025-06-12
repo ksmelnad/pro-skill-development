@@ -35,6 +35,14 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
@@ -217,198 +225,179 @@ const ExperienceForm = ({
   };
 
   return (
-    <div className="space-y-6 py-6 my-6">
-      <div className="flex justify-between gap-x-4">
-        <h1 className="text-2xl font-semibold">Experience Details</h1>
-        <Dialog
-          open={dialogOpen}
-          onOpenChange={(open) => {
-            setDialogOpen(open);
-            if (!open) {
-              setEditing(false);
-              setCurrentEditingIndex(null);
-              setValue("current", false);
-              form.reset();
-            }
-          }}
-        >
-          <DialogTrigger asChild>
-            <Button
-              size={"icon"}
-              variant={"secondary"}
-              onClick={() => {
+    <div className="">
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex justify-between items-center">
+            Experience
+          </CardTitle>
+          <CardDescription>
+            Please provide your work experience details.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <Accordion type="single" collapsible>
+            {optimisticExperiences?.map((item, index) => (
+              <AccordionItem value={`${item.jobTitle}+${index}`} key={index}>
+                <AccordionTrigger>
+                  {item.jobTitle} at {item.company}
+                </AccordionTrigger>
+                <AccordionContent className="text-sm">
+                  <p className="font-semibold">
+                    {item.employmentType} - {item.locationType}
+                    {item.location && ` (${item.location})`}
+                  </p>
+                  <p>
+                    {/* Ensure dates are parsed if they are strings from server data */}
+                    {format(new Date(item.startDate), "MMM yyyy")} -{" "}
+                    {item.current || !item.endDate
+                      ? "Present"
+                      : format(new Date(item.endDate), "MMM yyyy")}
+                  </p>
+                  {item.description && (
+                    <p className="mt-2">{item.description}</p>
+                  )}
+                  {item.skills && item.skills.length > 0 && (
+                    <p className="mt-2">Skills: {item.skills.join(", ")}</p>
+                  )}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </CardContent>
+        <CardFooter className="flex justify-end">
+          <Dialog
+            open={dialogOpen}
+            onOpenChange={(open) => {
+              setDialogOpen(open);
+              if (!open) {
                 setEditing(false);
+                setCurrentEditingIndex(null);
                 setValue("current", false);
                 form.reset();
-              }}
-            >
-              <Plus />
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-h-lvh">
-            <DialogHeader>
-              <DialogTitle>Add Experience Details</DialogTitle>
-              <DialogDescription>
-                Please provide your experience details.
-              </DialogDescription>
-            </DialogHeader>
-            <div>
-              <Form {...form}>
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                  <FormField
-                    name="company"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Company</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    name="jobTitle"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Job Title</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    name="employmentType"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Employment Type</FormLabel>
-                        <Select onValueChange={field.onChange}>
+              }
+            }}
+          >
+            <DialogTrigger asChild>
+              <Button
+                size={"icon"}
+                variant={"secondary"}
+                onClick={() => {
+                  setEditing(false);
+                  setValue("current", false);
+                  form.reset();
+                }}
+              >
+                <Plus />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-h-lvh">
+              <DialogHeader>
+                <DialogTitle>Add Experience Details</DialogTitle>
+                <DialogDescription>
+                  Please provide your experience details.
+                </DialogDescription>
+              </DialogHeader>
+              <div>
+                <Form {...form}>
+                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                    <FormField
+                      name="company"
+                      control={form.control}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Company</FormLabel>
                           <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select Employment Type" />
-                            </SelectTrigger>
+                            <Input {...field} />
                           </FormControl>
-                          <SelectContent>
-                            {employmentTypeOptions.map((type) => (
-                              <SelectItem key={type.value} value={type.value}>
-                                {type.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                  <FormField
-                    name="locationType"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Location Type</FormLabel>
-                        <Select onValueChange={field.onChange}>
+                    <FormField
+                      name="jobTitle"
+                      control={form.control}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Job Title</FormLabel>
                           <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select Location Type" />
-                            </SelectTrigger>
+                            <Input {...field} />
                           </FormControl>
-                          <SelectContent>
-                            {locationTypeOptions.map((type) => (
-                              <SelectItem key={type.value} value={type.value}>
-                                {type.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                  <FormField
-                    name="location"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Location (Optional)</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="startDate"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-col">
-                        <FormLabel>Start Date</FormLabel>
-                        <Popover modal={true}>
-                          <PopoverTrigger asChild>
+                    <FormField
+                      name="employmentType"
+                      control={form.control}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Employment Type</FormLabel>
+                          <Select onValueChange={field.onChange}>
                             <FormControl>
-                              <Button
-                                variant={"outline"}
-                                className={cn(
-                                  "w-[240px] pl-3 text-left font-normal",
-                                  !field.value && "text-muted-foreground"
-                                )}
-                              >
-                                {field.value ? (
-                                  format(field.value, "PPP")
-                                ) : (
-                                  <span>Pick a date</span>
-                                )}
-                                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                              </Button>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select Employment Type" />
+                              </SelectTrigger>
                             </FormControl>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              mode="single"
-                              selected={field.value}
-                              onSelect={field.onChange}
-                              disabled={(date) => date > new Date()}
-                              autoFocus
-                            />
-                          </PopoverContent>
-                        </Popover>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="current"
-                    render={({ field }) => (
-                      <FormItem className="flex items-center space-x-2">
-                        <FormControl>
-                          <Switch
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                        </FormControl>
-                        <FormLabel>Currently Working</FormLabel>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                            <SelectContent>
+                              {employmentTypeOptions.map((type) => (
+                                <SelectItem key={type.value} value={type.value}>
+                                  {type.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                  {!isCurrent && (
+                    <FormField
+                      name="locationType"
+                      control={form.control}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Location Type</FormLabel>
+                          <Select onValueChange={field.onChange}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select Location Type" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {locationTypeOptions.map((type) => (
+                                <SelectItem key={type.value} value={type.value}>
+                                  {type.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      name="location"
+                      control={form.control}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Location (Optional)</FormLabel>
+                          <FormControl>
+                            <Input {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                     <FormField
                       control={form.control}
-                      name="endDate"
+                      name="startDate"
                       render={({ field }) => (
                         <FormItem className="flex flex-col">
-                          <FormLabel>End Date</FormLabel>
+                          <FormLabel>Start Date</FormLabel>
                           <Popover modal={true}>
                             <PopoverTrigger asChild>
                               <FormControl>
@@ -436,9 +425,7 @@ const ExperienceForm = ({
                                 mode="single"
                                 selected={field.value}
                                 onSelect={field.onChange}
-                                disabled={(date) =>
-                                  date < selectedStartDate || date > new Date()
-                                }
+                                disabled={(date) => date > new Date()}
                                 autoFocus
                               />
                             </PopoverContent>
@@ -447,76 +434,114 @@ const ExperienceForm = ({
                         </FormItem>
                       )}
                     />
-                  )}
-
-                  <FormField
-                    name="description"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Description (Optional)</FormLabel>
-                        <FormControl>
-                          <Textarea {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    name="skills"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Skills (Comma-separated)</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <DialogFooter>
-                    <Button type="submit" disabled={isPending}>
-                      {isPending && (
-                        <Loader2 size={16} className="mr-2 animate-spin" /> // Use isPending for loader
+                    <FormField
+                      control={form.control}
+                      name="current"
+                      render={({ field }) => (
+                        <FormItem className="flex items-center space-x-2">
+                          <FormControl>
+                            <Switch
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <FormLabel>Currently Working</FormLabel>
+                          <FormMessage />
+                        </FormItem>
                       )}
-                      {editing ? "Update" : "Add"}
-                    </Button>
-                  </DialogFooter>
-                </form>
-              </Form>
-            </div>
-          </DialogContent>
-        </Dialog>
-      </div>
-      <Accordion type="single" collapsible>
-        {optimisticExperiences?.map((item, index) => (
-          <AccordionItem value={`${item.jobTitle}+${index}`} key={index}>
-            <AccordionTrigger>
-              {item.jobTitle} at {item.company}
-            </AccordionTrigger>
-            <AccordionContent className="text-sm">
-              <p className="font-semibold">
-                {item.employmentType} - {item.locationType}
-                {item.location && ` (${item.location})`}
-              </p>
-              <p>
-                {/* Ensure dates are parsed if they are strings from server data */}
-                {format(new Date(item.startDate), "MMM yyyy")} -{" "}
-                {item.current || !item.endDate
-                  ? "Present"
-                  : format(new Date(item.endDate), "MMM yyyy")}
-              </p>
-              {item.description && <p className="mt-2">{item.description}</p>}
-              {item.skills && item.skills.length > 0 && (
-                <p className="mt-2">Skills: {item.skills.join(", ")}</p>
-              )}
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
+                    />
+
+                    {!isCurrent && (
+                      <FormField
+                        control={form.control}
+                        name="endDate"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-col">
+                            <FormLabel>End Date</FormLabel>
+                            <Popover modal={true}>
+                              <PopoverTrigger asChild>
+                                <FormControl>
+                                  <Button
+                                    variant={"outline"}
+                                    className={cn(
+                                      "w-[240px] pl-3 text-left font-normal",
+                                      !field.value && "text-muted-foreground"
+                                    )}
+                                  >
+                                    {field.value ? (
+                                      format(field.value, "PPP")
+                                    ) : (
+                                      <span>Pick a date</span>
+                                    )}
+                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                  </Button>
+                                </FormControl>
+                              </PopoverTrigger>
+                              <PopoverContent
+                                className="w-auto p-0"
+                                align="start"
+                              >
+                                <Calendar
+                                  mode="single"
+                                  selected={field.value}
+                                  onSelect={field.onChange}
+                                  disabled={(date) =>
+                                    date < selectedStartDate ||
+                                    date > new Date()
+                                  }
+                                  autoFocus
+                                />
+                              </PopoverContent>
+                            </Popover>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    )}
+
+                    <FormField
+                      name="description"
+                      control={form.control}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Description (Optional)</FormLabel>
+                          <FormControl>
+                            <Textarea {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      name="skills"
+                      control={form.control}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Skills (Comma-separated)</FormLabel>
+                          <FormControl>
+                            <Input {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <DialogFooter>
+                      <Button type="submit" disabled={isPending}>
+                        {isPending && (
+                          <Loader2 size={16} className="mr-2 animate-spin" /> // Use isPending for loader
+                        )}
+                        {editing ? "Update" : "Add"}
+                      </Button>
+                    </DialogFooter>
+                  </form>
+                </Form>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </CardFooter>
+      </Card>
     </div>
   );
 };

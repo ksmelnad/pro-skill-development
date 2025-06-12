@@ -23,7 +23,7 @@ export default function QuizHeader({
   attempt: number;
 }) {
   return (
-    <section className="max-w-2xl mx-auto bg-sidebar my-4 shadow-md rounded-md">
+    <section className="bg-sidebar my-4 shadow-md rounded-md">
       <div className="p-4">
         <p className="font-semibold text-blue-800 mb-2">{quizTitle}</p>
         <div className="flex justify-between text-sm">

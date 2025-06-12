@@ -23,7 +23,7 @@ export default async function page({
     userId: user?.id!,
   });
   return (
-    <div className="p-4 max-w-2xl">
+    <div className="container mx-auto p-4 ">
       <QuizHeader
         quizTitle={quiz?.quizTitle!}
         quizId={quiz?.quizId!}

@@ -8,6 +8,7 @@ import EducationForm, {
 import ExperienceForm, {
   EffectiveExperienceData,
 } from "@/components/userDashboard/experienceForm";
+import { Separator } from "@/components/ui/separator";
 
 export default async function page() {
   const { userId } = await auth();
@@ -42,9 +43,12 @@ export default async function page() {
   return (
     <section className="">
       <h2 className="section-title">Profile</h2>
-      <div className="max-w-2xl mx-auto p-4">
+      <div className="max-w-2xl mx-auto p-4 flex flex-col gap-8">
         {userId && <ProfileForm profile={profile!} />}
+        <Separator />
         {userId && <EducationForm educationData={transformedEducationData!} />}
+        <Separator />
+
         {userId && <ExperienceForm experienceData={experiencesForForm} />}
       </div>
     </section>
