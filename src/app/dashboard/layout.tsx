@@ -15,6 +15,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { UserButton } from "@clerk/nextjs";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title: "My Skill Learning",
@@ -26,10 +27,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={defaultOpen}>
       <AppSidebar />
-      <SidebarInset>
+      <div className="flex flex-col flex-1">
         <header className="bg-sidebar text-sidebar-foreground border-b shadow-xs flex justify-between items-center h-16 shrink-0 gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
@@ -50,8 +53,12 @@ export default async function RootLayout({
             <UserButton />
           </div>
         </header>
-        <div className="md:px-12">{children}</div>
-      </SidebarInset>
+        <SidebarInset>
+          <main className="md:px-12 flex-grow p-6 overflow-auto bg-gray-100">
+            {children}
+          </main>
+        </SidebarInset>
+      </div>
     </SidebarProvider>
   );
 }

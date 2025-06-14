@@ -1,6 +1,7 @@
 import prisma from "@/utils/prismadb";
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
+
 export async function GET() {
   try {
     const { userId } = await auth();
@@ -8,9 +9,13 @@ export async function GET() {
     if (!userId) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-    const profile = await prisma.jobSeeker.findUnique({
+    const profile = await prisma.profile.findUnique({
       where: {
         userId,
+      },
+      include: {
+        educations: true,
+        experiences: true,
       },
     });
 
