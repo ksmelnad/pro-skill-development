@@ -325,11 +325,11 @@ const ExperienceForm = ({
                     </CardTitle>
                     <Button
                       type="button"
-                      variant="destructive"
+                      variant="ghost"
                       size="icon"
                       onClick={() => handleDelete(index)}
                     >
-                      <Trash2 className="w-4 h-4" />
+                      <Trash2 color="red" className="w-4 h-4" />
                     </Button>
                   </CardHeader>
                   <CardContent className="space-y-6 px-0 pb-0">

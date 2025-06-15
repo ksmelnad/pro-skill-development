@@ -114,12 +114,11 @@ export default function ProfilePageComp({
         </TabsContent>
         <TabsContent value="education" className="mt-6">
           {/* EducationForm expects a non-null Education object. Handle null from SWR. */}
-          {educationContainer && (
-            <EducationForm
-              educationData={educationContainer}
-              mutateEducation={mutateEducationContainer}
-            />
-          )}
+
+          <EducationForm
+            educationData={educationContainer! || []}
+            mutateEducation={mutateEducationContainer}
+          />
         </TabsContent>
         <TabsContent value="experience" className="mt-6">
           <ExperienceForm

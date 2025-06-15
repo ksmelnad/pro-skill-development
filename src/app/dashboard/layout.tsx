@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/sidebar";
 import { UserButton } from "@clerk/nextjs";
 import { cookies } from "next/headers";
+import prisma from "@/utils/prismadb";
+import { auth, currentUser } from "@clerk/nextjs/server";
 
 export const metadata: Metadata = {
   title: "My Skill Learning",
@@ -29,6 +31,27 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
+
+  const { userId } = await auth();
+  const user = await currentUser();
+  const profile = await prisma.profile.findUnique({
+    where: {
+      userId: userId!,
+    },
+  });
+  if (!profile) {
+    const createProfile = await prisma.profile.create({
+      data: {
+        userId: userId!,
+      },
+    });
+
+    console.log("Profile created for ", user?.fullName);
+
+    if (!createProfile) {
+      return null;
+    }
+  }
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
       <AppSidebar />
