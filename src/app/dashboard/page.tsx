@@ -1,4 +1,4 @@
-import { currentUser } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import {
   Card,
   CardContent,
@@ -10,13 +10,18 @@ import {
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
-import { getProfile } from "../actions/profile";
 import { getQuizResult } from "../actions/quiz";
 import { redirect } from "next/navigation";
+import prisma from "@/utils/prismadb";
 
 export default async function page() {
+  const { userId } = await auth();
   const user = await currentUser();
-  const profile = await getProfile();
+  const profile = await prisma.profile.findUnique({
+    where: {
+      userId: userId!,
+    },
+  });
   if (!profile) {
     redirect("/dashboard/profile");
   }

@@ -2,85 +2,57 @@
 
 import prisma from "@/utils/prismadb";
 import { auth, currentUser } from "@clerk/nextjs/server";
-import { Education } from "@prisma/client";
-import { EducationData } from "@/components/userDashboard/educationForm";
+import { Education, EducationLevel } from "@prisma/client"; // Added EducationLevel
 import { revalidatePath } from "next/cache";
 
-export async function createEducation({
-  educationData,
+export async function upsertEducationLevelsAction({
+  educationLevels,
 }: {
-  educationData: EducationData;
-}) {
-  try {
-    const { userId } = await auth();
-
-    if (!userId) {
-      throw new Error("User not found");
-    }
-
-    console.log("Edu Data:", educationData);
-
-    const existingProfile = await prisma.profile.findFirst({
-      where: {
-        userId: userId as string,
-      },
-    });
-
-    console.log("Existing profile", existingProfile);
-
-    const existingEducation = await prisma.education.findUnique({
-      where: {
-        profileId: existingProfile?.id!,
-      },
-    });
-
-    if (existingEducation) {
-      const updatedEducation = await prisma.education.update({
-        where: {
-          id: existingEducation.id,
-        },
-        data: {
-          educationLevels: {
-            push: educationData,
-          },
-        },
-      });
-      console.log("Education Update", updatedEducation);
-      return updatedEducation;
-    } else {
-      const educationRecord = await prisma.education.create({
-        data: {
-          userId: userId as string,
-          profileId: existingProfile?.id!,
-          educationLevels: educationData,
-        },
-      });
-      console.log("Education Write", educationRecord);
-      return educationRecord;
-    }
-
-    revalidatePath("dashboard/profile");
-  } catch (error) {
-    // console.log(error);
+  educationLevels: EducationLevel[]; // Expecting Prisma's EducationLevel type
+}): Promise<{
+  success: boolean;
+  message?: string;
+  error?: string;
+  education?: Education;
+}> {
+  const { userId } = await auth();
+  if (!userId) {
+    return { success: false, error: "User not authenticated" };
   }
-}
 
-export async function getEducation() {
   try {
-    const { userId } = await auth();
+    const profile = await prisma.profile.findUnique({
+      where: { userId },
+    });
 
-    if (!userId) {
-      throw new Error("User not found");
+    if (!profile) {
+      return { success: false, error: "Profile not found" };
     }
 
-    const education = await prisma.education.findFirst({
-      where: {
-        userId: userId as string,
+    const updatedOrCreatedEducation = await prisma.education.upsert({
+      where: { profileId: profile.id },
+      update: {
+        educationLevels: educationLevels,
+      },
+      create: {
+        userId: userId,
+        profileId: profile.id,
+        educationLevels: educationLevels,
       },
     });
 
-    return education;
+    revalidatePath("/dashboard/profile"); // Or specific API path if SWR revalidates based on that
+    return {
+      success: true,
+      message: "Education history updated successfully.",
+      education: updatedOrCreatedEducation,
+    };
   } catch (error) {
-    console.log(error);
+    console.error("Error upserting education levels:", error);
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : "Failed to update education history.";
+    return { success: false, error: errorMessage };
   }
 }

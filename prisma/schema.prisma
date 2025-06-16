@@ -34,19 +34,30 @@ model User {
 }
 
 model Profile {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId     String    @unique
-  fullName   String?
-  email      String?
-  dob        DateTime?
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String        @unique
+  personalInfo PersonalInfo?
+  certificates Certificate[]
+  educations   Education?
+  experiences  Experience?
+  skills       Skill[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+type PersonalInfo {
+  fullName   String
+  image      String?
+  email      String
+  dob        DateTime
   mobile     String?
   relative   String?
-  image      String?
-  address    String?
-  city       String?
-  state      String?
+  address    String
+  city       String
+  state      String
   postalCode String?
-  country    String?
+  country    String
 
   linkedIn String?
   github   String?
@@ -56,14 +67,6 @@ model Profile {
 
   areaImprovementCurrent String?
   areaImprovementFuture  String?
-
-  certificates Certificate[]
-  educations   Education[]
-  experiences  Experience[]
-
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model Certificate {
@@ -170,33 +173,37 @@ type EducationLevel {
 
 // Refined Experience Model
 model Experience {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  profile     Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  profileId   String   @db.ObjectId
-  userId      String
-  company     String
-  jobTitle    String
-  employmentType String // e.g., "Full-time", "Part-time", "Contract", "Internship"
-  locationType String // e.g., "Remote", "On-site", "Hybrid"
-  location     String?  // City, State, Country or a general description
-  startDate   DateTime
-  current     Boolean
-  endDate     DateTime? // Nullable if currently working
-  description String?  // Description of the role and responsibilities
-  skills      String[] // Relevant skills used in this role
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  profile           Profile             @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId         String              @unique @db.ObjectId
+  userId            String
+  experienceDetails ExperienceDetails[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
+type ExperienceDetails {
+  company        String
+  jobTitle       String
+  employmentType String // e.g., "Full-time", "Part-time", "Contract", "Internship"
+  locationType   String // e.g., "Remote", "On-site", "Hybrid"
+  location       String? // City, State, Country or a general description
+  startDate      DateTime
+  current        Boolean
+  endDate        DateTime? // Nullable if currently working
+  description    String? // Description of the role and responsibilities
+  skills         String[] // Relevant skills used in this role
+}
+
 // Skill Model
-model Skill {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  jobSeeker   JobSeeker @relation(fields: [jobSeekerId], references: [id])
-  jobSeekerId String    @db.ObjectId
-  name        String
-  proficiency String
-  years       Int
+type Skill {
+  // id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  // jobSeeker   JobSeeker @relation(fields: [jobSeekerId], references: [id])
+  // jobSeekerId String    @db.ObjectId
+  name            String
+  level           Level
+  experienceYears Int
   // domain-technical | behavioural-soft skills (media recording)
   // ai assessment
   // scope for improvement/ recommendation
@@ -330,4 +337,11 @@ type QuizQuestion {
 type QuizOption {
   optionId Int
   option   String
+}
+
+enum Level {
+  Beginner
+  Skilled
+  Advanced
+  Expert
 }

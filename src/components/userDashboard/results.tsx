@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { getQuizResult } from "@/app/actions/quiz";
 import CertificateDownloadBtn from "./certificateDownloadBtn";
 import ViewQuizDetails from "./viewQuizDetails";
+import { Download, Eye } from "lucide-react";
 
 export default async function Results() {
   const quizResult = await getQuizResult();
@@ -58,7 +59,9 @@ export default async function Results() {
                 <TableCell>
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Button variant="secondary">View</Button>
+                      <Button variant="ghost" size={"icon"}>
+                        <Eye size={16} />
+                      </Button>
                     </DialogTrigger>
                     <DialogContent className="md:max-w-xl overflow-y-auto max-h-[calc(80dvh)]">
                       <DialogHeader>
@@ -88,7 +91,9 @@ export default async function Results() {
                 <TableCell>
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Button variant="secondary">Download</Button>
+                      <Button variant="ghost" size={"icon"}>
+                        <Download size={16} />
+                      </Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-md">
                       <DialogHeader>

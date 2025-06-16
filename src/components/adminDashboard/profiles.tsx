@@ -106,64 +106,68 @@ export const columns: ColumnDef<PrismaProfile>[] = [
             </DialogHeader>
             <div>
               <p>
-                <strong>Full Name:</strong> {profile.fullName}
+                <strong>Full Name:</strong> {profile.personalInfo?.fullName}
               </p>
               <p>
                 <strong>Date of Birth:</strong>{" "}
-                {new Date(profile.dob!).toLocaleDateString("en-US", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })}
+                {new Date(profile.personalInfo?.dob!).toLocaleDateString(
+                  "en-US",
+                  {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  }
+                )}
               </p>
               <p>
-                <strong>Email:</strong> {profile.email}
+                <strong>Email:</strong> {profile.personalInfo?.email}
               </p>
-              {profile.mobile && (
+              {profile.personalInfo?.mobile && (
                 <p>
-                  <strong>Mobile:</strong> {profile.mobile}
+                  <strong>Mobile:</strong> {profile.personalInfo?.mobile}
                 </p>
               )}
-              {profile.address && (
+              {profile.personalInfo?.address && (
                 <p>
-                  <strong>Address:</strong> {profile.address}
+                  <strong>Address:</strong> {profile.personalInfo?.address}
                 </p>
               )}
-              {profile.city && (
+              {profile.personalInfo?.city && (
                 <p>
-                  <strong>City:</strong> {profile.city}
+                  <strong>City:</strong> {profile.personalInfo?.city}
                 </p>
               )}
-              {profile.state && (
+              {profile.personalInfo?.state && (
                 <p>
-                  <strong>State:</strong> {profile.state}
+                  <strong>State:</strong> {profile.personalInfo?.state}
                 </p>
               )}
-              {profile.postalCode && (
+              {profile.personalInfo?.postalCode && (
                 <p>
-                  <strong>Postal Code:</strong> {profile.postalCode}
+                  <strong>Postal Code:</strong>{" "}
+                  {profile.personalInfo?.postalCode}
                 </p>
               )}
-              {profile.country && (
+              {profile.personalInfo?.country && (
                 <p>
-                  <strong>Country:</strong> {profile.country}
+                  <strong>Country:</strong> {profile.personalInfo?.country}
                 </p>
               )}
-              {profile.hobbies && (
+              {profile.personalInfo?.hobbies && (
                 <p>
-                  <strong>Hobbies:</strong> {profile.hobbies}
+                  <strong>Hobbies:</strong> {profile.personalInfo?.hobbies}
                 </p>
               )}
-              {profile.areaImprovementCurrent && (
+              {profile.personalInfo?.areaImprovementCurrent && (
                 <p>
                   <strong>Current Improvement Area:</strong>{" "}
-                  {profile.areaImprovementCurrent}
+                  {profile.personalInfo?.areaImprovementCurrent}
                 </p>
               )}
-              {profile.areaImprovementFuture && (
+              {profile.personalInfo?.areaImprovementFuture && (
                 <p>
                   <strong>Future Improvement Area:</strong>{" "}
-                  {profile.areaImprovementFuture}
+                  {profile.personalInfo?.areaImprovementFuture}
                 </p>
               )}
             </div>

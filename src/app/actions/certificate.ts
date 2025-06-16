@@ -45,12 +45,12 @@ export async function generateCertificate({
     throw new Error("Quiz result not found");
   }
 
-  // if (!profile) {
-  //   throw new Error("Profile not found");
-  // }
+  if (!profile) {
+    throw new Error("Profile not found");
+  }
 
   const certificateGenerated = await createCertificatePDF({
-    name: profile?.fullName ?? user?.fullName!,
+    name: profile.personalInfo?.fullName ?? user?.fullName!,
     course: courseTitle,
     grade: isAddGrade ? quizResultExists.grade : undefined,
     date: date,
