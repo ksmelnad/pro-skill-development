@@ -1,18 +1,8 @@
+"use client";
 import Link from "next/link";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Button, buttonVariants } from "./ui/button";
 import Image from "next/image";
-
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Dropdown } from "react-day-picker";
 import {
   Sheet,
   SheetTrigger,
@@ -20,6 +10,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { MenuIcon } from "lucide-react";
+import { useState } from "react";
 
 // const navItems = [
 //   {
@@ -29,6 +20,8 @@ import { MenuIcon } from "lucide-react";
 // ];
 
 export default function Navbar() {
+  const [sheetOpen, setSheetOpen] = useState(false);
+
   return (
     <header className="py-4 ">
       <div className="container mx-auto flex justify-between items-center">
@@ -78,7 +71,7 @@ export default function Navbar() {
             </li>
           </ul>
         </nav>
-        <Sheet>
+        <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
           <SheetTrigger asChild>
             <Button
               variant="ghost"
@@ -89,8 +82,8 @@ export default function Navbar() {
               <span className="sr-only">Toggle navigation menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="md:hidden">
-            <SheetTitle className="mb-6">
+          <SheetContent side="right" className="w-[400px] sm:w-[540px]">
+            <SheetTitle className="my-6">
               <div className="flex gap-3 items-center">
                 <Image src="/logo.svg" width={65} height={65} alt="logo" />
                 <Link href="/">
@@ -116,6 +109,13 @@ export default function Navbar() {
             </SignedOut>
             <SignedIn>
               <div className="flex flex-col gap-2 items-center">
+                <Link
+                  className={buttonVariants({ variant: "link" })}
+                  href={"/forum"}
+                  onClick={() => setSheetOpen(false)}
+                >
+                  Community
+                </Link>
                 <Link
                   href="/dashboard"
                   className={buttonVariants({ variant: "link" })}

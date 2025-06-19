@@ -70,6 +70,19 @@ export async function createForumThread(
 ): Promise<ActionResult<ForumThread>> {
   const { userId } = await auth();
 
+  const user = await prisma.user.findUnique({
+    where: {
+      clerkId: userId!,
+    },
+  });
+
+  if (!user) {
+    return {
+      success: false,
+      error: "User not found.",
+    };
+  }
+
   try {
     const validatedData = createThreadSchema.parse(data);
     const slug = slugify(
@@ -83,7 +96,7 @@ export async function createForumThread(
         slug: slug,
         author: {
           connect: {
-            clerkId: userId!,
+            clerkId: user.clerkId,
           },
         },
       },

@@ -86,7 +86,7 @@ export function ForumPostItem({ post }: ForumPostItemProps) {
       <CardHeader className="pb-3">
         <div className="flex items-center space-x-3">
           <Image
-            src={post.author.image || "https://placehold.co/40x40.png"}
+            src={post.author.image || "user-128.svg"}
             alt={post.author.name || "Author"}
             width={32}
             height={32}

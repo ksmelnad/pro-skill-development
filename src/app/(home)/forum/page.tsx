@@ -45,7 +45,7 @@ export default async function ForumPage() {
 
   return (
     <div className="space-y-8 p-4 md:p-6 container mx-auto">
-      <header className="flex items-center justify-center gap-4 h-60 bg-gradient-to-r from-blue-600 to-violet-600 rounded-md text-white p-4">
+      <header className="flex items-center justify-center gap-4 h-60 bg-linear-to-r from-blue-600 to-violet-600 rounded-md text-white p-4">
         <div className="flex flex-col items-center space-y-3 ">
           <MessageSquareText className="w-10 h-10 " />
           <h1 className="text-xl md:text-2xl lg:text-4xl font-headline font-bold">

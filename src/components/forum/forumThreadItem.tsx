@@ -32,7 +32,7 @@ export function ForumThreadItem({ thread }: ForumThreadItemProps) {
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground mb-2">
           <div className="flex items-center gap-1">
             <Image
-              src={thread.author.image || "https://placehold.co/40x40.png"}
+              src={thread.author.image || "user-128.svg"}
               alt={thread.author.name || "Author"}
               width={16}
               height={16}

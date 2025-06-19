@@ -12,7 +12,7 @@ export function ForumCommentItem({ comment }: ForumCommentItemProps) {
   return (
     <div className="flex items-start space-x-2.5 p-3 bg-background rounded-md shadow-xs border">
       <Image
-        src={comment.author.image || "https://placehold.co/32x32.png"}
+        src={comment.author.image || "user-128.svg"}
         alt={comment.author.name || "Author"}
         width={28}
         height={28}

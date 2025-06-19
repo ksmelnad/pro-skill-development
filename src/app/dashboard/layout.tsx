@@ -77,7 +77,7 @@ export default async function RootLayout({
           </div>
         </header>
         <SidebarInset>
-          <main className="md:px-12 flex-grow p-6 overflow-auto bg-gray-100">
+          <main className="md:px-12 grow p-6 overflow-auto bg-gray-100">
             {children}
           </main>
         </SidebarInset>
