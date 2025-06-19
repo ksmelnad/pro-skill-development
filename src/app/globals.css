@@ -108,6 +108,7 @@
   :root {
     --background: 0 0% 94%; /* Light Grey */
     --foreground: 275 10% 15%; /* Dark Indigo for text */
+    /* --foreground: 251, 97%, 64% */
 
     --card: 0 0% 100%; /* White */
     --card-foreground: 275 10% 15%;
@@ -116,6 +117,7 @@
     --popover-foreground: 275 10% 15%;
 
     --primary: 275 100% 25%; /* Deep Indigo */
+    /* --primary: 0, 0%, 13.33%; */
     --primary-foreground: 0 0% 98%; /* Almost White */
 
     --secondary: 275 60% 90%; /* Light Indigo tint */

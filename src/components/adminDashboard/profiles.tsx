@@ -35,6 +35,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 
 import { Profile as PrismaProfile } from "@prisma/client";
+import { getClerkUserList, syncClerkUsersToDB } from "@/app/actions/clerk";
+import { toast } from "sonner";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -258,6 +260,21 @@ export function DataTable<TData, TValue>({
   );
 }
 
+const handleSyncClerkUserListToDB = async () => {
+  const response = await syncClerkUsersToDB();
+  console.log(response);
+  toast.success("Total Users Fetched: " + response.totalFetched, {
+    description: "Total Users Upserted: " + response.totalUpserted,
+  });
+};
+
 export default function Profiles({ profiles }: { profiles: PrismaProfile[] }) {
-  return <DataTable columns={columns} data={profiles} />;
+  return (
+    <div>
+      <Button onClick={handleSyncClerkUserListToDB}>
+        Sync Clerk User List to DB
+      </Button>
+      <DataTable columns={columns} data={profiles} />;
+    </div>
+  );
 }

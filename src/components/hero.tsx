@@ -8,8 +8,8 @@ import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 const Hero = () => {
   return (
-    <div className="relative h-screen bg-linear-to-tl from-blue-800 from-10% via-sky-500 via-30% to-emerald-500 to-90%">
-      <Navbar />
+    <div className="relative h-screen ">
+      {/* <Navbar /> */}
       <section className="relative h-[90vh] flex justify-center items-center">
         <div className="container grid grid-cols-1 md:grid-cols-2 items-center">
           <div className="flex flex-col justify-center gap-4 ">

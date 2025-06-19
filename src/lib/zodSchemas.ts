@@ -137,3 +137,35 @@ export const educationFormSchema = z
   });
 
 export type EducationFormValues = z.infer<typeof educationFormSchema>;
+
+// Forum Schemas
+// Forum Schemas
+export const createThreadSchema = z.object({
+  title: z
+    .string()
+    .min(5, "Title must be at least 5 characters.")
+    .max(150, "Title cannot exceed 150 characters."),
+  content: z
+    .string()
+    .min(10, "Content must be at least 10 characters.")
+    .max(5000, "Content cannot exceed 5000 characters."),
+});
+export type CreateThreadFormValues = z.infer<typeof createThreadSchema>;
+
+export const createPostSchema = z.object({
+  content: z
+    .string()
+    .min(2, "Reply must be at least 2 characters.")
+    .max(5000, "Reply cannot exceed 5000 characters."),
+  threadId: z.string(),
+});
+export type CreatePostFormValues = z.infer<typeof createPostSchema>;
+
+export const createCommentSchema = z.object({
+  content: z
+    .string()
+    .min(1, "Comment cannot be empty.")
+    .max(1000, "Comment cannot exceed 1000 characters."),
+  postId: z.string(),
+});
+export type CreateCommentFormValues = z.infer<typeof createCommentSchema>;

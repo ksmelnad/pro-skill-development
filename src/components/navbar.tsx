@@ -61,6 +61,12 @@ export default function Navbar() {
               <SignedIn>
                 <div className="flex items-center gap-2">
                   <Link
+                    className={buttonVariants({ variant: "link" })}
+                    href={"/forum"}
+                  >
+                    Community
+                  </Link>
+                  <Link
                     href="/dashboard"
                     className={buttonVariants({ variant: "link" })}
                   >

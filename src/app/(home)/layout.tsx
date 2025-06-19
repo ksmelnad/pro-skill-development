@@ -13,7 +13,7 @@ export default async function RootLayout({
 }>) {
   return (
     <div>
-      {/* <Navbar /> */}
+      <Navbar />
       {children}
     </div>
   );
