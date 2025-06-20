@@ -25,7 +25,7 @@ export function ForumThreadItem({ thread }: ForumThreadItemProps) {
       className="block hover:bg-muted/50 transition-colors"
     >
       <div className="p-4 md:p-6">
-        <h3 className="text-lg font-semibold text-primary hover:underline mb-1 truncate">
+        <h3 className="text-lg font-semibold hover:underline mb-1 truncate">
           {thread.title}
         </h3>
 

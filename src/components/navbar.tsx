@@ -1,6 +1,12 @@
 "use client";
 import Link from "next/link";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import {
+  SignInButton,
+  SignOutButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 import { Button, buttonVariants } from "./ui/button";
 import Image from "next/image";
 import {
@@ -47,21 +53,21 @@ export default function Navbar() {
             ))} */}
             <li>
               <SignedOut>
-                <Button asChild variant={"outline"}>
+                <Button asChild variant={"ghost"}>
                   <SignInButton />
                 </Button>
               </SignedOut>
               <SignedIn>
                 <div className="flex items-center gap-2">
                   <Link
-                    className={buttonVariants({ variant: "link" })}
+                    className={buttonVariants({ variant: "ghost" })}
                     href={"/forum"}
                   >
                     Community
                   </Link>
                   <Link
                     href="/dashboard"
-                    className={buttonVariants({ variant: "link" })}
+                    className={buttonVariants({ variant: "ghost" })}
                   >
                     Dashboard
                   </Link>
@@ -83,7 +89,7 @@ export default function Navbar() {
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="w-[400px] sm:w-[540px]">
-            <SheetTitle className="my-6">
+            <SheetTitle className="my-6 flex justify-center">
               <div className="flex gap-3 items-center">
                 <Image src="/logo.svg" width={65} height={65} alt="logo" />
                 <Link href="/">
@@ -102,15 +108,15 @@ export default function Navbar() {
             ))} */}
             <SignedOut>
               <div className="flex justify-center">
-                <Button asChild variant={"outline"}>
+                <Button asChild variant={"ghost"}>
                   <SignInButton />
                 </Button>
               </div>
             </SignedOut>
             <SignedIn>
-              <div className="flex flex-col gap-2 items-center">
+              <div className="flex flex-col gap-2 ">
                 <Link
-                  className={buttonVariants({ variant: "link" })}
+                  className={buttonVariants({ variant: "ghost" })}
                   href={"/forum"}
                   onClick={() => setSheetOpen(false)}
                 >
@@ -118,11 +124,18 @@ export default function Navbar() {
                 </Link>
                 <Link
                   href="/dashboard"
-                  className={buttonVariants({ variant: "link" })}
+                  className={buttonVariants({ variant: "ghost" })}
                 >
                   Dashboard
                 </Link>
-                <UserButton />
+                <Button
+                  asChild
+                  variant={"ghost"}
+                  className="cursor-pointer"
+                  onClick={() => setSheetOpen(false)}
+                >
+                  <SignOutButton />
+                </Button>
               </div>
             </SignedIn>
           </SheetContent>

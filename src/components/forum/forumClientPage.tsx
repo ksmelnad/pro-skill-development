@@ -139,7 +139,8 @@ export function ForumClientPage({
       <div className="text-right mb-4">
         <Button
           onClick={() => setIsCreateModalOpen(true)}
-          className="bg-accent hover:bg-accent/90 text-accent-foreground"
+          variant={"outline"}
+          className="cursor-pointer"
         >
           <PlusCircle className="mr-2 h-5 w-5" /> Create New Thread
         </Button>

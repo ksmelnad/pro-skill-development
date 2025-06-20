@@ -98,7 +98,7 @@ export default async function ForumThreadPage({
   const initialPostsResponse = await getInitialPosts(thread.id);
 
   return (
-    <div className="space-y-8 p-4 md:p-6 container mx-auto">
+    <div className="space-y-8 p-4 md:p-6 container mx-auto bg-gray-100">
       <header className="flex items-center justify-center gap-4 h-60 bg-linear-to-r from-blue-600 to-violet-600 rounded-md text-white p-4">
         <div className="flex flex-col items-center space-y-3 ">
           <MessageSquareText className="w-10 h-10 " />
@@ -121,7 +121,7 @@ export default async function ForumThreadPage({
 
       <Card className="shadow-lg">
         <CardHeader>
-          <CardTitle className="text-3xl font-headline text-primary">
+          <CardTitle className="text-2xl font-headline">
             {thread.title}
           </CardTitle>
           <div className="text-sm text-muted-foreground flex items-center gap-2 mt-1">
@@ -138,7 +138,7 @@ export default async function ForumThreadPage({
             <span>{format(new Date(thread.createdAt), "PPpp")}</span>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="mb-4 py-4">
           {/* Ensure whitespace-pre-wrap is applied to respect newlines from DB */}
           <div className="prose dark:prose-invert max-w-none whitespace-pre-wrap">
             {thread.content}

@@ -26,7 +26,6 @@ import {
   type CreateThreadFormValues,
 } from "@/lib/zodSchemas";
 import { Loader2, Send } from "lucide-react";
-import { ForumThread } from "@prisma/client";
 
 interface CreateThreadFormProps {
   isOpen: boolean;
@@ -53,8 +52,8 @@ export function CreateThreadForm({
   } = form;
 
   const handleSubmit = async (values: CreateThreadFormValues) => {
-    console.log("Form values:", values);
-    console.log("Form errors:", form.formState.errors);
+    // console.log("Form values:", values);
+    // console.log("Form errors:", form.formState.errors);
     const success = await onSubmit(values);
     if (success) {
       form.reset(); // Reset form only on successful submission
@@ -122,11 +121,7 @@ export function CreateThreadForm({
               >
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="bg-primary hover:bg-primary/90"
-              >
+              <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />

@@ -119,7 +119,7 @@ export function ForumThreadClientView({
   return (
     <>
       <section className="space-y-6">
-        <h2 className="text-2xl font-semibold font-headline">
+        <h2 className="text-xl font-semibold font-headline">
           Replies ({totalPostsCount})
         </h2>
         {postsLoading && !postsResponse?.data?.length && (

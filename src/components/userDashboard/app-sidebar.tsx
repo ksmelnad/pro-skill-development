@@ -11,6 +11,7 @@ import {
   Settings,
   ChartNoAxesCombined,
   User2,
+  GalleryVerticalEnd,
 } from "lucide-react";
 import {
   Sidebar,
@@ -66,15 +67,20 @@ const items = [
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { isMobile, toggleSidebar } = useSidebar();
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible="icon">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <Link href="/">
-                <Image src="/logo.svg" width={42} height={42} alt="logo" />
-                <span>My Skill Learning</span>
-              </Link>
+            <SidebarMenuButton size={"lg"} asChild>
+              <a href="/dashboard">
+                <div className="bg-primary text-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+                  <GalleryVerticalEnd className="size-4" />
+                </div>
+                <div className="flex flex-col gap-0.5 leading-none">
+                  <span className="font-medium">My Skill Learning</span>
+                  {/* <span className="">v1.0.0</span> */}
+                </div>
+              </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
