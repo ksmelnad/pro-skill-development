@@ -22,7 +22,6 @@ import {
   Settings,
 } from "lucide-react";
 import useSWR from "swr";
-import { Fallback } from "@radix-ui/react-avatar";
 import {
   Education,
   Experience,
