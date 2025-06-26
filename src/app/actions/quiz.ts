@@ -84,6 +84,7 @@ export async function createQuizResult({
     return {
       success: true,
       message: "Quiz result and certificate created successfully",
+      attempt: attempt,
     };
   } catch (error) {
     console.error("Error creating quiz result:", error);
@@ -116,6 +117,9 @@ export async function getQuizResult() {
   const quizResult = await prisma.quizResult.findMany({
     where: {
       userId,
+    },
+    orderBy: {
+      createdAt: "desc",
     },
   });
 
@@ -240,4 +244,79 @@ export async function getQuiz(quizId: string) {
     },
   });
   return quiz;
+}
+
+export async function getQuizDetailsForReview(quizId: string, attempt: number) {
+  const { userId } = await auth();
+  if (!userId) {
+    return { success: false, error: "User not authenticated." };
+  }
+
+  try {
+    const quiz = await prisma.quiz.findUnique({
+      where: { quizId },
+      // You might want to select specific fields to reduce payload size
+      select: {
+        quizId: true,
+        quizTitle: true,
+        quizTopic: true,
+        totalQuestions: true,
+        questions: {
+          select: {
+            questionId: true,
+            question: true,
+            difficulty: true,
+            correctOptionId: true,
+            options: {
+              select: {
+                optionId: true,
+                option: true,
+              },
+            },
+            // If you add explanation to your Prisma schema, include it here:
+            // explanation: true,
+          },
+        },
+      },
+    });
+
+    const quizResult = await prisma.quizResult.findUnique({
+      where: {
+        quizId_userId_attempt: {
+          quizId,
+          userId,
+          attempt,
+        },
+      },
+      select: {
+        score: true,
+        percent: true,
+        grade: true,
+        quizAnswers: true,
+        createdAt: true,
+        // If you add timeSpent or flaggedQuestions, include them here:
+        // timeSpent: true,
+        // flaggedQuestions: true,
+      },
+    });
+
+    if (!quiz) {
+      return { success: false, error: "Quiz not found." };
+    }
+
+    if (!quizResult) {
+      return {
+        success: false,
+        error: "Quiz result not found for this attempt.",
+      };
+    }
+
+    return { success: true, quiz, quizResult };
+  } catch (error: any) {
+    console.error("Error fetching quiz details for review:", error);
+    return {
+      success: false,
+      error: error.message || "An unexpected error occurred.",
+    };
+  }
 }

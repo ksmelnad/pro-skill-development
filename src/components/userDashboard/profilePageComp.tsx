@@ -108,8 +108,10 @@ export default function ProfilePageComp({
         </TabsList>
 
         <TabsContent value="personal" className="mt-6">
-          {/* Ensure personalInfo is passed correctly, handle null if necessary */}
-          <PersonalInfoForm personalInfo={fetchedProfileData?.personalInfo} />
+          <PersonalInfoForm
+            initialData={fetchedProfileData!}
+            mutateProfile={mutateProfile}
+          />
         </TabsContent>
         <TabsContent value="education" className="mt-6">
           {/* EducationForm expects a non-null Education object. Handle null from SWR. */}

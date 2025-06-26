@@ -1,9 +1,10 @@
+import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
+
 interface QuizHeaderProps {
   quizTitle: string;
   quizCode: string;
   quizTopic: string;
   totalQuestions: number;
-  userFullname: string;
   attempt: number;
 }
 
@@ -12,33 +13,31 @@ export default function QuizHeader({
   quizId,
   quizTopic,
   totalQuestions,
-  userFullname,
   attempt,
 }: {
   quizTitle: string;
   quizId: string;
   quizTopic: string;
   totalQuestions: number;
-  userFullname: string;
   attempt: number;
 }) {
   return (
-    <section className="bg-sidebar my-4 shadow-md rounded-md">
-      <div className="p-4">
-        <p className="font-semibold text-blue-800 mb-2">{quizTitle}</p>
-        <div className="flex justify-between text-sm">
+    <Card className="bg-primary text-white">
+      <CardHeader>
+        <CardTitle className=" text-center text-lg md:text-2xl font-semibold">
+          {quizTitle}
+        </CardTitle>
+        <div className="sm:flex justify-between">
           <div>
-            <p>Quiz code: {quizId}</p>
-
             <p>Topic: {quizTopic}</p>
-            <p>Total questions: {totalQuestions}</p>
+            <p>Quiz code: {quizId}</p>
           </div>
           <div>
-            <h3>Name: {userFullname}</h3>
+            <p>Total questions: {totalQuestions}</p>
             <p>Attempt: {attempt}</p>
           </div>
         </div>
-      </div>
-    </section>
+      </CardHeader>
+    </Card>
   );
 }

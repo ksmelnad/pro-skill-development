@@ -48,6 +48,7 @@ import {
   Users,
   Check,
   ChevronsUpDown,
+  Save,
 } from "lucide-react";
 import {
   Command,
@@ -75,6 +76,7 @@ import countriesWithStatesAndCities, {
   State,
 } from "@/data/countries_with_states_and_cities";
 import { updatePersonalInfo } from "@/app/actions/profile";
+import { ProfileWithPayload } from "@/types";
 // import { updatePersonalInfo } from "@/app/actions/profile";
 
 // TODO: Postal code validation can be added later
@@ -208,15 +210,24 @@ const formSchema = z.object({
     .nullable(),
 });
 
+interface PersonalInfoFormProps {
+  initialData: ProfileWithPayload;
+  mutateProfile: (
+    data?:
+      | ProfileWithPayload
+      | Promise<ProfileWithPayload | undefined>
+      | undefined,
+    options?: any
+  ) => Promise<ProfileWithPayload | undefined>;
+}
+
 export function PersonalInfoForm({
-  personalInfo,
-}: {
-  personalInfo?: PersonalInfo | null;
-}) {
+  initialData,
+  mutateProfile,
+}: PersonalInfoFormProps) {
   const { isLoaded, isSignedIn, user } = useUser();
   const { toast } = useToast();
-
-  const [date, setDate] = useState<Date>();
+  const personalInfo = initialData.personalInfo;
   const [availableStates, setAvailableStates] = useState<State[]>([]);
   const [availableCities, setAvailableCities] = useState<City[]>([]);
   // State for Combobox open/close
@@ -342,7 +353,7 @@ export function PersonalInfoForm({
         });
       }
     }
-  }, [isLoaded, isSignedIn, user, personalInfo, reset]);
+  }, [isLoaded, isSignedIn, user, initialData, reset, personalInfo]);
 
   // Watch the selected country and state values
   const selectedCountryId = form.watch("country");
@@ -391,8 +402,6 @@ export function PersonalInfoForm({
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Original form values (with IDs)
-    console.log("Original form values (IDs):", values);
-
     // --- Transformation to names ---
     let countryName = values.country; // Start with the ID or undefined/empty string
     let stateName = values.state;
@@ -431,59 +440,54 @@ export function PersonalInfoForm({
       city: cityName,
     };
 
-    console.log("Form values with names:", valuesWithNames);
+    const originalProfileDataForRollback = await mutateProfile(undefined, {
+      revalidate: false,
+    });
+
+    // Optimistic update
+    const newPersonalInfoData = {
+      ...initialData.personalInfo,
+      ...valuesWithNames,
+      // id: initialData.personalInfo?.id || "temp-id",
+      profileId: initialData.id,
+    };
+
+    await mutateProfile(
+      {
+        ...initialData,
+        personalInfo: newPersonalInfoData as PersonalInfo,
+      },
+      { revalidate: false }
+    );
 
     try {
       const response = await updatePersonalInfo(valuesWithNames);
-      if (response.success === true) {
+      if (response.success) {
         toast({
           title: "🎉 Personal Information has been updated successfully",
           description: response.message,
         });
+        mutateProfile(); // Revalidate to get latest data
+      } else {
+        toast({
+          title: "Error Saving",
+          description: response.error || "Failed to update personal info.",
+          variant: "destructive",
+        });
+        await mutateProfile(originalProfileDataForRollback, {
+          revalidate: false,
+        });
       }
-    } catch (error) {}
-
-    // console.log(response)
-
-    // try {
-    //   const response = await createProfile({
-    //     personalInfo: {
-    //       image: valuesWithNames.image,
-    //       fullName: valuesWithNames.fullName,
-    //       dob: valuesWithNames.dob.toISOString(),
-    //       mobile: valuesWithNames.mobile as string,
-    //       relative: valuesWithNames.relative,
-    //       address: valuesWithNames.address,
-    //       city: valuesWithNames.city, // Now this will be the name
-    //       state: valuesWithNames.state, // Now this will be the name
-    //       postalCode: valuesWithNames.postalCode,
-    //       country: valuesWithNames.country, // Now this will be the name
-    //       hobbies: valuesWithNames.hobbies,
-    //       areaImprovementCurrent: valuesWithNames.areaImprovementCurrent,
-    //       areaImprovementFuture: valuesWithNames.areaImprovementFuture,
-    //       linkedIn: valuesWithNames.linkedin || null,
-    //       github: valuesWithNames.github || null,
-    //       twitter: valuesWithNames.twitter || null,
-    //       facebook: valuesWithNames.facebook || null,
-    //     },
-    //   });
-    //   console.log(response);
-    //   if (response.success === true) {
-    //     toast({
-    //       title:
-    //         "🎉 Successfully saved your personalInfo. Redirecting to assessment...",
-    //       description: response.message,
-    //     });
-    //     router.push("/dashboard/assessment");
-    //   } else {
-    //     toast({
-    //       title: "❌ Error ",
-    //       description: "Something went wrong",
-    //       variant: "destructive",
-    //     });
-    //   }
-    // } catch (error) {
-    //   console.log(error);
+    } catch (error) {
+      toast({
+        title: "Unexpected Error",
+        description: "Could not save personal info.",
+        variant: "destructive",
+      });
+      await mutateProfile(originalProfileDataForRollback, {
+        revalidate: false,
+      });
+    }
   }
 
   const watchedValues = form.watch();
@@ -1086,17 +1090,24 @@ export function PersonalInfoForm({
             </FormItem>
           )}
         /> */}
-
-            <Button
-              disabled={form.formState.isSubmitting}
-              type="submit"
-              className="w-full md:w-auto"
-            >
-              {form.formState.isSubmitting && (
-                <Loader2 className="animate-spin" />
-              )}
-              {form.formState.isSubmitting ? "Saving..." : "Save"}
-            </Button>
+            <div className="flex justify-end">
+              <Button
+                disabled={form.formState.isSubmitting}
+                type="submit"
+                className="w-full md:w-auto"
+              >
+                {form.formState.isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Save className="mr-2 h-4 w-4" /> Save Personal Information
+                  </>
+                )}
+              </Button>
+            </div>
           </form>
         </Form>
       </CardContent>

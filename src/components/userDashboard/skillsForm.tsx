@@ -25,6 +25,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -452,17 +453,17 @@ export function SkillsForm({ initialData, mutateProfile }: SkillsFormProps) {
             <PlusCircle className="mr-2 h-4 w-4" /> Add New Skill
           </Button>
         )}
-        <div className="mt-8 flex justify-end border-t pt-6">
-          <Button
-            onClick={handleSaveAllSkills}
-            disabled={isSavingAll || skills.length === 0}
-          >
-            {isSavingAll && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            <Save className="mr-2 h-4 w-4" />
-            Save All Skills to Profile
-          </Button>
-        </div>
       </CardContent>
+      <CardFooter className="flex justify-end">
+        <Button
+          onClick={handleSaveAllSkills}
+          disabled={isSavingAll || skills.length === 0}
+        >
+          {isSavingAll && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          <Save className="mr-2 h-4 w-4" />
+          Save All Skills to Profile
+        </Button>
+      </CardFooter>
     </Card>
   );
 }
