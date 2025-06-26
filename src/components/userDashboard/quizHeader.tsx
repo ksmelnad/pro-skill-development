@@ -22,7 +22,7 @@ export default function QuizHeader({
   attempt: number;
 }) {
   return (
-    <Card className="bg-primary text-white">
+    <Card className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-white">
       <CardHeader>
         <CardTitle className=" text-center text-lg md:text-2xl font-semibold">
           {quizTitle}

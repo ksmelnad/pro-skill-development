@@ -41,7 +41,7 @@ export default function OnboardingComponent() {
         <CardHeader>
           <CardTitle>User Details</CardTitle>
           <CardDescription>
-            Your basic profile will be created with above details.
+            Your basic profile will be created with some details.
           </CardDescription>
         </CardHeader>
         <CardContent>

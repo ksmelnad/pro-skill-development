@@ -12,6 +12,7 @@ import {
   ChartNoAxesCombined,
   User2,
   GalleryVerticalEnd,
+  Users,
 } from "lucide-react";
 import {
   Sidebar,
@@ -42,13 +43,13 @@ const items = [
     url: "/dashboard/profile",
     icon: User2,
   },
+  // {
+  //   title: "Assessment",
+  //   url: "/dashboard/assessment",
+  //   icon: Glasses,
+  // },
   {
-    title: "Assessment",
-    url: "/dashboard/assessment",
-    icon: Glasses,
-  },
-  {
-    title: "Quiz",
+    title: "Quizzes",
     url: "/dashboard/quiz",
     icon: BookOpenCheck,
   },
@@ -57,11 +58,11 @@ const items = [
     url: "/dashboard/results",
     icon: ChartNoAxesCombined,
   },
-  // {
-  //   title: "Settings",
-  //   url: "#",
-  //   icon: Settings,
-  // },
+  {
+    title: "Community",
+    url: "/forum",
+    icon: Users,
+  },
 ];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {

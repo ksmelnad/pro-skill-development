@@ -200,7 +200,7 @@ const Quiz: React.FC<QuizProps> = ({ quiz, attemptCount }) => {
   //   return "border-blue-500";
   // };
   return (
-    <div>
+    <div className="space-y-4">
       <QuizHeader
         quizTitle={quiz.quizTitle}
         quizId={quiz.quizId}

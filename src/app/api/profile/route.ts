@@ -40,9 +40,6 @@ export async function POST(request: Request) {
     const { profile } = await request.json();
     // console.log("Profile: ", profile);
     const { userId } = await auth();
-    // if (!session?.user?.email) {
-    //   return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-    // }
 
     const profileWrite = await prisma.jobSeeker.create({
       data: {

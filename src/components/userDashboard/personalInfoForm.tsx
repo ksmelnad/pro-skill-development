@@ -618,6 +618,10 @@ export function PersonalInfoForm({
                           selected={field.value}
                           onSelect={field.onChange}
                           autoFocus
+                          disabled={(date) =>
+                            date > new Date() || date < new Date("1900-01-01")
+                          }
+                          captionLayout="dropdown"
                         />
                       </PopoverContent>
                     </Popover>

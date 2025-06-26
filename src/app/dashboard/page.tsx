@@ -28,19 +28,7 @@ import {
   BarChart3,
   Mail,
 } from "lucide-react";
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Cell,
-  Legend,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
 import { format } from "date-fns";
-import { Separator } from "@/components/ui/separator";
 import { QuizPerformanceChart } from "@/components/userDashboard/QuizPerformanceChart";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -157,7 +145,7 @@ export default async function page() {
             alt="profile pic"
             className="rounded-full"
           />
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 mt-2">
             {user?.emailAddresses[0].emailAddress}
           </p>
           <p className="text-sm text-gray-500">
@@ -165,7 +153,7 @@ export default async function page() {
           </p>
         </div>
         {/* Profile Completion Card */}
-        <Card className="shadow border-l-4 border-blue-500">
+        <Card className="shadow border-l-4 border-emerald-600">
           <CardHeader className="pb-2">
             <CardDescription className="text-sm text-gray-600">
               Your Progress
@@ -178,9 +166,9 @@ export default async function page() {
             <div className="flex items-center gap-3">
               <Progress
                 value={profileProgress}
-                className="flex-1 h-2 bg-blue-200"
+                className="flex-1 h-2 bg-gray-200"
               />
-              <span className="text-base font-semibold text-blue-700">
+              <span className="text-base font-semibold text-primary">
                 {profileProgress}%
               </span>
             </div>
@@ -239,7 +227,7 @@ export default async function page() {
           </CardFooter>
         </Card> */}
         {/* Forum Activity Card */}
-        <Card className="shadow border-l-4 border-purple-500">
+        <Card className="shadow border-l-4 border-amber-500">
           <CardHeader className="pb-2">
             <CardDescription className="text-sm text-gray-600">
               Community Engagement
@@ -251,19 +239,19 @@ export default async function page() {
           <CardContent className="space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-sm text-gray-700">Threads Created:</span>
-              <span className="text-base font-medium text-purple-700">
+              <span className="text-base font-medium text-gray-800">
                 {forumThreads}
               </span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-sm text-gray-700">Posts Made:</span>
-              <span className="text-base font-medium text-purple-700">
+              <span className="text-base font-medium text-gray-800">
                 {forumPosts}
               </span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-sm text-gray-700">Comments Made:</span>
-              <span className="text-base font-medium text-purple-700">
+              <span className="text-base font-medium text-gray-800">
                 {forumComments}
               </span>
             </div>
@@ -341,8 +329,8 @@ export default async function page() {
           <StatCard
             title="Attempted"
             value={quizResults.length}
-            valueColor="text-violet-600"
-            icon={<BookOpen className="w-6 h-6 text-violet-600" />}
+            valueColor="text-rose-600"
+            icon={<BookOpen className="w-6 h-6 text-rose-600" />}
           />
           <StatCard
             title="Passed"
