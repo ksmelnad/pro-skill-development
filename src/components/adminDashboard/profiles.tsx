@@ -34,16 +34,18 @@ import {
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 
-import { Profile as PrismaProfile } from "@prisma/client";
+import { User } from "@prisma/client";
 import { getClerkUserList, syncClerkUsersToDB } from "@/app/actions/clerk";
 import { toast } from "sonner";
+import { DataTable } from "../userDashboard/data-table";
+import Image from "next/image";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export const columns: ColumnDef<PrismaProfile>[] = [
+export const columns: ColumnDef<User>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -67,8 +69,18 @@ export const columns: ColumnDef<PrismaProfile>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "fullName",
-    header: "Profile",
+    accessorKey: "name",
+    header: "User",
+    cell: ({ row }) => {
+      const imageUrl: string = row.original.image!;
+      const name: string = row.getValue("name");
+      return (
+        <div className="flex items-center gap-2">
+          <Image src={imageUrl} alt="User" className="w-8 h-8 rounded-full" />
+          <span>{name}</span>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "createdAt",
@@ -106,73 +118,7 @@ export const columns: ColumnDef<PrismaProfile>[] = [
                 Here is the profile details.
               </DialogDescription>
             </DialogHeader>
-            <div>
-              <p>
-                <strong>Full Name:</strong> {profile.personalInfo?.fullName}
-              </p>
-              <p>
-                <strong>Date of Birth:</strong>{" "}
-                {new Date(profile.personalInfo?.dob!).toLocaleDateString(
-                  "en-US",
-                  {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  }
-                )}
-              </p>
-              <p>
-                <strong>Email:</strong> {profile.personalInfo?.email}
-              </p>
-              {profile.personalInfo?.mobile && (
-                <p>
-                  <strong>Mobile:</strong> {profile.personalInfo?.mobile}
-                </p>
-              )}
-              {profile.personalInfo?.address && (
-                <p>
-                  <strong>Address:</strong> {profile.personalInfo?.address}
-                </p>
-              )}
-              {profile.personalInfo?.city && (
-                <p>
-                  <strong>City:</strong> {profile.personalInfo?.city}
-                </p>
-              )}
-              {profile.personalInfo?.state && (
-                <p>
-                  <strong>State:</strong> {profile.personalInfo?.state}
-                </p>
-              )}
-              {profile.personalInfo?.postalCode && (
-                <p>
-                  <strong>Postal Code:</strong>{" "}
-                  {profile.personalInfo?.postalCode}
-                </p>
-              )}
-              {profile.personalInfo?.country && (
-                <p>
-                  <strong>Country:</strong> {profile.personalInfo?.country}
-                </p>
-              )}
-              {profile.personalInfo?.hobbies && (
-                <p>
-                  <strong>Hobbies:</strong> {profile.personalInfo?.hobbies}
-                </p>
-              )}
-              {profile.personalInfo?.areaImprovementCurrent && (
-                <p>
-                  <strong>Current Improvement Area:</strong>{" "}
-                  {profile.personalInfo?.areaImprovementCurrent}
-                </p>
-              )}
-              {profile.personalInfo?.areaImprovementFuture && (
-                <p>
-                  <strong>Future Improvement Area:</strong>{" "}
-                  {profile.personalInfo?.areaImprovementFuture}
-                </p>
-              )}
-            </div>
+
             <DialogFooter>
               <DialogClose>Close</DialogClose>
             </DialogFooter>
@@ -183,82 +129,82 @@ export const columns: ColumnDef<PrismaProfile>[] = [
   },
 ];
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
-    currency: false,
-  });
-  const [rowSelection, setRowSelection] = useState({});
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: setColumnFilters,
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    },
-  });
+// export function DataTable<TData, TValue>({
+//   columns,
+//   data,
+// }: DataTableProps<TData, TValue>) {
+//   const [sorting, setSorting] = useState<SortingState>([]);
+//   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+//   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+//     currency: false,
+//   });
+//   const [rowSelection, setRowSelection] = useState({});
+//   const table = useReactTable({
+//     data,
+//     columns,
+//     getCoreRowModel: getCoreRowModel(),
+//     getPaginationRowModel: getPaginationRowModel(),
+//     onSortingChange: setSorting,
+//     getSortedRowModel: getSortedRowModel(),
+//     onColumnFiltersChange: setColumnFilters,
+//     getFilteredRowModel: getFilteredRowModel(),
+//     onColumnVisibilityChange: setColumnVisibility,
+//     onRowSelectionChange: setRowSelection,
+//     state: {
+//       sorting,
+//       columnFilters,
+//       columnVisibility,
+//       rowSelection,
+//     },
+//   });
 
-  return (
-    <div className="rounded-md border">
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </div>
-  );
-}
+//   return (
+//     <div className="rounded-md border">
+//       <Table>
+//         <TableHeader>
+//           {table.getHeaderGroups().map((headerGroup) => (
+//             <TableRow key={headerGroup.id}>
+//               {headerGroup.headers.map((header) => {
+//                 return (
+//                   <TableHead key={header.id}>
+//                     {header.isPlaceholder
+//                       ? null
+//                       : flexRender(
+//                           header.column.columnDef.header,
+//                           header.getContext()
+//                         )}
+//                   </TableHead>
+//                 );
+//               })}
+//             </TableRow>
+//           ))}
+//         </TableHeader>
+//         <TableBody>
+//           {table.getRowModel().rows?.length ? (
+//             table.getRowModel().rows.map((row) => (
+//               <TableRow
+//                 key={row.id}
+//                 data-state={row.getIsSelected() && "selected"}
+//               >
+//                 {row.getVisibleCells().map((cell) => (
+//                   <TableCell key={cell.id}>
+//                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
+//                   </TableCell>
+//                 ))}
+//               </TableRow>
+//             ))
+//           ) : (
+//             <TableRow>
+//               <TableCell colSpan={columns.length} className="h-24 text-center">
+//                 No results.
+//               </TableCell>
+//             </TableRow>
+//           )}
+//         </TableBody>
+//       </Table>
+//     </div>
+//   );
+// }
 
 const handleSyncClerkUserListToDB = async () => {
   const response = await syncClerkUsersToDB();
@@ -268,13 +214,14 @@ const handleSyncClerkUserListToDB = async () => {
   });
 };
 
-export default function Profiles({ profiles }: { profiles: PrismaProfile[] }) {
+export default function Profiles({ users }: { users: User[] }) {
   return (
     <div>
       <Button onClick={handleSyncClerkUserListToDB}>
         Sync Clerk User List to DB
       </Button>
-      <DataTable columns={columns} data={profiles} />;
+      {/* <DataTable columns={columns} data={users} /> */}
+      <DataTable columns={columns} data={users} />
     </div>
   );
 }

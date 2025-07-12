@@ -12,7 +12,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="bg-gray-100">
+    <div className="bg-background">
       <Navbar />
       {children}
     </div>

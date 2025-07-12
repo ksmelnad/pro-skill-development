@@ -1,4 +1,4 @@
-import { getQuizzes } from "@/app/actions/quiz";
+import { getEnabledQuizzes, getQuizzes } from "@/app/actions/quiz";
 import {
   Card,
   CardContent,
@@ -37,7 +37,7 @@ const getDifficultyColor = (difficulty: string) => {
 };
 
 const page = async () => {
-  const quizzes = await getQuizzes();
+  const quizzes = await getEnabledQuizzes();
 
   return (
     <div className="">
@@ -200,7 +200,8 @@ const page = async () => {
                 <QuizPreviewModal quiz={quiz}>
                   <Button
                     variant="outline"
-                    className="w-full border-2 border-blue-200 text-blue-600 hover:bg-blue-50 font-medium py-2.5 rounded-xl transition-all duration-200"
+                    className="w-full rounded-xl border-2 py-2.5 text-blue-600"
+                    // className="w-full border-2 border-blue-200 text-blue-600 hover:bg-blue-800 font-medium py-2.5 rounded-xl transition-all duration-200"
                   >
                     <Eye className="h-4 w-4 mr-2" />
                     Preview Quiz

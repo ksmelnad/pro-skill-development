@@ -20,6 +20,7 @@ export const quizSchema = z.object({
   quizTopic: z.string(),
   totalQuestions: z.number(),
   maxAttempts: z.number(),
+  allotedTime: z.number(),
   questions: z.array(quizQuestionSchema),
 });
 

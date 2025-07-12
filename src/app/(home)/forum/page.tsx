@@ -44,21 +44,23 @@ export default async function ForumPage() {
   const initialThreadsResponse = await getInitialThreads();
 
   return (
-    <div className="space-y-8 p-4 md:p-6 container mx-auto bg-gray-100">
-      <header className="flex items-center justify-center gap-4 h-60 bg-linear-to-r from-blue-600 to-violet-600 rounded-md text-white p-4">
-        <div className="flex flex-col items-center space-y-3 ">
-          <MessageSquareText className="w-10 h-10 " />
-          <h1 className="text-xl md:text-2xl lg:text-4xl font-headline font-bold">
-            Welcome to MSL Community Forum!
-          </h1>
-          <p className="text-sm md:text-base text-center">
-            A place to share your thoughts and interact with other users of this
-            platform.
-          </p>
-        </div>
-        {/* Create New Thread button will be part of ForumClientPage for interactivity */}
-      </header>
-      <ForumClientPage initialThreadsResponse={initialThreadsResponse} />
+    <div className="bg-gray-100">
+      <div className="space-y-8 p-4 md:p-6 container mx-auto">
+        <header className="flex items-center justify-center gap-4 h-60 bg-linear-to-r from-blue-600 to-violet-600 rounded-md text-white p-4">
+          <div className="flex flex-col items-center space-y-3 ">
+            <MessageSquareText className="w-10 h-10 " />
+            <h1 className="text-xl md:text-2xl lg:text-4xl font-headline font-bold">
+              Welcome to MSL Community Forum!
+            </h1>
+            <p className="text-sm md:text-base text-center">
+              A place to share your thoughts and interact with other users of
+              this platform.
+            </p>
+          </div>
+          {/* Create New Thread button will be part of ForumClientPage for interactivity */}
+        </header>
+        <ForumClientPage initialThreadsResponse={initialThreadsResponse} />
+      </div>
     </div>
   );
 }

@@ -1,9 +1,22 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+/* src/app/globals.css */
 
+/* 1. Core Tailwind CSS and Animation Imports */
+@import "tailwindcss";
+@import "tw-animate-css"; /* For shadcn/ui animations */
+
+/* 2. Custom Variants (like dark mode) */
+/* This defines a custom 'dark' variant that applies when any ancestor has the '.dark' class. */
 @custom-variant dark (&:is(.dark *));
 
-@theme {
+/* 3. Tailwind CSS v4 Theme Configuration (@theme inline) */
+/*
+  This is the core of Tailwind CSS v4's configuration.
+  All design tokens (colors, spacing, fonts, etc.) are defined here
+  as CSS variables and mapped to Tailwind's utility system.
+*/
+@theme inline {
+  /* --- Colors (Mapped from :root/.dark CSS variables) --- */
+  /* Shadcn/ui colors */
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
@@ -31,7 +44,8 @@
   --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
 
-  --color-sidebar: hsl(var(--sidebar-background));
+  /* Custom sidebar colors */
+  --color-sidebar: hsl(var(--sidebar));
   --color-sidebar-foreground: hsl(var(--sidebar-foreground));
   --color-sidebar-primary: hsl(var(--sidebar-primary));
   --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
@@ -40,14 +54,58 @@
   --color-sidebar-border: hsl(var(--sidebar-border));
   --color-sidebar-ring: hsl(var(--sidebar-ring));
 
-  --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-sm: calc(var(--radius) - 4px);
+  /* Custom success color */
+  --color-success: hsl(var(--success));
+  --color-success-foreground: hsl(var(--success-foreground));
 
+  /* Learning-specific colors */
+  --color-learning-orange: hsl(var(--learning-orange));
+  --color-learning-blue: hsl(var(--learning-blue));
+  --color-learning-purple: hsl(var(--learning-purple));
+  --color-learning-green: hsl(var(--learning-green));
+
+  /* --- Gradients (Mapped to background-image utilities) --- */
+  /*
+    These map your custom CSS gradient variables (defined in :root)
+    to Tailwind's `bg-*` utilities.
+    The convention is --background-image-<your-key>.
+  */
+  --background-image-gradient-primary: var(--gradient-primary);
+  --background-image-gradient-secondary: var(--gradient-secondary);
+  --background-image-gradient-hero: var(--gradient-hero);
+  --background-image-gradient-card: var(--gradient-card);
+
+  /* Note: Removed --color-gradient-X mappings as they were incorrect for gradients.
+     Gradients are background-images, not single colors. */
+
+  /* --- Shadows (Mapped to box-shadow utilities) --- */
+  /* The convention is --box-shadow-<your-key>. */
+  --box-shadow-soft: var(--shadow-soft);
+  --box-shadow-medium: var(--shadow-medium);
+  --box-shadow-strong: var(--shadow-strong);
+  --box-shadow-glow: var(--shadow-glow);
+
+  /* --- Border Radius (Mapped to rounded-* utilities) --- */
+  /* Aligned with common shadcn/ui v4 radius scale */
+  --radius-xs: calc(var(--radius) - 4px); /* Smallest radius */
+  --radius-sm: calc(var(--radius) - 2px); /* Smaller than default */
+  --radius-md: var(--radius); /* Default radius, maps to --radius */
+  --radius-lg: calc(var(--radius) + 2px); /* Larger than default */
+  --radius-xl: calc(var(--radius) + 4px); /* Largest radius */
+
+  /* --- Animations (Mapped to animate-* utilities) --- */
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
   --animate-infinite-scroll: infinite-scroll 25s linear infinite;
+  --animate-fade-in-up: fade-in-up 0.5s ease-out; /* From your custom class */
+  /*
+    TODO: If you have an 'animate-scale-in' utility used in your components
+    (e.g., in StatsSection.tsx), you need to define its mapping here
+    and its @keyframes below. Example:
+    --animate-scale-in: scale-in 0.5s ease-out;
+  */
 
+  /* --- Keyframes (Definitions for custom animations) --- */
   @keyframes accordion-down {
     from {
       height: 0;
@@ -72,10 +130,32 @@
       transform: translateX(-100%);
     }
   }
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  /*
+    TODO: Define @keyframes for 'scale-in' if you add
+    --animate-scale-in above. Example:
+    @keyframes scale-in {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  */
 
-  --font-headline: Space Grotesk, sans-serif;
+  /* --- Fonts (Mapped to font-family utilities) --- */
+  /* The convention is --font-family-<your-key>. */
+  --font-family-headline: var(--font-headline);
 }
 
+/* 4. Custom Utility Definitions */
+/* Allows you to define custom utilities using standard CSS */
 @utility container {
   margin-inline: auto;
   padding-inline: 2rem;
@@ -87,50 +167,45 @@
   }
 }
 
+/* 5. Base CSS Variables (Shadcn/ui theme definitions) */
 /*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
+  These are the raw CSS variables that hold your color values (HSL or OKLCH).
+  They are then referenced by the --color-X mappings in @theme inline.
 */
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-}
-
 :root {
+  /* Light Mode Colors */
   --background: 0 0% 100%;
-  --foreground: 224 71.4% 4.1%;
+  --foreground: 228 12% 15%;
   --card: 0 0% 100%;
-  --card-foreground: 224 71.4% 4.1%;
+  --card-foreground: 228 12% 15%;
   --popover: 0 0% 100%;
-  --popover-foreground: 224 71.4% 4.1%;
-  --primary: 262.1 83.3% 57.8%;
-  --primary-foreground: 210 20% 98%;
-  --secondary: 220 14.3% 95.9%;
-  --secondary-foreground: 220.9 39.3% 11%;
-  --muted: 220 14.3% 95.9%;
-  --muted-foreground: 220 8.9% 46.1%;
-  --accent: 220 14.3% 95.9%;
-  --accent-foreground: 220.9 39.3% 11%;
+  --popover-foreground: 228 12% 15%;
+  --primary: 221 83% 53%; /* Professional blue for trust and learning */
+  --primary-foreground: 0 0% 98%;
+  --primary-glow: 221 100% 65%;
+  --secondary: 262 83% 58%; /* Sophisticated purple for innovation */
+  --secondary-foreground: 0 0% 98%;
+  --muted: 210 40% 98%; /* Subtle grays for backgrounds */
+  --muted-foreground: 228 12% 45%;
+  --accent: 25 95% 53%; /* Energetic orange for CTAs */
+  --accent-foreground: 0 0% 98%;
+  --success: 142 76% 36%; /* Green for achievements */
+  --success-foreground: 0 0% 98%;
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 210 20% 98%;
   --border: 220 13% 91%;
   --input: 220 13% 91%;
   --ring: 262.1 83.3% 57.8%;
-  --radius: 0.5rem;
+  --radius: 0.5rem; /* Base border-radius for shadcn/ui components */
+
+  /* Chart colors (often used directly in JS for chart libraries) */
   --chart-1: 12 76% 61%;
   --chart-2: 173 58% 39%;
   --chart-3: 197 37% 24%;
   --chart-4: 43 74% 66%;
   --chart-5: 27 87% 67%;
+
+  /* Sidebar colors (using OKLCH as in your original) */
   --sidebar: oklch(1 0 0);
   --sidebar-foreground: oklch(0.141 0.005 285.823);
   --sidebar-primary: oklch(0.606 0.25 292.717);
@@ -139,8 +214,50 @@
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.606 0.25 292.717);
+
+  /* Learning-specific colors */
+  --learning-blue: 202 100% 50%;
+  --learning-purple: 266 100% 78%;
+  --learning-green: 134 61% 41%;
+  --learning-orange: 25 95% 53%;
+
+  /* Gradients for modern feel (defined as CSS image values) */
+  --gradient-primary: linear-gradient(
+    135deg,
+    hsl(var(--primary)),
+    hsl(var(--primary-glow))
+  );
+  --gradient-secondary: linear-gradient(
+    135deg,
+    hsl(var(--secondary)),
+    hsl(262 90% 70%)
+  );
+  --gradient-hero: linear-gradient(
+    135deg,
+    hsl(var(--primary)) 0%,
+    hsl(var(--secondary)) 100%
+  );
+  --gradient-card: linear-gradient(
+    145deg,
+    hsl(0 0% 100%) 0%,
+    hsl(220 13% 97%) 100%
+  );
+
+  /* Shadows (defined as CSS box-shadow values) */
+  --shadow-soft: 0 4px 20px -2px hsl(var(--primary) / 0.1);
+  --shadow-medium: 0 10px 40px -4px hsl(var(--primary) / 0.15);
+  --shadow-strong: 0 20px 60px -8px hsl(var(--primary) / 0.25);
+  --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.3);
+
+  /* Animations (for direct CSS use, not Tailwind utilities) */
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* Fonts (for direct CSS use, mapped to Tailwind utility above) */
+  --font-headline: "Space Grotesk", sans-serif;
 }
 
+/* Dark Mode Colors (applied when .dark class is present) */
 .dark {
   --background: 224 71.4% 4.1%;
   --foreground: 210 20% 98%;
@@ -161,11 +278,15 @@
   --border: 215 27.9% 16.9%;
   --input: 215 27.9% 16.9%;
   --ring: 263.4 70% 50.4%;
+
+  /* Dark mode chart colors */
   --chart-1: 220 70% 50%;
   --chart-2: 160 60% 45%;
   --chart-3: 30 80% 55%;
   --chart-4: 280 65% 60%;
   --chart-5: 340 75% 55%;
+
+  /* Dark mode sidebar colors (using OKLCH as in your original) */
   --sidebar: oklch(0.21 0.006 285.885);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.541 0.281 293.009);
@@ -176,15 +297,22 @@
   --sidebar-ring: oklch(0.541 0.281 293.009);
 }
 
+/* 6. Base Styles and CSS Reset (@layer base) */
+/*
+  This layer contains global styles and a CSS reset.
+  The default border color changed in v4, so this ensures compatibility.
+*/
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
   }
 }
 
+/* 7. Custom CSS Classes (not Tailwind utilities) */
+/* These are standard CSS classes that you apply directly in your HTML. */
 .section-title {
   @apply text-xl font-semibold md:text-2xl p-4 mt-4;
 }
@@ -201,33 +329,23 @@
   background-position-x: 0%;
   background-size: 200%;
   animation: gradimate 3s linear infinite;
-  background-clip: text;
+  background-clip: text; /* This makes the gradient apply to the text color */
+  -webkit-background-clip: text; /* For Safari */
+  -webkit-text-fill-color: transparent; /* Makes text transparent to show gradient */
+}
+
+/* Keyframes for the custom .gradient class */
+@keyframes gradimate {
+  0% {
+    background-position-x: 0%;
+  }
+  100% {
+    background-position-x: 200%;
+  }
 }
 
 /*
-  ---break---
+  Removed .animate-fade-in-up as a standalone class.
+  It's now mapped as a Tailwind utility in @theme inline
+  and can be used directly as `animate-fade-in-up`.
 */
-
-@theme inline {
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-}
-
-/*
-  ---break---
-*/
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}

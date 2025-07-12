@@ -98,58 +98,60 @@ export default async function ForumThreadPage({
   const initialPostsResponse = await getInitialPosts(thread.id);
 
   return (
-    <div className="space-y-8 p-4 md:p-6 container mx-auto bg-gray-100">
-      <header className="flex items-center justify-center gap-4 h-60 bg-linear-to-r from-blue-600 to-violet-600 rounded-md text-white p-4">
-        <div className="flex flex-col items-center space-y-3 ">
-          <MessageSquareText className="w-10 h-10 " />
-          <h1 className="text-xl md:text-2xl lg:text-4xl font-headline font-bold">
-            Welcome to MSL Community Forum!
-          </h1>
-          <p className="text-sm md:text-base text-center">
-            A place to share your thoughts and interact with other users of this
-            platform.
-          </p>
-        </div>
-        {/* Create New Thread button will be part of ForumClientPage for interactivity */}
-      </header>
-      <Button asChild variant="outline" size="sm" className="mb-6">
-        <Link href="/forum">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to All Threads
-        </Link>
-      </Button>
-
-      <Card className="shadow-lg">
-        <CardHeader>
-          <CardTitle className="text-2xl font-headline">
-            {thread.title}
-          </CardTitle>
-          <div className="text-sm text-muted-foreground flex items-center gap-2 mt-1">
-            <Image
-              src={thread.author.image || "https://placehold.co/40x40.png"}
-              alt={thread.author.name || "Author"}
-              width={24}
-              height={24}
-              className="rounded-full"
-              data-ai-hint="person avatar"
-            />
-            <span>By {thread.author.name || "Unknown User"}</span>
-            <span>&bull;</span>
-            <span>{format(new Date(thread.createdAt), "PPpp")}</span>
+    <div className="bg-gray-100">
+      <div className="space-y-8 p-4 md:p-6 container mx-auto">
+        <header className="flex items-center justify-center gap-4 h-60 bg-linear-to-r from-blue-600 to-violet-600 rounded-md text-white p-4">
+          <div className="flex flex-col items-center space-y-3 ">
+            <MessageSquareText className="w-10 h-10 " />
+            <h1 className="text-xl md:text-2xl lg:text-4xl font-headline font-bold">
+              Welcome to MSL Community Forum!
+            </h1>
+            <p className="text-sm md:text-base text-center">
+              A place to share your thoughts and interact with other users of
+              this platform.
+            </p>
           </div>
-        </CardHeader>
-        <CardContent className="mb-4 py-4">
-          {/* Ensure whitespace-pre-wrap is applied to respect newlines from DB */}
-          <div className="prose dark:prose-invert max-w-none whitespace-pre-wrap">
-            {thread.content}
-          </div>
-        </CardContent>
-      </Card>
+          {/* Create New Thread button will be part of ForumClientPage for interactivity */}
+        </header>
+        <Button asChild variant="outline" size="sm" className="mb-6">
+          <Link href="/forum">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to All Threads
+          </Link>
+        </Button>
 
-      <ForumThreadClientView
-        threadId={thread.id}
-        initialPostsResponse={initialPostsResponse}
-      />
+        <Card className="shadow-lg">
+          <CardHeader>
+            <CardTitle className="text-2xl font-headline">
+              {thread.title}
+            </CardTitle>
+            <div className="text-sm text-muted-foreground flex items-center gap-2 mt-1">
+              <Image
+                src={thread.author.image || "https://placehold.co/40x40.png"}
+                alt={thread.author.name || "Author"}
+                width={24}
+                height={24}
+                className="rounded-full"
+                data-ai-hint="person avatar"
+              />
+              <span>By {thread.author.name || "Unknown User"}</span>
+              <span>&bull;</span>
+              <span>{format(new Date(thread.createdAt), "PPpp")}</span>
+            </div>
+          </CardHeader>
+          <CardContent className="mb-4 py-4">
+            {/* Ensure whitespace-pre-wrap is applied to respect newlines from DB */}
+            <div className="prose dark:prose-invert max-w-none whitespace-pre-wrap">
+              {thread.content}
+            </div>
+          </CardContent>
+        </Card>
+
+        <ForumThreadClientView
+          threadId={thread.id}
+          initialPostsResponse={initialPostsResponse}
+        />
+      </div>
     </div>
   );
 }

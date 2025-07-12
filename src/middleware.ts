@@ -7,8 +7,14 @@ const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
 const isPublicRoute = createRouteMatcher(["/"]);
 
 export default clerkMiddleware(async (auth, req) => {
+  if (
+    isAdminRoute(req) &&
+    (await auth()).sessionClaims?.metadata?.role !== "admin"
+  ) {
+    const url = new URL("/", req.url);
+    return NextResponse.redirect(url);
+  }
   const { userId, sessionClaims, redirectToSignIn } = await auth();
-
   // For users visiting /onboarding, don't try to redirect
   if (userId && isOnboardingRoute(req)) {
     return NextResponse.next();
@@ -28,13 +34,6 @@ export default clerkMiddleware(async (auth, req) => {
   // If the user is logged in and the route is protected, let them view.
   if (userId && !isPublicRoute(req)) return NextResponse.next();
 
-  if (
-    isAdminRoute(req) &&
-    (await auth()).sessionClaims?.metadata?.role !== "admin"
-  ) {
-    const url = new URL("/", req.url);
-    return NextResponse.redirect(url);
-  }
   if (isProtectedRoute(req)) await auth.protect();
 });
 

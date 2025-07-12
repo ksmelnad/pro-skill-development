@@ -29,8 +29,8 @@ export default function Navbar() {
   const [sheetOpen, setSheetOpen] = useState(false);
 
   return (
-    <header className="py-4 ">
-      <div className="container mx-auto flex justify-between items-center">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
+      <div className="container mx-auto px-4 flex justify-between items-center h-16">
         <div className="flex items-center">
           <Image src="/logo.svg" width={65} height={65} alt="logo" />
           <Link href="/">

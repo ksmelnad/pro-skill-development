@@ -237,6 +237,29 @@ export async function getQuizzes() {
   return quizzes;
 }
 
+export async function getEnabledQuizzes() {
+  const quizzes = await prisma.quiz.findMany();
+  return quizzes.filter((quiz) => quiz.enabled);
+}
+
+export async function updateQuizState({
+  quizId,
+  enabled,
+}: {
+  quizId: string;
+  enabled: boolean;
+}) {
+  const quiz = await prisma.quiz.update({
+    where: {
+      quizId,
+    },
+    data: {
+      enabled,
+    },
+  });
+  return quiz;
+}
+
 export async function getQuiz(quizId: string) {
   const quiz = await prisma.quiz.findUnique({
     where: {

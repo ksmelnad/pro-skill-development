@@ -8,11 +8,12 @@ import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 const Hero = () => {
   return (
-    <div className="relative h-screen ">
-      {/* <Navbar /> */}
+    <div className="relative">
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-blue-100 -z-10"></div>
+      <div className="absolute inset-0 bg-[url(/grid.svg)] bg-center -z-10"></div>
       <section className="relative h-[90vh] flex justify-center items-center">
         <div className="container grid grid-cols-1 md:grid-cols-2 items-center">
-          <div className="flex flex-col justify-center gap-4 ">
+          <div className="flex flex-col justify-center gap-4 animate-fade-in-up">
             <h2 className="text-4xl max-w-sm lg:max-w-lg lg:text-5xl font-bold">
               Unlock Your Potential, One Skill at a Time
             </h2>
@@ -39,18 +40,14 @@ const Hero = () => {
             <div className="relative h-[400px] w-[400px] lg:h-[400px] lg:w-[400px]">
               <Image
                 src={
-                  "https://plus.unsplash.com/premium_photo-1661475855862-3f61f5b580e6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 }
                 alt="hero image"
                 className="object-cover rounded-md"
                 fill
               />
             </div>
-            {/* <CarouselComp /> */}
           </div>
-        </div>
-        <div className="absolute bottom-0 right-0 h-[70px] w-full flex justify-center items-center">
-          <p className="text-sm ">My skill learning © 2025</p>
         </div>
       </section>
     </div>

@@ -1,65 +1,60 @@
+import { Facebook, Linkedin, Twitter } from "lucide-react";
 import Link from "next/link";
-import React from "react";
 
 const navItems = [
-  // {
-  //   title: "Job Seekers",
-  //   href: "#",
-  // },
-  // {
-  //   title: "Employers",
-  //   href: "#",
-  // },
   {
-    title: "Quiz",
-    href: "/quiz",
+    title: "Features",
+    href: "#features",
   },
-];
-
-const otherLinks = [
-  // {
-  //   title: "About Us",
-  //   href: "#",
-  // },
-  // {
-  //   title: "Contact",
-  //   href: "#",
-  // },
-  // {
-  //   title: "Terms and Conditions",
-  //   href: "#",
-  // },
-  // {
-  //   title: "Privacy Policy",
-  //   href: "#",
-  // },
+  {
+    title: "Pricing",
+    href: "#pricing",
+  },
+  {
+    title: "Contact",
+    href: "#contact",
+  },
 ];
 
 const Footer = () => {
   return (
-    <section className="bg-slate-700 py-6 md:py-8 text-white h-[200px] flex justify-center items-center">
-      <div className="container mx-auto px-4 ">
+    <footer className="bg-gray-900 text-white py-8">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
-          <h3 className="text-sm font-bold text-center">
-            My Skill Learning @ 2025
-          </h3>
+          <h3 className="text-xl font-bold">My Skill Learning</h3>
+          <p className="mt-2">Unlock your potential, one skill at a time.</p>
         </div>
-        {/* <ul className="text-sm text-slate-200 space-y-2">
-          {navItems.map((item, index) => (
-            <li key={index}>
-              <Link href={item.href}>{item.title}</Link>
-            </li>
-          ))}
-        </ul> */}
-        {/* <ul className="text-sm text-slate-200 space-y-2">
-          {otherLinks.map((item, index) => (
-            <li key={index}>
-              <Link href={item.href}>{item.title}</Link>
-            </li>
-          ))}
-        </ul> */}
+        <div>
+          <h3 className="text-xl font-bold">Quick Links</h3>
+          <ul className="mt-2 space-y-2">
+            {navItems.map((item, index) => (
+              <li key={index}>
+                <Link href={item.href} className="hover:text-gray-400">
+                  {item.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3 className="text-xl font-bold">Follow Us</h3>
+          <div className="flex space-x-4 mt-2">
+            <Link href="#" className="hover:text-gray-400">
+              <Twitter />
+            </Link>
+            <Link href="#" className="hover:text-gray-400">
+              <Linkedin />
+            </Link>
+            <Link href="#" className="hover:text-gray-400">
+              <Facebook />
+            </Link>
+          </div>
+        </div>
       </div>
-    </section>
+      <div className="container mx-auto text-center mt-8">
+        <p>&copy; 2025 My Skill Learning. All rights reserved.</p>
+      </div>
+    </footer>
   );
 };
 

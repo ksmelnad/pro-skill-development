@@ -35,23 +35,23 @@ const companies = [
 
 const Companies = () => {
   return (
-    <section className="py-8 md:py-12">
+    <section className="py-20 lg:py-24 bg-white">
       <div className="container mx-auto">
-        <h2 className="text-xl lg:text-3xl text-center font-bold mb-4">
+        <h2 className="text-3xl lg:text-4xl text-center font-bold mb-4">
           Trusted by Industry Leaders
         </h2>
-        <p className="text-sm text-center">
+        <p className="text-lg text-center max-w-2xl mx-auto">
           Join the ranks of top companies that are eager to hire the best talent
           in the industry.
         </p>
-        <div className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {companies.map((item, index) => (
             <div
               key={index}
-              className="flex flex-col justify-center px-4 md:px-6 py-6 md:py-8 rounded-sm border shadow-xs"
+              className="flex flex-col justify-center p-6 rounded-lg border shadow-lg transform hover:scale-105 transition-transform duration-300 bg-slate-50"
             >
-              <p className="font-bold">{item.name}</p>
-              <p className="text-sm">{item.description}</p>
+              <p className="font-bold text-xl">{item.name}</p>
+              <p className="text-sm mt-2">{item.description}</p>
             </div>
           ))}
         </div>
