@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
 import heroImage from "hero-image.jpg";
+import Link from "next/link";
 
 export const HeroSection = () => {
   return (
@@ -36,18 +37,23 @@ export const HeroSection = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-in"
             style={{ animationDelay: "0.4s" }}
           >
-            <Button variant="hero" size="lg" className="group">
-              Start Learning Today
-              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            <Button variant="hero" size="lg" className="group" asChild>
+              <Link href="/sign-up">
+                Start Your Journey
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </Link>
             </Button>
 
             <Button
               variant="outline"
               size="lg"
               className="bg-background/10 border-primary-foreground/20 text-primary-foreground hover:bg-background/20 backdrop-blur-sm"
+              asChild
             >
-              <Play className="mr-2 h-5 w-5" />
-              Watch Demo
+              <Link href="#features">
+                <Play className="mr-2 h-5 w-5" />
+                Know more
+              </Link>
             </Button>
           </div>
 

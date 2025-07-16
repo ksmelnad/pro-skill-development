@@ -76,7 +76,13 @@ export const columns: ColumnDef<User>[] = [
       const name: string = row.getValue("name");
       return (
         <div className="flex items-center gap-2">
-          <Image src={imageUrl} alt="User" className="w-8 h-8 rounded-full" />
+          <Image
+            src={imageUrl}
+            alt="User"
+            className="w-8 h-8 rounded-full"
+            width={40}
+            height={40}
+          />
           <span>{name}</span>
         </div>
       );
