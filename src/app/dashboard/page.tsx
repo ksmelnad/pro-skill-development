@@ -425,7 +425,7 @@ function StatCard({
   description,
 }: StatCardProps) {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
       <div className="flex items-center justify-between">
         <p className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">
           {title}

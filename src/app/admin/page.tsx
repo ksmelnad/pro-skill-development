@@ -10,6 +10,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { getQuizzes } from "../actions/quiz";
 import { getProfiles } from "../actions/profile";
+import { cn } from "@/lib/utils";
+import { BookOpen, Brain, Trophy } from "lucide-react";
+
+interface StatCardProps {
+  title: string;
+  value: string | number;
+  valueColor?: string;
+  icon: React.ReactNode;
+  description?: string;
+}
+
 export default async function page() {
   const quizzes = await getQuizzes();
   const profiles = await getProfiles();
@@ -17,6 +28,26 @@ export default async function page() {
   return (
     <div className="">
       <h3 className="section-title">Welcome Admin! </h3>
+      <div className="p-4 grid auto-rows-min gap-4 md:grid-cols-3">
+        <StatCard
+          title="Users"
+          value={profiles.length}
+          valueColor="text-emerald-600"
+          icon={<Trophy className="w-6 h-6 text-emerald-600" />}
+        />
+        <StatCard
+          title="Profiles"
+          value={profiles.length}
+          valueColor="text-blue-600"
+          icon={<Brain className="w-6 h-6 text-blue-600" />}
+        />
+        <StatCard
+          title="Quizzes"
+          value={quizzes.length}
+          valueColor="text-rose-600"
+          icon={<BookOpen className="w-6 h-6 text-rose-600" />}
+        />
+      </div>
       <div className="p-4 grid auto-rows-min gap-4 md:grid-cols-3">
         <Card>
           <CardHeader>
@@ -46,6 +77,33 @@ export default async function page() {
             </Button>
           </CardFooter>
         </Card>
+      </div>
+    </div>
+  );
+}
+
+function StatCard({
+  title,
+  value,
+  valueColor,
+  icon,
+  description,
+}: StatCardProps) {
+  return (
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+      <div className="flex items-center justify-between">
+        <p className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">
+          {title}
+        </p>
+        <div className="text-primary-500 dark:text-primary-400">{icon}</div>
+      </div>
+      <div className="mt-2">
+        <p className={cn("text-3xl font-semibold", valueColor)}>{value}</p>
+        {description && (
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            {description}
+          </p>
+        )}
       </div>
     </div>
   );
