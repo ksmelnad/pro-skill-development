@@ -1,30 +1,9 @@
 "use client";
-import { useState, useTransition } from "react";
-import {
-  SortingState,
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  getPaginationRowModel,
-  useReactTable,
-  getSortedRowModel,
-  getFilteredRowModel,
-  ColumnFiltersState,
-  VisibilityState,
-} from "@tanstack/react-table";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Checkbox } from "@/components/ui/checkbox";
+import { useState } from "react";
+import { ColumnDef } from "@tanstack/react-table";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -32,58 +11,72 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react";
-
-import { User } from "@prisma/client";
-import { getClerkUserList, syncClerkUsersToDB } from "@/app/actions/clerk";
-import { toast } from "sonner";
+import { ArrowUpDown, Eye, User, UserCircle } from "lucide-react";
+import { Profile } from "@prisma/client";
 import { DataTable } from "../userDashboard/data-table";
 import Image from "next/image";
+import ProfileView from "./profile-view";
+import useSWR from "swr";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-}
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export const columns: ColumnDef<User>[] = [
+const ProfileDialog = ({ userId }: { userId: string }) => {
+  const [open, setOpen] = useState(false);
+  const { data: profile, error } = useSWR(
+    open ? `/api/admin/profiles/${userId}` : null,
+    fetcher
+  );
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="ghost" size="icon">
+          <Eye className="h-4 w-4" />
+        </Button>
+      </DialogTrigger>
+      <DialogContent className=" max-w-3xl max-h-[90dvh] overflow-auto">
+        <DialogHeader>
+          <DialogTitle>Profile Details</DialogTitle>
+        </DialogHeader>
+        {error && <div>Failed to load profile.</div>}
+        {!profile && !error && <div>Loading...</div>}
+        {profile && <ProfileView profile={profile} />}
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="outline">Close</Button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export const columns: ColumnDef<Profile>[] = [
   {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "name",
-    header: "User",
+    accessorKey: "personalInfo.fullName",
+    header: "Profile",
     cell: ({ row }) => {
-      const imageUrl: string = row.original.image!;
-      const name: string = row.getValue("name");
+      const imageUrl: string = row.original.personalInfo?.image!;
+      const fullName = row.original.personalInfo?.fullName;
       return (
         <div className="flex items-center gap-2">
-          <Image
-            src={imageUrl}
-            alt="User"
-            className="w-8 h-8 rounded-full"
-            width={40}
-            height={40}
-          />
-          <span>{name}</span>
+          {imageUrl ? (
+            <Image
+              src={imageUrl}
+              alt="User"
+              className="w-8 h-8 rounded-full"
+              width={40}
+              height={40}
+            />
+          ) : (
+            <UserCircle
+              className="w-8 h-8 rounded-full"
+              strokeWidth="0.9"
+              color="gray"
+            />
+          )}
+
+          <span>{fullName}</span>
         </div>
       );
     },
@@ -112,122 +105,14 @@ export const columns: ColumnDef<User>[] = [
   {
     id: "view",
     header: "View",
-    cell: ({ row }) => {
-      const profile = row.original;
-      return (
-        <Dialog>
-          <DialogTrigger>Open</DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Profile</DialogTitle>
-              <DialogDescription>
-                Here is the profile details.
-              </DialogDescription>
-            </DialogHeader>
-
-            <DialogFooter>
-              <DialogClose>Close</DialogClose>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      );
-    },
+    cell: ({ row }) => <ProfileDialog userId={row.original.userId} />,
   },
 ];
 
-// export function DataTable<TData, TValue>({
-//   columns,
-//   data,
-// }: DataTableProps<TData, TValue>) {
-//   const [sorting, setSorting] = useState<SortingState>([]);
-//   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-//   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
-//     currency: false,
-//   });
-//   const [rowSelection, setRowSelection] = useState({});
-//   const table = useReactTable({
-//     data,
-//     columns,
-//     getCoreRowModel: getCoreRowModel(),
-//     getPaginationRowModel: getPaginationRowModel(),
-//     onSortingChange: setSorting,
-//     getSortedRowModel: getSortedRowModel(),
-//     onColumnFiltersChange: setColumnFilters,
-//     getFilteredRowModel: getFilteredRowModel(),
-//     onColumnVisibilityChange: setColumnVisibility,
-//     onRowSelectionChange: setRowSelection,
-//     state: {
-//       sorting,
-//       columnFilters,
-//       columnVisibility,
-//       rowSelection,
-//     },
-//   });
-
-//   return (
-//     <div className="rounded-md border">
-//       <Table>
-//         <TableHeader>
-//           {table.getHeaderGroups().map((headerGroup) => (
-//             <TableRow key={headerGroup.id}>
-//               {headerGroup.headers.map((header) => {
-//                 return (
-//                   <TableHead key={header.id}>
-//                     {header.isPlaceholder
-//                       ? null
-//                       : flexRender(
-//                           header.column.columnDef.header,
-//                           header.getContext()
-//                         )}
-//                   </TableHead>
-//                 );
-//               })}
-//             </TableRow>
-//           ))}
-//         </TableHeader>
-//         <TableBody>
-//           {table.getRowModel().rows?.length ? (
-//             table.getRowModel().rows.map((row) => (
-//               <TableRow
-//                 key={row.id}
-//                 data-state={row.getIsSelected() && "selected"}
-//               >
-//                 {row.getVisibleCells().map((cell) => (
-//                   <TableCell key={cell.id}>
-//                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
-//                   </TableCell>
-//                 ))}
-//               </TableRow>
-//             ))
-//           ) : (
-//             <TableRow>
-//               <TableCell colSpan={columns.length} className="h-24 text-center">
-//                 No results.
-//               </TableCell>
-//             </TableRow>
-//           )}
-//         </TableBody>
-//       </Table>
-//     </div>
-//   );
-// }
-
-const handleSyncClerkUserListToDB = async () => {
-  const response = await syncClerkUsersToDB();
-  console.log(response);
-  toast.success("Total Users Fetched: " + response.totalFetched, {
-    description: "Total Users Upserted: " + response.totalUpserted,
-  });
-};
-
-export default function Profiles({ users }: { users: User[] }) {
+export default function Profiles({ profiles }: { profiles: Profile[] }) {
   return (
-    <div>
-      <Button onClick={handleSyncClerkUserListToDB}>
-        Sync Clerk User List to DB
-      </Button>
-      {/* <DataTable columns={columns} data={users} /> */}
-      <DataTable columns={columns} data={users} />
+    <div className="px-4">
+      <DataTable columns={columns} data={profiles} />
     </div>
   );
 }

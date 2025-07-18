@@ -536,10 +536,10 @@ export function PersonalInfoForm({
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <div className="flex items-center gap-2">
+            {/* <div className="flex items-center gap-2">
               <Progress value={progress} className="flex-1" />
               <span className="text-sm text-muted-foreground">{progress}%</span>
-            </div>
+            </div> */}
             <div className="flex flex-col items-center space-y-4">
               <FormField
                 control={form.control}

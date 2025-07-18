@@ -46,7 +46,9 @@ export default async function RootLayout({
             </Breadcrumb>
           </div>
         </header>
-        <div className="md:ml-12">{children}</div>
+        <main className="md:px-12 grow p-2 overflow-auto bg-slate-50">
+          {children}
+        </main>
       </SidebarInset>
     </SidebarProvider>
   );

@@ -50,6 +50,11 @@ const items = [
     url: "/admin/quizzes",
     icon: BookOpenCheck,
   },
+  {
+    title: "Results",
+    url: "/admin/results",
+    icon: Inbox,
+  },
 
   // {
   //   title: "Settings",

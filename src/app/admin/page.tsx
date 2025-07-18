@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { getQuizzes } from "../actions/quiz";
 import { getProfiles } from "../actions/profile";
 import { cn } from "@/lib/utils";
-import { BookOpen, Brain, Trophy } from "lucide-react";
+import { ArrowRight, BookOpen, Brain, Trophy } from "lucide-react";
 
 interface StatCardProps {
   title: string;
@@ -27,7 +27,16 @@ export default async function page() {
 
   return (
     <div className="">
-      <h3 className="section-title">Welcome Admin! </h3>
+      <div className="flex lg:flex-row flex-col gap-2 items-center justify-between">
+        <h3 className="section-title">Welcome Admin! </h3>
+
+        <Button asChild variant={"secondary"}>
+          <Link href={"/dashboard"}>
+            User Dashboard <ArrowRight />
+          </Link>
+        </Button>
+      </div>
+
       <div className="p-4 grid auto-rows-min gap-4 md:grid-cols-3">
         <StatCard
           title="Users"
@@ -47,36 +56,6 @@ export default async function page() {
           valueColor="text-rose-600"
           icon={<BookOpen className="w-6 h-6 text-rose-600" />}
         />
-      </div>
-      <div className="p-4 grid auto-rows-min gap-4 md:grid-cols-3">
-        <Card>
-          <CardHeader>
-            <CardTitle>Profiles</CardTitle>
-            <CardDescription>No. of user profiles</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>There are {profiles.length} profiles.</p>
-          </CardContent>
-          <CardFooter>
-            <Button asChild>
-              <Link href="/admin/profiles">Go to Profiles</Link>
-            </Button>
-          </CardFooter>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Quizzes</CardTitle>
-            <CardDescription>Quiz Bank</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>There are {quizzes.length} quizzes.</p>
-          </CardContent>
-          <CardFooter>
-            <Button asChild>
-              <Link href="/admin/quizzes">View Quiz Bank</Link>
-            </Button>
-          </CardFooter>
-        </Card>
       </div>
     </div>
   );

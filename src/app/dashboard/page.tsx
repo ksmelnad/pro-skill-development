@@ -33,6 +33,7 @@ import { QuizPerformanceChart } from "@/components/userDashboard/QuizPerformance
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
+import { checkRole } from "@/utils/roles";
 
 interface StatCardProps {
   title: string;
@@ -64,6 +65,9 @@ export default async function page() {
   if (!profile) {
     redirect("/onboarding");
   }
+
+  const isAdmin = await checkRole("admin");
+
   // const totalFields = 12;
   // const validFilledCount = Object.values(profile)?.filter(Boolean).length || 5;
   // const progress = Math.round(((validFilledCount - 6) / totalFields) * 100);
@@ -132,9 +136,18 @@ export default async function page() {
 
   return (
     <div className="p-4 md:p-6 space-y-8">
-      <h3 className="text-3xl font-bold text-gray-800">
-        Welcome, {user?.fullName || "User"}!
-      </h3>
+      <div className="flex lg:flex-row flex-col gap-2 items-center justify-between">
+        <h3 className="text-2xl lg:text-3xl font-bold text-gray-800">
+          Welcome, {user?.fullName || "User"}!
+        </h3>
+        {isAdmin && (
+          <Button asChild variant={"secondary"}>
+            <Link href={"/admin"}>
+              Admin Dashboard <ArrowRight />
+            </Link>
+          </Button>
+        )}
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2  2xl:grid-cols-4 gap-6">
         <div className="flex flex-col items-center justify-center lg:col-span-2">

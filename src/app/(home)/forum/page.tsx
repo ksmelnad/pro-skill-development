@@ -44,7 +44,7 @@ export default async function ForumPage() {
   const initialThreadsResponse = await getInitialThreads();
 
   return (
-    <div className="bg-gray-100">
+    <div className="bg-gray-100 mt-16">
       <div className="space-y-8 p-4 md:p-6 container mx-auto">
         <header className="flex items-center justify-center gap-4 h-60 bg-linear-to-r from-blue-600 to-violet-600 rounded-md text-white p-4">
           <div className="flex flex-col items-center space-y-3 ">

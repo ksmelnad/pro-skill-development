@@ -4,8 +4,8 @@ import Link from "next/link";
 
 export default function page() {
   return (
-    <div className="relative min-h-screen w-full grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+    <div className="relative min-h-screen w-full flex flex-col justify-center md:grid md:grid-cols-2 gap-4 items-center">
+      <section className="relative min-h-screen hidden md:flex items-center justify-center overflow-hidden pt-16">
         {/* Background with overlay */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -92,6 +92,12 @@ export default function page() {
           style={{ animationDelay: "1.5s" }}
         />
       </section>
+      <div className="mt-4 md:hidden flex gap-3 items-center ">
+        <Image src="/logo.svg" width={60} height={60} alt="logo" />
+        <Link href="/">
+          <p className="text-2xl lg:text-4xl font-bold ">My Skill Learning</p>
+        </Link>
+      </div>
       <div className="h-full w-full flex justify-center items-center p-4">
         <SignUp />
       </div>

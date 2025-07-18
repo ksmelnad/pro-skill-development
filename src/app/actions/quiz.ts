@@ -183,6 +183,7 @@ export async function createQuiz(quizData: any) {
     quizTopic,
     totalQuestions,
     maxAttempts,
+    allotedTime,
     questions,
   } = parsedData.data!;
 
@@ -209,6 +210,7 @@ export async function createQuiz(quizData: any) {
         quizTopic,
         totalQuestions,
         maxAttempts,
+        allotedTime,
         questions,
       },
     });

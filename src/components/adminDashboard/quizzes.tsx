@@ -26,7 +26,7 @@ import { useToast } from "@/hooks/use-toast";
 import { createQuiz, updateQuizState } from "@/app/actions/quiz";
 import type { Quiz } from "@prisma/client";
 import { quizSchema } from "@/lib/zodSchemas";
-import CreateQuizForm from "./CreateQuizForm";
+// import CreateQuizForm from "./CreateQuizForm";
 import { z } from "zod";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -143,106 +143,76 @@ export default function Quizzes({
   };
 
   return (
-    <div>
-      <h1 className="section-title">Quizzes</h1>
-      {quizData ? (
-        <CreateQuizForm
-          quizData={quizData}
-          onSubmit={handleFormSubmit}
-          onCancel={() => {
-            setQuizData(null);
-            setFile(null);
-          }}
-        />
-      ) : (
-        <div className="mb-4 flex items-end gap-4 px-4">
-          <div className="space-y-1">
-            <Label htmlFor="file">Upload Quiz JSON data</Label>
-            <Input
-              id="file"
-              type="file"
-              accept=".json"
-              onChange={handleFileChange}
-              key={file ? file.name : "file-input"}
-            />
-          </div>
-        </div>
+    <section className="px-4">
+      {isQuizzesLoading && (
+        <Loader2 className="animate-spin mx-auto mt-4" size={24} />
       )}
-      <hr />
-      <section className="mt-6 p-4">
-        <h2 className="text-xl font-bold">Quiz Database</h2>
-        {isQuizzesLoading && (
-          <Loader2 className="animate-spin mx-auto mt-4" size={24} />
-        )}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-4">
-          {quizzes?.map((quiz) => (
-            <Card
-              key={quiz.quizId}
-              className="group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm"
-            >
-              <CardHeader className="pb-4">
-                <div className="flex justify-between mb-3">
-                  <div className="text-xs text-gray-500 font-mono bg-gray-100 px-2 py-1 rounded">
-                    {quiz.quizId}
-                  </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
+        {quizzes?.map((quiz) => (
+          <Card
+            key={quiz.quizId}
+            className="group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm"
+          >
+            <CardHeader className="pb-4">
+              <div className="flex justify-between mb-3">
+                <div className="text-xs text-gray-500 font-mono bg-gray-100 px-2 py-1 rounded">
+                  {quiz.quizId}
                 </div>
-                <CardTitle className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
-                  {quiz.quizTitle}
-                </CardTitle>
-                <CardDescription className="text-gray-600 font-medium">
-                  {quiz.quizTopic}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="text-sm">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <BookOpen className="h-4 w-4 text-blue-500" />
-                    <span className="font-medium">
-                      {quiz.totalQuestions} questions
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Clock className="h-4 w-4 text-green-500" />
-                    <span className="font-medium">
-                      {quiz.allotedTime} mins.
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Target className="h-4 w-4 text-orange-500" />
-                    <span className="font-medium">
-                      {quiz.maxAttempts} attempts
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Users className="h-4 w-4 text-purple-500" />
-                    {/* <span className="font-medium">{quiz.participants.toLocaleString()}</span> */}
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Calendar className="h-4 w-4 text-orange-500" />
-                    <span className="font-medium">
-                      {format(new Date(quiz.createdAt), "MMMM d, yyyy")}
-                    </span>
-                  </div>
+              </div>
+              <CardTitle className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                {quiz.quizTitle}
+              </CardTitle>
+              <CardDescription className="text-gray-600 font-medium">
+                {quiz.quizTopic}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="text-sm">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <BookOpen className="h-4 w-4 text-blue-500" />
+                  <span className="font-medium">
+                    {quiz.totalQuestions} questions
+                  </span>
                 </div>
-              </CardContent>
-              <hr />
-              <CardFooter className="mt-4">
-                <div className="w-full flex justify-between items-center">
-                  <Label htmlFor={`toggle-${quiz.quizId}`}>Enable</Label>
-                  <Switch
-                    id={`toggle-${quiz.quizId}`}
-                    checked={quiz.enabled}
-                    disabled={isPending}
-                    onCheckedChange={(checked) =>
-                      handleToggle(quiz.quizId, checked)
-                    }
-                  />
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <Clock className="h-4 w-4 text-green-500" />
+                  <span className="font-medium">{quiz.allotedTime} mins.</span>
                 </div>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
-      </section>
-    </div>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <Target className="h-4 w-4 text-orange-500" />
+                  <span className="font-medium">
+                    {quiz.maxAttempts} attempts
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <Users className="h-4 w-4 text-purple-500" />
+                  {/* <span className="font-medium">{quiz.participants.toLocaleString()}</span> */}
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <Calendar className="h-4 w-4 text-orange-500" />
+                  <span className="font-medium">
+                    {format(new Date(quiz.createdAt), "MMMM d, yyyy")}
+                  </span>
+                </div>
+              </div>
+            </CardContent>
+            <hr />
+            <CardFooter className="mt-4">
+              <div className="w-full flex justify-between items-center">
+                <Label htmlFor={`toggle-${quiz.quizId}`}>Enable</Label>
+                <Switch
+                  id={`toggle-${quiz.quizId}`}
+                  checked={quiz.enabled}
+                  disabled={isPending}
+                  onCheckedChange={(checked) =>
+                    handleToggle(quiz.quizId, checked)
+                  }
+                />
+              </div>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+    </section>
   );
 }
