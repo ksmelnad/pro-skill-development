@@ -12,6 +12,7 @@ import { getQuizzes } from "../actions/quiz";
 import { getProfiles } from "../actions/profile";
 import { cn } from "@/lib/utils";
 import { ArrowRight, BookOpen, Brain, Trophy } from "lucide-react";
+import prisma from "@/utils/prismadb";
 
 interface StatCardProps {
   title: string;
@@ -24,6 +25,7 @@ interface StatCardProps {
 export default async function page() {
   const quizzes = await getQuizzes();
   const profiles = await getProfiles();
+  const quizResults = await prisma.quizResult.findMany();
 
   return (
     <div className="">
@@ -37,7 +39,7 @@ export default async function page() {
         </Button>
       </div>
 
-      <div className="p-4 grid auto-rows-min gap-4 md:grid-cols-3">
+      <div className="mt-4 p-4 grid auto-rows-min gap-4 md:grid-cols-2 lg:grid-cols-4">
         <StatCard
           title="Users"
           value={profiles.length}
@@ -53,6 +55,12 @@ export default async function page() {
         <StatCard
           title="Quizzes"
           value={quizzes.length}
+          valueColor="text-rose-600"
+          icon={<BookOpen className="w-6 h-6 text-rose-600" />}
+        />
+        <StatCard
+          title="Quiz Attempts"
+          value={quizResults.length}
           valueColor="text-rose-600"
           icon={<BookOpen className="w-6 h-6 text-rose-600" />}
         />

@@ -23,6 +23,7 @@ import {
   SidebarRail,
   SidebarFooter,
   SidebarHeader,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
@@ -64,6 +65,7 @@ const items = [
 ];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { isMobile, toggleSidebar } = useSidebar();
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="py-4">
@@ -92,7 +94,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <Link href={item.url}>
+                    <Link
+                      href={item.url}
+                      onClick={() => isMobile && toggleSidebar()}
+                    >
                       <item.icon />
                       <span>{item.title}</span>
                     </Link>

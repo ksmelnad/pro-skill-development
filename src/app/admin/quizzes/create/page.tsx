@@ -60,7 +60,9 @@ const CreateQuizPage = () => {
 
   const onSubmit = async (data: QuizFormValues) => {
     try {
-      const quizId = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+      const quizId = `${Date.now()}-${Math.random()
+        .toString(36)
+        .substring(2, 9)}`;
       const quizData = {
         ...data,
         quizId,
@@ -191,19 +193,19 @@ const CreateQuizPage = () => {
   };
 
   return (
-    <div className="container mx-auto py-8 bg-gray-50 min-h-screen">
-      <div className="flex items-center justify-between mb-6">
+    <div className="py-8 bg-gray-50 min-h-screen">
+      <div className="mb-6 space-y-6">
         <Button variant="outline" onClick={onCancel}>
           <ArrowLeft className="mr-2 h-4 w-4" /> Back to Quizzes
         </Button>
-        <h1 className="text-3xl font-bold text-gray-800">Create New Quiz</h1>
+        <h1 className="section-title">Create New Quiz</h1>
       </div>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <Card className="shadow-md">
             <CardHeader>
-              <CardTitle className="text-2xl font-bold text-gray-700">
+              <CardTitle className="text-xl font-bold text-gray-700">
                 Quiz Details
               </CardTitle>
             </CardHeader>
@@ -279,7 +281,7 @@ const CreateQuizPage = () => {
 
           <Card className="shadow-md">
             <CardHeader>
-              <CardTitle className="text-2xl font-bold text-gray-700">
+              <CardTitle className="text-xl font-bold text-gray-700">
                 Questions
               </CardTitle>
             </CardHeader>
