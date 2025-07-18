@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-18">
       {/* Background with overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -59,28 +59,32 @@ export const HeroSection = () => {
 
           {/* Stats */}
           <div
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto animate-fade-in"
+            className="grid grid-cols-3 gap-4 md:gap-8 max-w-2xl mx-auto animate-fade-in"
             style={{ animationDelay: "0.6s" }}
           >
             <div className="bg-background/10 backdrop-blur-sm rounded-lg p-6 border border-primary-foreground/20">
-              <div className="text-3xl font-bold text-primary-foreground mb-2">
+              <div className="text-2xl md:text-3xl font-bold text-primary-foreground mb-2">
                 10K+
               </div>
-              <div className="text-primary-foreground/80">Active Learners</div>
+              <div className=" text-sm md:text-base text-primary-foreground/80">
+                Active Learners
+              </div>
             </div>
-            <div className="bg-background/10 backdrop-blur-sm rounded-lg p-6 border border-primary-foreground/20">
-              <div className="text-3xl font-bold text-primary-foreground mb-2">
+            <div className="bg-background/10 backdrop-blur-sm rounded-lg p-4 md:p-6 border border-primary-foreground/20">
+              <div className="text-2xl md:text-3xl font-bold text-primary-foreground mb-2">
                 500+
               </div>
-              <div className="text-primary-foreground/80">
-                Skill Assessments
+              <div className="text-center text-sm md:text-base text-primary-foreground/80">
+                <span>Skill</span> <span> Assessments </span>
               </div>
             </div>
             <div className="bg-background/10 backdrop-blur-sm rounded-lg p-6 border border-primary-foreground/20">
-              <div className="text-3xl font-bold text-primary-foreground mb-2">
+              <div className="text-2xl md:text-3xl font-bold text-primary-foreground mb-2">
                 95%
               </div>
-              <div className="text-primary-foreground/80">Success Rate</div>
+              <div className=" text-sm md:text-base text-primary-foreground/80">
+                Success Rate
+              </div>
             </div>
           </div>
         </div>

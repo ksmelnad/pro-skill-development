@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
+import Link from "next/link";
 
 export const CtaSection = () => {
   return (
@@ -61,9 +62,12 @@ export const CtaSection = () => {
               variant="accent"
               size="lg"
               className="group text-lg px-8 py-6 rounded-xl"
+              asChild
             >
-              Get Started for Free
-              <ArrowRight className="ml-2 h-6 w-6 transition-transform group-hover:translate-x-1" />
+              <Link href="/sign-up">
+                Get Started for Free
+                <ArrowRight className="ml-2 h-6 w-6 transition-transform group-hover:translate-x-1" />
+              </Link>
             </Button>
 
             <Button

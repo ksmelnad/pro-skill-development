@@ -100,7 +100,7 @@ export const FeaturesSection = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in">
             Everything You Need to
-            <span className="block bg-gradient-hero bg-clip-text text-transparent">
+            <span className="block py-2 bg-gradient-hero bg-clip-text text-transparent">
               Succeed in Your Career
             </span>
           </h2>

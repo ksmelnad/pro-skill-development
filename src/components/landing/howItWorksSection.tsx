@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, UserPlus, BookOpen, Award, Users } from "lucide-react";
+import Link from "next/link";
 
 const steps = [
   {
@@ -44,7 +45,7 @@ export const HowItWorksSection = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in">
             Your Learning Journey in
-            <span className="block bg-gradient-hero bg-clip-text text-transparent">
+            <span className="block py-2 bg-gradient-hero bg-clip-text text-transparent">
               Four Simple Steps
             </span>
           </h2>
@@ -123,9 +124,11 @@ export const HowItWorksSection = () => {
           className="text-center mt-16 animate-fade-in"
           style={{ animationDelay: "0.8s" }}
         >
-          <Button variant="hero" size="lg" className="group">
-            Start Your Journey
-            <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+          <Button variant="hero" size="lg" className="group" asChild>
+            <Link href="/sign-up">
+              Start Your Journey
+              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Link>
           </Button>
         </div>
       </div>

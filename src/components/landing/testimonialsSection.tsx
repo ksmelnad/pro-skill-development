@@ -65,7 +65,7 @@ export const TestimonialsSection = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in">
             Trusted by
-            <span className="block bg-gradient-hero bg-clip-text text-transparent">
+            <span className="block py-2 bg-gradient-hero bg-clip-text text-transparent">
               Thousands of Professionals
             </span>
           </h2>
